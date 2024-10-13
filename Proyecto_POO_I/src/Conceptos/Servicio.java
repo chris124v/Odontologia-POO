@@ -20,6 +20,12 @@ public class Servicio {
         this.nombre = nombre;
         this.precio = precio;
     }
+    
+     public Servicio() {
+        this.id = " ";
+        this.nombre = " ";
+        this.precio = 0.0;
+    }
   
     public String getId() {
         return id;

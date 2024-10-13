@@ -24,7 +24,7 @@ public class Paciente {
     }
 
      public Paciente() {
-        this.id = "";
+        this.id = " ";
         this.nombre = "";
         this.telefono = "";
         this.email = "";

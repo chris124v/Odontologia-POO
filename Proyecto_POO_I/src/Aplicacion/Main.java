@@ -15,10 +15,7 @@ public class Main {
      */
     public static void main(String[] args) {
         System.out.print("Hola");
-        System.out.print("Hola2");
-        System.out.print("Hola23");
-        System.out.print("Hola24");
-        System.out.print("Hola25");
+      
     }
     
 }

@@ -61,5 +61,9 @@ public class Paciente {
     public void setEmail(String email) {
         this.email = email;
     }
-
+    
+    @Override
+    public String toString(){
+        return "Paciente :" + this.getNombre() + " ID :" + this.getId() + " Tel.:" + this.getTelefono() + " Email: " + this.getEmail();
+    }
 }

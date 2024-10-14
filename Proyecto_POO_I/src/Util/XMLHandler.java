@@ -84,6 +84,7 @@ public class XMLHandler {
                 // Obtener los IDs de los servicios
                 ArrayList<String> idsServicios = new ArrayList<>();
                 NodeList servicios = elemento.getElementsByTagName("servicios").item(0).getChildNodes();
+                
                 for (int j = 0; j < servicios.getLength(); j++) {
                     Node idServicioNode = servicios.item(j);
                     if (idServicioNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -91,14 +92,17 @@ public class XMLHandler {
                     }
                 }
                 
+                String idServicioString = String.join(", ", idsServicios);
+                
                 // Crear el médico 
-                Medicos medico = new Medicos(telefono, puesto, nombre_medico, id_m, id_m, "", 0.0); // Ajustar según lo que necesites
+                Medicos medico = new Medicos(telefono, puesto, nombre_medico, id_m, idServicioString, "", 0.0); // Ajustar según lo que necesites
                 medicos.add(medico);
             }
         }
     } catch (Exception ex) {
         ex.printStackTrace();
     }
+    
     return medicos;
 }
 

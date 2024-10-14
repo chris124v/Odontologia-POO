@@ -5,7 +5,11 @@
 package Aplicacion;
 
 import Conceptos.Medicos;
+import Conceptos.Paciente;
 import Conceptos.Servicio;
+import java.util.ArrayList;
+import java.util.List;
+import util.XMLHandler;
 
 /**
  *
@@ -31,8 +35,32 @@ public class Main {
         
         System.out.println(m1.getId());
         
+        // Cargar pacientes desde el archivo XML
+        ArrayList<Paciente> pacientes = XMLHandler.CargarPacientes("pacientes.xml");
         
-
+        // Mostrar los pacientes cargados
+        System.out.println("\nPacientes cargados:");
+        for (Paciente paciente : pacientes) {
+        System.out.println(paciente);}
+        
+        
+        ArrayList<Servicio> servicios = XMLHandler.CargarServicios("servicios.xml");
+        
+        // Mostrar los pacientes cargados
+        System.out.println("\nServicios cargados:");
+        for (Servicio servicio : servicios) {
+        System.out.println(servicio);}
+        
+        ArrayList<Medicos> medicos = XMLHandler.CargarMedico("medicos.xml");
+        
+        // Mostrar los pacientes cargados
+        System.out.println("\nMedicos cargados:");
+        for (Medicos medico : medicos) {
+        System.out.println(medico);}
+        
+        
+        
+        
     }
     
 }

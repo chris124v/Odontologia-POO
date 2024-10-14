@@ -53,7 +53,7 @@ public class Servicio {
     
     @Override
     public String toString(){
-        return "Servicio :" + this.getNombre_servicio()+ " ID :" + this.getId() + " Precio.:" + this.getPrecio();
+        return "Servicio :" + this.getNombre_servicio()+ ", ID :" + this.getId() + ", Precio:" + this.getPrecio();
     }
 }
 

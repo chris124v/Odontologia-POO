@@ -13,8 +13,9 @@ public class Medicos extends Servicio {
     String telefono;
     String puesto;
     String nombre_medico;
+    String id_m;
 
-    public Medicos(String telefono, String puesto, String nombre_medico, String id, String nombre_servicio, double precio) {
+    public Medicos(String telefono, String puesto, String nombre_medico, String id_m, String id, String nombre_servicio, double precio) {
         super(id, nombre_servicio, precio);
         this.telefono = telefono;
         this.puesto = puesto;
@@ -26,6 +27,7 @@ public class Medicos extends Servicio {
         this.telefono = " ";
         this.puesto = " ";
         this.nombre_medico = " ";
+        this.id_m = " ";
     }
    
 
@@ -52,6 +54,19 @@ public class Medicos extends Servicio {
     public void setNombre_medico(String nombre_medico) {
         this.nombre_medico = nombre_medico;
     }
-   
+
+    public String getId_m() {
+        return id_m;
+    }
+
+    public void setId_m(String id_m) {
+        this.id_m = id_m;
+    }
+    
+    
+    @Override
+    public String toString(){
+        return "Medico :" + this.getNombre_medico()+ " ID :" + this.getId_m() + " Puesto:" + this.getPuesto() + " Telefono:" + this.getTelefono() + "Servicios" + this.getId();
+    }
     
 }

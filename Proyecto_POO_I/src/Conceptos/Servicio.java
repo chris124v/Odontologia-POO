@@ -50,6 +50,11 @@ public class Servicio {
     public void setPrecio(double precio) {
         this.precio = precio;
     }
+    
+    @Override
+    public String toString(){
+        return "Servicio :" + this.getNombre_servicio()+ " ID :" + this.getId() + " Precio.:" + this.getPrecio();
+    }
 }
 
     

@@ -64,6 +64,6 @@ public class Paciente {
     
     @Override
     public String toString(){
-        return "Paciente :" + this.getNombre() + " ID :" + this.getId() + " Tel.:" + this.getTelefono() + " Email: " + this.getEmail();
+        return "Paciente :" + this.getNombre() + ", ID :" + this.getId() + ", Tel:" + this.getTelefono() + ", Email: " + this.getEmail();
     }
 }

@@ -4,6 +4,8 @@
  */
 package Conceptos;
 
+import java.util.List;
+
 
 /**
  *
@@ -14,12 +16,13 @@ public class Medicos extends Servicio {
     String puesto;
     String nombre_medico;
     String id_m;
-
+    
     public Medicos(String telefono, String puesto, String nombre_medico, String id_m, String id, String nombre_servicio, double precio) {
         super(id, nombre_servicio, precio);
         this.telefono = telefono;
         this.puesto = puesto;
         this.nombre_medico = nombre_medico;
+        this.id_m = id_m;
     }
     
      public Medicos() {
@@ -66,7 +69,7 @@ public class Medicos extends Servicio {
     
     @Override
     public String toString(){
-        return "Medico :" + this.getNombre_medico()+ " ID :" + this.getId_m() + " Puesto:" + this.getPuesto() + " Telefono:" + this.getTelefono() + "Servicios" + this.getId();
+        return "Medico :" + this.getNombre_medico()+ ", ID :" + this.getId_m() + ", Puesto :" + this.getPuesto() + ", Telefono :" + this.getTelefono() + ", Servicios: " + this.getId();
     }
     
 }

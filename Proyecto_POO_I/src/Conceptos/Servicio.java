@@ -11,19 +11,19 @@ package Conceptos;
 
 public class Servicio {
     public String id;
-    public String nombre;
+    public String nombre_servicio;
     public double precio;
 
     
     public Servicio(String id, String nombre, double precio) {
         this.id = id;
-        this.nombre = nombre;
+        this.nombre_servicio = nombre;
         this.precio = precio;
     }
     
      public Servicio() {
         this.id = " ";
-        this.nombre = " ";
+        this.nombre_servicio = " ";
         this.precio = 0.0;
     }
   
@@ -35,12 +35,12 @@ public class Servicio {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombre_servicio() {
+        return nombre_servicio;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombre_servicio(String nombre) {
+        this.nombre_servicio = nombre;
     }
 
     public double getPrecio() {

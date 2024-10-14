@@ -7,8 +7,13 @@ package Aplicacion;
 import Conceptos.Medicos;
 import Conceptos.Paciente;
 import Conceptos.Servicio;
+import Util.XMLWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import org.xml.sax.SAXException;
 import util.XMLHandler;
 
 /**
@@ -58,9 +63,29 @@ public class Main {
         for (Medicos medico : medicos) {
         System.out.println(medico);}
         
+         
+        try {
+            XMLWriter generador = new XMLWriter();
+            
+            // Cargar el XML existente
+            generador.cargarXml("pacientes.xml");
+            
+            // Modificar pacientes existentes
+            generador.modificarPaciente("300001111", "Juan Pérez Modificado 5", "7777-1111", "juan.pm@gmail.com");
+            generador.modificarPaciente("300002222", "Ana Rojas Modificada 2", "7777-2222", "ana.rm@gmail.com");
+            generador.modificarPaciente("300003333", "Pedro Arnaez Modificado 7", "7777-3333", "pedro.am@gmail.com");
+            
+            // Guardar los cambios
+            generador.guardarXml("pacientes.xml");
+            
+            System.out.println("XML de pacientes modificado con éxito.");
+        } catch (ParserConfigurationException | SAXException | IOException | TransformerException e) {
+            e.printStackTrace();
+        }
         
-        
-        
+        System.out.println("\nPacientes cargados:");
+        for (Paciente paciente : pacientes) {
+        System.out.println(paciente);}
     }
     
 }

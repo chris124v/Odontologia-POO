@@ -4,9 +4,6 @@
  */
 package Conceptos;
 
-import java.util.List;
-
-
 /**
  *
  * @author Christopher

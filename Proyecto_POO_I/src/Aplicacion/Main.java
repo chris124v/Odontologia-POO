@@ -293,6 +293,9 @@ public class Main {
     
     // Hacer la ventana visible
     principal.setVisible(true);
+    
+    
+    //Prueba
 }
     }
     

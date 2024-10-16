@@ -7,8 +7,10 @@ package Aplicacion;
 import Conceptos.Medicos;
 import Conceptos.Paciente;
 import Conceptos.Servicio;
+import Presentacion.Principal;
 import Util.XMLWriter;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import util.XMLHandler;
 
 /**
@@ -277,7 +279,21 @@ public class Main {
         System.out.println("\nXML de Eliminar Servicios Exitosa");
         
         
-        
+             // Inicializar la ventana principal
+    Principal principal = new Principal();
+    
+    // Establecer el comportamiento de cierre
+    principal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    
+    // Establecer el tamaño de la ventana
+    principal.setSize(400, 300); // Ancho: 400, Alto: 300
+    
+    // Centrar la ventana en la pantalla
+    principal.setLocationRelativeTo(null);
+    
+    // Hacer la ventana visible
+    principal.setVisible(true);
+}
     }
     
-}
+

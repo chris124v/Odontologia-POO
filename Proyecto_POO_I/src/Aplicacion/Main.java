@@ -286,7 +286,7 @@ public class Main {
     principal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     
     // Establecer el tamaño de la ventana
-    principal.setSize(400, 300); // Ancho: 400, Alto: 300
+    principal.setSize(1074, 768); // Ancho: 400, Alto: 300
     
     // Centrar la ventana en la pantalla
     principal.setLocationRelativeTo(null);

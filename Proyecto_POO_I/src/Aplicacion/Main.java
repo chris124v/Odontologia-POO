@@ -230,7 +230,7 @@ public class Main {
         }
         
          //Ensena los servicios sin el eliminado
-        System.out.println("\nServicios:");
+        System.out.println("\nServicios eliminados:");
         
         //Print de todos los servicios 
         for (Servicio servicio : servicios) {
@@ -247,10 +247,11 @@ public class Main {
         //Main de Medicos Parser Escritura
         
         
-        //Probando Eliminar servicios
+        //Probando Agregar medcos
         try {
             XMLWriter generador = new XMLWriter();
             
+            //Llamamos tambien a servicios porque lo tiene que recorrer
             generador.cargarXML("servicios.xml");
             generador.CargaServicios();
             
@@ -258,7 +259,7 @@ public class Main {
             generador.cargarXML("medicos.xml");
             
             // Agregar medico con un servicio existente
-            generador.agregarMedico("9999-0000", "Odontologo", "Marcelo Fernandez", "208", "100");
+            generador.agregarMedico("7777-8899", "Odontologo 84", "Rodrigo Perez 2", "210", "100");
             
             // Guardar los cambios
             generador.guardarXML("medicos.xml");
@@ -268,15 +269,78 @@ public class Main {
             e.printStackTrace();
         }
         
-         //Ensena los servicios sin el eliminado
+         //Ensena los medicos agregados
         System.out.println("\nMedicos Agregados:");
         
-        //Print de todos los servicios 
+        //Print de todos los medicos
+        for (Medicos medico : medicos) {
+        System.out.println(medico);}
+        
+        //Menciona que el agregador
+        System.out.println("\nXML de Agregar Medicos Exitosa");
+        
+        
+        
+        //Probando Eliminar medicos
+        try {
+            XMLWriter generador = new XMLWriter();
+            
+            // Cargar el XML existente
+            generador.cargarXML("medicos.xml");
+            
+            // Eliminar medico con un servicio existente
+            generador.eliminarMedico("9999-77777", "Odontologo", "Pedro Blanco", "202", "101");
+            
+            // Guardar los cambios
+            generador.guardarXML("medicos.xml");
+        
+        //Excepcion
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+         //Ensena los medicos
+        System.out.println("\nMedicos elimando:");
+        
+        //Print de todos los medicos
         for (Medicos medico : medicos) {
         System.out.println(medico);}
         
         //Menciona que el eliminar fue exitoso.
-        System.out.println("\nXML de Eliminar Servicios Exitosa");
+        System.out.println("\nXML de Eliminar Medicos Exitosa");
+        
+        
+        //Probando Modificar medicos
+        try {
+            XMLWriter generador = new XMLWriter();
+            
+            //Llamamos tambien a servicios porque lo tiene que recorrer
+            generador.cargarXML("servicios.xml");
+            generador.CargaServicios();
+            
+            // Cargar el XML existente
+            generador.cargarXML("medicos.xml");
+            
+            // Eliminar medico con un servicio existente
+            generador.modificarMedico("8888-9999", "Medico maxilofacial", "Maria Rojas", "201", "102");
+            
+            // Guardar los cambios
+            generador.guardarXML("medicos.xml");
+        
+        //Excepcion
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        //Ensena los medicos
+        System.out.println("\nMedicos Modificados:");
+        
+        //Print de todos los medicos
+        for (Medicos medico : medicos) {
+        System.out.println(medico);}
+        
+        //Menciona que el modificar fue exitoso.
+        System.out.println("\nXML de Modificar medicos Exitosa");
         
         
              // Inicializar la ventana principal

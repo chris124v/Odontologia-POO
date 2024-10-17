@@ -264,17 +264,30 @@ public class XMLWriter {
     
     //Fin Metodos para Servicios: Agregar, Eliminar y Modificar
     
+    
+    //Este metodo de cargar servicios nos ayudara a obtener los servicios ya existentes para luego darselos a los medicos
+    //Esto dado a que un medico no puede crear sus propios servicios tienen que venir directamente desde la clase servicios
     public void CargaServicios() {
+        
+        //Para eso utilizaremos un hashmap que sera capaz de identificar los servicios ya existentes
         serviciosactuales = new HashMap<>();
         
+        //Aqui establecemos una raiz del arbol
         Element raiz = document.getDocumentElement();
         
+        //Aqui se indica el tag name porque el cual se van a buscar
         NodeList servicios = raiz.getElementsByTagName("servicio");
         
+        //Ciclo for que recorre los servicios existentes
         for (int i = 0; i < servicios.getLength(); i++) {
             
+            //Se establece element en el inicio del arbol de servicios
             Element servicio = (Element) servicios.item(i);
+            
+            //Establecemos que solo vamos a indicarle al medico el ID del servicio
             String id = servicio.getAttribute("id");
+            
+            //Lo agregamos al hashmap
             serviciosactuales.put(id, servicio);
             
         }
@@ -312,18 +325,101 @@ public class XMLWriter {
         elemPuesto.setTextContent(puesto);
         medicos.appendChild(elemPuesto);
         
-        //Caso de servicios
+        //Caso de servicios con hashmap, mediante contains key, esto busca en el hashmap los servicios existentes
         if (serviciosactuales.containsKey(id_servicio)) {
+            
+            //Creamos un elemento de tipo servicios que lo busca por tag name
             Element servicios = document.createElement("servicios");
+            
+            //Creamos una variable que busque solamente el id 
             Element elemID = document.createElement("id");
+            
+            //Establecemos que se pueda anadir un id valido de los servicios existentes
             elemID.setTextContent(id_servicio);
+            
+            //Se anade el elem id a servicios
             servicios.appendChild(elemID);
+            
+            //Esto se agrega al nodo grande de medicos
             medicos.appendChild(servicios);
             
-        }
+         }
+           
         
-        //Finalmente se realiza el append del elemento de pacientes al elemento raiz que es la base del archivo xml 
+        //Finalmente se realiza el append del elemento de medicos al elemento raiz que es la base del archivo xml 
         raiz.appendChild(medicos);
+    }
+    
+    
+    
+    //Metodo para eliminar los medicos toma como parametro los atributos del medico
+    public void eliminarMedico(String telefono, String puesto, String nombre_medico, String id_m, String id_servicio) { 
+        
+        //Obtenemos los elementos del documento xml
+        Element raiz = document.getDocumentElement();
+        
+        //Mediante una lista de nodo establecemos la raiz del arbol como pacientes el tag
+        NodeList medicos = raiz.getElementsByTagName("medico");
+        
+        //Establecemos el ciclo for para recorrer los pacientes
+        for (int i = 0; i < medicos.getLength(); i++) {
+            Element medico = (Element) medicos.item(i); //Establecemos el elemento como el primero de la lista
+            
+            //Si el obtenemos el atributo id y es igual que el id buscado del servicio como tal
+            if (medico.getAttribute("id_m").equals(id_m)) {
+                
+                //Eliminamos el paciente de la lista enlazada 
+                raiz.removeChild(medico);
+                
+                //Se sale de la funcion
+                break;
+                
+                //Esto se repite con todos los elementso cliente de la lista enlazada
+            }
+        }
+    }
+    
+    //Metodo para modificar los medicos
+    public void modificarMedico(String telefono, String puesto, String nombre_medico, String id_m, String id_servicio) {
+       
+        //Obtenemos los elementos del documento xml
+        Element raiz = document.getDocumentElement();
+        
+        //Mediante una lista de nodo establecemos la raiz del arbol como medico el tag
+        NodeList medicos = raiz.getElementsByTagName("medico");
+        
+        //Establecemos el ciclo for para recorrer los medicos
+        for (int i = 0; i < medicos.getLength(); i++) {
+            Element medico = (Element) medicos.item(i); //Establecemos el elemento como el primero de la lista
+            
+            //Si obtenemos el atributo id y es igual que el id buscado del medico como tal
+            if (medico.getAttribute("id_m").equals(id_m)) {
+                
+                // Modificar los elementos del medico como tal
+                medico.getElementsByTagName("nombre_medico").item(0).setTextContent(nombre_medico);
+                medico.getElementsByTagName("puesto").item(0).setTextContent(puesto);
+                medico.getElementsByTagName("telefono").item(0).setTextContent(telefono);
+                
+                NodeList servicios = raiz.getElementsByTagName("servicios");
+                
+                //Caso de servicios con hashmap, mediante contains key, esto busca en el hashmap los servicios existentes
+                if (serviciosactuales.containsKey(id_servicio)) {
+                    
+                    //Establecemos un elemento servicio
+                    Element servicio = (Element) servicios.item(i);
+                    
+                    //Cambia el servicio existente
+                    servicio.getElementsByTagName("id").item(0).setTextContent(id_servicio);
+                
+                }
+            
+                
+                //Se sale de la funcion
+                break;
+                
+                //Esto se repite con todos los elementos de servicio de la lista enlazada
+            }
+        }
     }
     
     

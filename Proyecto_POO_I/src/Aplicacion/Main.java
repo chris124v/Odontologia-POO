@@ -66,7 +66,7 @@ public class Main {
             generador.cargarXML("pacientes.xml");
             
             // Modificar pacientes existente
-            generador.modificarPaciente("300001111", "Juan Perez Modificado", "7777-1111", "juan.pm@gmail.com");
+            generador.modificarPaciente("3000011114", "Juan Perez Modificado", "7777-1111", "juan.pm@gmail.com");
             generador.modificarPaciente("300002222", "Ana Rojas Modificada", "7777-2222", "ana.rm@gmail.com");
             generador.modificarPaciente("300003333", "Pedro Arnaez Modificado", "7777-3333", "pedro.am@gmail.com");
             
@@ -86,7 +86,7 @@ public class Main {
         System.out.println(paciente);}
         
         //Dice que fue exitoso
-        System.out.println("\nXML de Modificacion de Pacientes Exitosa");
+        System.out.println("\nXML de Modificacion de Pacientes Exitosa\n");
         
         
         //Probando agregar pacientes
@@ -127,7 +127,7 @@ public class Main {
             generador.cargarXML("pacientes.xml");
             
             // Modificar pacientes existente
-            generador.eliminarPaciente("300009999", "Christopher Vargas", "8888-1111", "jer.pm@gmail.com");
+            generador.eliminarPaciente("3000099998", "Christopher Vargas", "8888-1111", "jer.pm@gmail.com");
             
             // Guardar los cambios
             generador.guardarXML("pacientes.xml");
@@ -145,7 +145,7 @@ public class Main {
         System.out.println(paciente);}
         
         //Menciona que el agregar fue exitoso.
-        System.out.println("\nXML de Eliminar de Pacientes Exitosa");
+        System.out.println("\nXML de Eliminar de Pacientes Exitosa\n");
         
         
         //Fin  del Main del Pacientes Parser Escritura
@@ -191,7 +191,7 @@ public class Main {
             generador.cargarXML("servicios.xml");
             
             // Modificar servicio existente
-            generador.modificarServicios("104", "Limpieza Bucal 2", 65000);
+            generador.modificarServicios("109", "Limpieza Bucal 2", 65000);
             
             // Guardar los cambios
             generador.guardarXML("servicios.xml");
@@ -219,7 +219,7 @@ public class Main {
             generador.cargarXML("servicios.xml");
             
             // Eliminar servicio existente
-            generador.eliminarServicio("106", "Cirugia 4", 75000);
+            generador.eliminarServicio("100", "Cirugia 4", 75000);
             
             // Guardar los cambios
             generador.guardarXML("servicios.xml");
@@ -237,7 +237,7 @@ public class Main {
         System.out.println(servicio);}
         
         //Menciona que el eliminar fue exitoso.
-        System.out.println("\nXML de Eliminar Servicios Exitosa");
+        System.out.println("\nXML de Eliminar Servicios Exitosa\n");
         
         
         //Fin del Main del Servicios Parser Escritura
@@ -247,7 +247,7 @@ public class Main {
         //Main de Medicos Parser Escritura
         
         
-        //Probando Agregar medcos
+        //Probando Agregar medicos
         try {
             XMLWriter generador = new XMLWriter();
             
@@ -277,7 +277,7 @@ public class Main {
         System.out.println(medico);}
         
         //Menciona que el agregador
-        System.out.println("\nXML de Agregar Medicos Exitosa");
+        System.out.println("\nXML de Agregar Medicos Exitosa\n");
         
         
         
@@ -307,7 +307,7 @@ public class Main {
         System.out.println(medico);}
         
         //Menciona que el eliminar fue exitoso.
-        System.out.println("\nXML de Eliminar Medicos Exitosa");
+        System.out.println("\nXML de Eliminar Medicos Exitosa\n");
         
         
         //Probando Modificar medicos
@@ -322,7 +322,7 @@ public class Main {
             generador.cargarXML("medicos.xml");
             
             // Eliminar medico con un servicio existente
-            generador.modificarMedico("8888-9999", "Medico maxilofacial", "Maria Rojas", "201", "102");
+            generador.modificarMedico("8888-9999", "Medico maxilofacial", "Maria Rojas 10", "201", new String[] {"102", "101", "100"});
             
             // Guardar los cambios
             generador.guardarXML("medicos.xml");
@@ -343,7 +343,7 @@ public class Main {
         System.out.println("\nXML de Modificar medicos Exitosa");
         
         
-             // Inicializar la ventana principal
+    // Inicializar la ventana principal
     Principal principal = new Principal();
     
     // Establecer el comportamiento de cierre

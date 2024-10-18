@@ -121,6 +121,8 @@ public class XMLWriter {
         //Mediante una lista de nodo establecemos la raiz del arbol como pacientes el tag
         NodeList pacientes = raiz.getElementsByTagName("paciente");
         
+        boolean pacienteElim = false;
+        
         //Establecemos el ciclo for para recorrer los pacientes
         for (int i = 0; i < pacientes.getLength(); i++) {
             Element paciente = (Element) pacientes.item(i); //Establecemos el elemento como el primero de la lista
@@ -131,11 +133,17 @@ public class XMLWriter {
                 //Eliminamos el paciente de la lista enlazada 
                 raiz.removeChild(paciente);
                 
+                pacienteElim = true;
                 //Se sale de la funcion
                 break;
                 
                 //Esto se repite con todos los elementso cliente de la lista enlazada
             }
+        }
+        
+        if (!pacienteElim) {
+            
+            System.out.println("Peligro: El paciente con ID " + id + " no existe y no se eliminara");
         }
     }
             
@@ -147,6 +155,8 @@ public class XMLWriter {
         
         //Mediante una lista de nodo establecemos la raiz del arbol como pacientes el tag
         NodeList pacientes = raiz.getElementsByTagName("paciente");
+        
+        boolean pacienteEncontrado = false;
         
         //Establecemos el ciclo for para recorrer los pacientes
         for (int i = 0; i < pacientes.getLength(); i++) {
@@ -160,11 +170,17 @@ public class XMLWriter {
                 paciente.getElementsByTagName("telefono").item(0).setTextContent(telefono);
                 paciente.getElementsByTagName("email").item(0).setTextContent(email);
                 
+                pacienteEncontrado = true;
+                
                 //Se sale de la funcion
                 break;
                 
                 //Esto se repite con todos los elementso cliente de la lista enlazada
             }
+        }
+        
+        if (!pacienteEncontrado) {
+            System.out.println("Peligro: El paciente con ID " + id + " no existe y no se modificara.");
         }
     }
     
@@ -216,6 +232,8 @@ public class XMLWriter {
         //Mediante una lista de nodo establecemos la raiz del arbol como pacientes el tag
         NodeList servicios = raiz.getElementsByTagName("servicio");
         
+        boolean servicioEncontradoElim = false; // Variable para verificar si se encontró el servicio
+        
         //Establecemos el ciclo for para recorrer los pacientes
         for (int i = 0; i < servicios.getLength(); i++) {
             Element servicio = (Element) servicios.item(i); //Establecemos el elemento como el primero de la lista
@@ -225,12 +243,18 @@ public class XMLWriter {
                 
                 //Eliminamos el paciente de la lista enlazada 
                 raiz.removeChild(servicio);
+                servicioEncontradoElim = true;
                 
                 //Se sale de la funcion
                 break;
                 
                 //Esto se repite con todos los elementso cliente de la lista enlazada
             }
+        }
+        
+        if (!servicioEncontradoElim) {
+            
+            System.out.println("Peligro: El servicio con ID " + id + " no existe y no se eliminara.");
         }
     }
     
@@ -243,6 +267,8 @@ public class XMLWriter {
         //Mediante una lista de nodo establecemos la raiz del arbol como servicio el tag
         NodeList servicios = raiz.getElementsByTagName("servicio");
         
+        boolean servicioEncontrado = false; // Variable para verificar si se encontró el servicio
+        
         //Establecemos el ciclo for para recorrer los servicios
         for (int i = 0; i < servicios.getLength(); i++) {
             Element servicio = (Element) servicios.item(i); //Establecemos el elemento como el primero de la lista
@@ -254,11 +280,17 @@ public class XMLWriter {
                 servicio.getElementsByTagName("nombre_servicio").item(0).setTextContent(nombre_servicio);
                 servicio.getElementsByTagName("precio").item(0).setTextContent(String.valueOf(precio));
                 
+                servicioEncontrado = true;
+                
                 //Se sale de la funcion
                 break;
                 
                 //Esto se repite con todos los elementos de servicio de la lista enlazada
             }
+        }
+        
+        if (!servicioEncontrado) {
+             System.out.println("Peligro: El servicio con ID " + id + " no existe y no se modificara.");
         }
     }
     
@@ -344,6 +376,15 @@ public class XMLWriter {
             medicos.appendChild(servicios);
             
          }
+        
+        else {
+            System.out.println("Peligro: El servicio con ID " + id_servicio + " no existe y no se agregara al medico.");
+            
+            // Llamar a eliminarMedico con los parámetros correspondientes
+            eliminarMedico(telefono, puesto, nombre_medico, id_m, id_servicio);
+            
+            return; // Salimos del método porque no se debe agregar el médico
+        }
            
         
         //Finalmente se realiza el append del elemento de medicos al elemento raiz que es la base del archivo xml 
@@ -361,67 +402,107 @@ public class XMLWriter {
         //Mediante una lista de nodo establecemos la raiz del arbol como pacientes el tag
         NodeList medicos = raiz.getElementsByTagName("medico");
         
-        //Establecemos el ciclo for para recorrer los pacientes
+        boolean medicoEncontrado = false; // Variable para verificar si se encontró el medico
+
+        // Establecemos el ciclo for para recorrer los médicos
         for (int i = 0; i < medicos.getLength(); i++) {
-            Element medico = (Element) medicos.item(i); //Establecemos el elemento como el primero de la lista
-            
-            //Si el obtenemos el atributo id y es igual que el id buscado del servicio como tal
+            Element medico = (Element) medicos.item(i); // Establecemos el elemento como el primero de la lista
+        
+            // Si el obtenemos el atributo id y es igual que el id buscado del servicio como tal
             if (medico.getAttribute("id_m").equals(id_m)) {
-                
-                //Eliminamos el paciente de la lista enlazada 
+                // Eliminamos el médico de la lista enlazada 
                 raiz.removeChild(medico);
+                medicoEncontrado = true; // Marcamos que se encontró y elimino el medico
                 
-                //Se sale de la funcion
-                break;
-                
-                //Esto se repite con todos los elementso cliente de la lista enlazada
+                break; // Salimos del ciclo ya que hemos encontrado y eliminado al medico
             }
+        }
+
+        // Verificamos si se encontró el médico después del ciclo
+        if (!medicoEncontrado) {
+            
+        System.out.println("Peligro Inminente: El medico con ID " + id_m + " no existe en los medicos disponibles para borrar.");
         }
     }
     
-    //Metodo para modificar los medicos
-    public void modificarMedico(String telefono, String puesto, String nombre_medico, String id_m, String id_servicio) {
-       
-        //Obtenemos los elementos del documento xml
+    //Metodo de modificar los medicos y sus atributos 
+    public void modificarMedico(String telefono, String puesto, String nombre_medico, String id_m, String[] ids_servicios) {
+        
+        // Obtenemos los elementos del documento XML
         Element raiz = document.getDocumentElement();
         
-        //Mediante una lista de nodo establecemos la raiz del arbol como medico el tag
+        // Obtener la lista de médicos en el XML
         NodeList medicos = raiz.getElementsByTagName("medico");
         
-        //Establecemos el ciclo for para recorrer los medicos
+        // Recorrer los médicos
         for (int i = 0; i < medicos.getLength(); i++) {
-            Element medico = (Element) medicos.item(i); //Establecemos el elemento como el primero de la lista
+            Element medico = (Element) medicos.item(i);
             
-            //Si obtenemos el atributo id y es igual que el id buscado del medico como tal
+            // Si el id del médico coincide con el proporcionado
             if (medico.getAttribute("id_m").equals(id_m)) {
                 
-                // Modificar los elementos del medico como tal
+                // Modificar los elementos del médico
                 medico.getElementsByTagName("nombre_medico").item(0).setTextContent(nombre_medico);
                 medico.getElementsByTagName("puesto").item(0).setTextContent(puesto);
                 medico.getElementsByTagName("telefono").item(0).setTextContent(telefono);
                 
-                NodeList servicios = raiz.getElementsByTagName("servicios");
-                
-                //Caso de servicios con hashmap, mediante contains key, esto busca en el hashmap los servicios existentes
-                if (serviciosactuales.containsKey(id_servicio)) {
-                    
-                    //Establecemos un elemento servicio
-                    Element servicio = (Element) servicios.item(i);
-                    
-                    //Cambia el servicio existente
-                    servicio.getElementsByTagName("id").item(0).setTextContent(id_servicio);
-                
-                }
-            
-                
-                //Se sale de la funcion
-                break;
-                
-                //Esto se repite con todos los elementos de servicio de la lista enlazada
+                //Invocamos a la funcion modificarservios_M que nos permite modificar el tag de los servicios ya existentes en la clase servicios
+                modificarServicios_M(medico, ids_servicios);
+       
+            break;
             }
         }
     }
     
+    //Metodo que nos permite recorrer y modificar los servicios a los cuales tiene acceso el medico
+    private void modificarServicios_M(Element medico, String[] ids_servicios) { //Utilizamos un arraylist para modificar los servicios a los que se accede
+        
+        // Obtener el elemento servicios del medico como tal
+        Element servicios = (Element) medico.getElementsByTagName("servicios").item(0);
+    
+        // Si no existe el elemento servicios, lo creamos
+        if (servicios == null) {
+            servicios = document.createElement("servicios");
+            medico.appendChild(servicios);
+        }
+    
+        // Obtener la lista de ids de servicio existentes en la clase servicios
+        NodeList ids = servicios.getElementsByTagName("id");
+    
+        // Modificar los ids existentes y agregar nuevos si es necesario esto solo si existen
+        for (int i = 0; i < ids_servicios.length; i++) {
+            
+            //Utilizamos el hashmap antes utilizado para verificar que existan los servicios de la clase
+            if (serviciosactuales.containsKey(ids_servicios[i])) {
+                
+                //Si el contador i es menor que la listas de nodos con el tag id
+                if (i < ids.getLength()) {
+                    
+                    // Modificar id existente
+                    ids.item(i).setTextContent(ids_servicios[i]);
+                
+                //En caso contrario cree uno nuevo que ya exista segun el hashmap
+                } else {
+                    
+                    // Agregar nuevo id
+                    Element idnuevo = document.createElement("id");
+                    idnuevo.setTextContent(ids_servicios[i]);
+                    servicios.appendChild(idnuevo);
+                }
+            
+            //Si no se reconoce el id del servicio va a tirar un error
+            } else {
+            System.out.println("Peligro Inminente: El servicio con ID " + ids_servicios[i] + " no existe en los servicios disponibles para eliminarlo en el medico deseado.");
+            
+            }
+        }
+    
+        // Eliminar ids sobrantes si hay más ids existentes que nuevos
+        while (ids.getLength() > ids_servicios.length) {
+            servicios.removeChild(ids.item(ids.getLength() - 1));
+        }
+    }
+
     
     
     //Metodo para guardar los cambios en el XML

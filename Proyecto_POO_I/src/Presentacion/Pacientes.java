@@ -4,9 +4,11 @@
  */
 package Presentacion;
 import Conceptos.Paciente;
+import Util.XMLWriter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,6 +25,8 @@ public class Pacientes extends javax.swing.JDialog {
         initComponents();
         llenarTabla();
         this.setLocation(400, 200);
+        
+        
     }
     
     private void llenarTabla(){
@@ -53,15 +57,26 @@ public class Pacientes extends javax.swing.JDialog {
                 rowData.addElement(row);
         }
 
-        // Establecer el modelo de la tabla
-        DefaultTableModel m = new DefaultTableModel(rowData, columnNames);
-        this.jTable2.setModel(m);
-
+        // Crear un modelo de tabla no editable
+        DefaultTableModel m = new DefaultTableModel(rowData, columnNames) {
             
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                // Todas las celdas serán no editables
+                return false;
+            }
+        };
+
+            // Establecer el modelo de la tabla
+            this.Tabla_Pacientes.setModel(m);
+       
         } catch (Exception e){
             e.printStackTrace();
         }
+        
     }
+    
+    
     
 
     /**
@@ -85,20 +100,19 @@ public class Pacientes extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         label1 = new java.awt.Label();
         Ltelefono = new java.awt.Label();
-        EntradaID = new java.awt.TextField();
-        EntradaID1 = new java.awt.TextField();
+        E_ID = new java.awt.TextField();
+        E_Telefono = new java.awt.TextField();
         Lnombre = new java.awt.Label();
         Labelemail1 = new java.awt.Label();
-        Entradanombre = new java.awt.TextField();
-        Entradanombre1 = new java.awt.TextField();
-        Bsalir1 = new javax.swing.JButton();
+        E_Email = new java.awt.TextField();
+        E_Nombre = new java.awt.TextField();
         label3 = new java.awt.Label();
-        BNuevo1 = new javax.swing.JButton();
-        BModificar1 = new javax.swing.JButton();
-        Bborrar1 = new javax.swing.JButton();
-        Bsalir4 = new javax.swing.JButton();
+        Nuevo_Paciente = new javax.swing.JButton();
+        Modificar_Paciente = new javax.swing.JButton();
+        Borrar_Paciente = new javax.swing.JButton();
+        Boton_Salir_Pacientes = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        Tabla_Pacientes = new javax.swing.JTable();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -150,39 +164,54 @@ public class Pacientes extends javax.swing.JDialog {
 
         Ltelefono.setText("Telefono");
 
+        E_ID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                E_IDActionPerformed(evt);
+            }
+        });
+
         Lnombre.setText("Nombre");
 
         Labelemail1.setName("Email"); // NOI18N
         Labelemail1.setText("Email");
 
-        Bsalir1.setText("Salir");
-        Bsalir1.addActionListener(new java.awt.event.ActionListener() {
+        E_Email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Bsalir1ActionPerformed(evt);
+                E_EmailActionPerformed(evt);
             }
         });
 
         label3.setText("Pacientes");
 
-        BNuevo1.setText("Nuevo");
-
-        BModificar1.setText("Modificar");
-
-        Bborrar1.setText("Borrar");
-        Bborrar1.addActionListener(new java.awt.event.ActionListener() {
+        Nuevo_Paciente.setText("Nuevo");
+        Nuevo_Paciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Bborrar1ActionPerformed(evt);
+                Nuevo_PacienteActionPerformed(evt);
             }
         });
 
-        Bsalir4.setText("Salir");
-        Bsalir4.addActionListener(new java.awt.event.ActionListener() {
+        Modificar_Paciente.setText("Modificar");
+        Modificar_Paciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Bsalir4ActionPerformed(evt);
+                Modificar_PacienteActionPerformed(evt);
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        Borrar_Paciente.setText("Borrar");
+        Borrar_Paciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Borrar_PacienteActionPerformed(evt);
+            }
+        });
+
+        Boton_Salir_Pacientes.setText("Salir");
+        Boton_Salir_Pacientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Boton_Salir_PacientesActionPerformed(evt);
+            }
+        });
+
+        Tabla_Pacientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -190,10 +219,18 @@ public class Pacientes extends javax.swing.JDialog {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Nombre", "Telefono", "Email"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        Tabla_Pacientes.setToolTipText("");
+        Tabla_Pacientes.setCellSelectionEnabled(true);
+        Tabla_Pacientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Tabla_PacientesMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(Tabla_Pacientes);
+        Tabla_Pacientes.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -205,40 +242,37 @@ public class Pacientes extends javax.swing.JDialog {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(61, 61, 61)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(Bsalir1)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addGap(20, 20, 20)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(68, 68, 68))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(Ltelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(EntradaID1, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                                .addComponent(EntradaID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGap(106, 106, 106)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(Lnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(Labelemail1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(20, 20, 20)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(Entradanombre, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(Entradanombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(61, 61, 61)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(BNuevo1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(BModificar1, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
-                                        .addComponent(Bborrar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                            .addGap(10, 10, 10))))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(103, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Ltelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(E_Telefono, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+                            .addComponent(E_ID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(106, 106, 106)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Lnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Labelemail1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(E_Email, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(E_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(61, 61, 61)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(Nuevo_Paciente, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Modificar_Paciente, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                                    .addComponent(Borrar_Paciente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(103, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Bsalir4)
+                .addComponent(Boton_Salir_Pacientes)
                 .addGap(66, 66, 66))
         );
         jPanel1Layout.setVerticalGroup(
@@ -250,33 +284,31 @@ public class Pacientes extends javax.swing.JDialog {
                         .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(48, 48, 48)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Entradanombre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(E_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(EntradaID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(E_ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(Lnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(EntradaID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(E_Telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(Labelemail1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Entradanombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(E_Email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(Ltelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(23, 23, 23))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(46, 46, 46)
-                        .addComponent(BNuevo1)
+                        .addComponent(Nuevo_Paciente)
                         .addGap(18, 18, 18)
-                        .addComponent(BModificar1)
+                        .addComponent(Modificar_Paciente)
                         .addGap(26, 26, 26)
-                        .addComponent(Bborrar1)))
+                        .addComponent(Borrar_Paciente)))
                 .addGap(35, 35, 35)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(59, 59, 59)
-                .addComponent(Bsalir4)
-                .addGap(84, 84, 84)
-                .addComponent(Bsalir1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(Boton_Salir_Pacientes)
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -288,7 +320,7 @@ public class Pacientes extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 679, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -299,25 +331,164 @@ public class Pacientes extends javax.swing.JDialog {
         
     }//GEN-LAST:event_BsalirActionPerformed
 
-    private void Bsalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bsalir1ActionPerformed
-       
-    }//GEN-LAST:event_Bsalir1ActionPerformed
-
     private void BborrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BborrarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BborrarActionPerformed
 
-    private void Bborrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bborrar1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Bborrar1ActionPerformed
+    private void Borrar_PacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Borrar_PacienteActionPerformed
+        
+        try {
+            // Obtener los datos de los textfields
+            String id = E_ID.getText();
+            String nombre = E_Nombre.getText();
+            String telefono = E_Telefono.getText();
+            String email = E_Email.getText();
+            
+            //Llamamos al writer
+            XMLWriter generador = new XMLWriter();
+            
+            // Cargar el XML existente
+            generador.cargarXML("pacientes.xml");
+            
+            // Crear un nuevo objeto Paciente
+            Paciente paciente1 = new Paciente(id, nombre, telefono, email);
+            
+            // Agregar pacientes usando el objeto
+            generador.eliminarPaciente(paciente1);
+            
+            // Guardar los cambios
+            generador.guardarXML("pacientes.xml");
+            
+            //Invocamos el metodo llenar tabla para que lo actualice
+            llenarTabla();
+            
+            // Limpiar campos después de agregar para la siguiente persona agregada
+            E_ID.setText("");
+            E_Nombre.setText("");
+            E_Telefono.setText("");
+            E_Email.setText("");
+         
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    
+                         
+    }//GEN-LAST:event_Borrar_PacienteActionPerformed
 
     private void Bsalir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bsalir2ActionPerformed
         
     }//GEN-LAST:event_Bsalir2ActionPerformed
 
-    private void Bsalir4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bsalir4ActionPerformed
+    private void Boton_Salir_PacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_Salir_PacientesActionPerformed
+        
+    //Boton que sale de la ventana de tipo dialog clientes pero no cierra el programa
+        
+        dispose();
+
+    }//GEN-LAST:event_Boton_Salir_PacientesActionPerformed
+
+    private void E_IDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_E_IDActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_Bsalir4ActionPerformed
+    }//GEN-LAST:event_E_IDActionPerformed
+
+    private void E_EmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_E_EmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_E_EmailActionPerformed
+
+    private void Nuevo_PacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nuevo_PacienteActionPerformed
+    
+    try {
+            // Obtener los datos de los textfields
+            String id = E_ID.getText();
+            String nombre = E_Nombre.getText();
+            String telefono = E_Telefono.getText();
+            String email = E_Email.getText();
+            
+            //Llamamos al writer
+            XMLWriter generador = new XMLWriter();
+            
+            // Cargar el XML existente
+            generador.cargarXML("pacientes.xml");
+            
+            // Crear un nuevo objeto Paciente
+            Paciente paciente1 = new Paciente(id, nombre, telefono, email);
+            
+            // Agregar pacientes usando el objeto al metodo del parser de escritura
+            generador.agregarPaciente(paciente1);
+            
+            // Guardar los cambios
+            generador.guardarXML("pacientes.xml");
+            
+            //Invocamos el metodo llenar tabla para que lo actualice
+            llenarTabla();
+            
+            // Limpiar campos después de agregar para la siguiente persona agregada
+            E_ID.setText("");
+            E_Nombre.setText("");
+            E_Telefono.setText("");
+            E_Email.setText("");
+         
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    
+    }//GEN-LAST:event_Nuevo_PacienteActionPerformed
+
+    private void Tabla_PacientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Tabla_PacientesMouseClicked
+    
+    // Obtener la fila seleccionada
+    int filaSeleccionada = Tabla_Pacientes.getSelectedRow();
+    
+    if (filaSeleccionada != -1) {
+
+        // Llenar los campos de texto con los datos de la fila seleccionada
+        E_ID.setText(Tabla_Pacientes.getValueAt(filaSeleccionada, 0).toString());
+        E_Nombre.setText(Tabla_Pacientes.getValueAt(filaSeleccionada, 1).toString());
+        E_Telefono.setText(Tabla_Pacientes.getValueAt(filaSeleccionada, 2).toString());
+        E_Email.setText(Tabla_Pacientes.getValueAt(filaSeleccionada, 3).toString());
+    }
+
+    }//GEN-LAST:event_Tabla_PacientesMouseClicked
+
+    private void Modificar_PacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Modificar_PacienteActionPerformed
+        
+        //Boton para modificar los pacientes ya existentes
+        try {
+            // Obtener los datos de los textfields
+            String id = E_ID.getText();
+            String nombre = E_Nombre.getText();
+            String telefono = E_Telefono.getText();
+            String email = E_Email.getText();
+            
+            //Llamamos al writer
+            XMLWriter generador = new XMLWriter();
+            
+            // Cargar el XML existente
+            generador.cargarXML("pacientes.xml");
+            
+            // Crear un nuevo objeto Paciente
+            Paciente paciente1 = new Paciente(id, nombre, telefono, email);
+            
+            // Agregar pacientes usando el objeto, implementamos el metodo modificar paciente para cambiar los datos en el objeto
+            generador.modificarPaciente(paciente1);
+            
+            // Guardar los cambios
+            generador.guardarXML("pacientes.xml");
+            
+            //Invocamos el metodo llenar tabla para que lo actualice
+            llenarTabla();
+            
+            // Limpiar campos después de agregar para la siguiente persona agregada
+            E_ID.setText("");
+            E_Nombre.setText("");
+            E_Telefono.setText("");
+            E_Email.setText("");
+         
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_Modificar_PacienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -346,33 +517,46 @@ public class Pacientes extends javax.swing.JDialog {
         }
         //</editor-fold>
         //</editor-fold>
+        
+        /* Create and display the dialog */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Pacientes dialog = new Pacientes(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        });
 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BModificar;
-    private javax.swing.JButton BModificar1;
     private javax.swing.JButton BNuevo;
-    private javax.swing.JButton BNuevo1;
     private javax.swing.JButton Bborrar;
-    private javax.swing.JButton Bborrar1;
+    private javax.swing.JButton Borrar_Paciente;
+    private javax.swing.JButton Boton_Salir_Pacientes;
     private javax.swing.JButton Bsalir;
-    private javax.swing.JButton Bsalir1;
     private javax.swing.JButton Bsalir2;
-    private javax.swing.JButton Bsalir4;
-    private java.awt.TextField EntradaID;
-    private java.awt.TextField EntradaID1;
-    private java.awt.TextField Entradanombre;
-    private java.awt.TextField Entradanombre1;
+    private java.awt.TextField E_Email;
+    private java.awt.TextField E_ID;
+    private java.awt.TextField E_Nombre;
+    private java.awt.TextField E_Telefono;
     private java.awt.Label Labelemail;
     private java.awt.Label Labelemail1;
     private java.awt.Label Lnombre;
     private java.awt.Label Ltelefono;
+    private javax.swing.JButton Modificar_Paciente;
+    private javax.swing.JButton Nuevo_Paciente;
+    private javax.swing.JTable Tabla_Pacientes;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private java.awt.Label label1;
     private java.awt.Label label2;
     private java.awt.Label label3;

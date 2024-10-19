@@ -361,7 +361,7 @@ public class XMLWriter {
         //Tomamos un elemento de tipo medico y se agrega al documento segun el tag medico
         Element medicos = document.createElement("medico");
         
-        //Sucede lo mismo en el caso del ID como la explicacion del nombre
+        //Sucede lo mismo en el caso del ID como la explicacion del nombre, usamos get para obtener el id 
         medicos.setAttribute("id_m", medico.getId_m());
         
         //Nuevamente un elemento de tipo nombre es creado y se agrega al documento 
@@ -387,15 +387,19 @@ public class XMLWriter {
         boolean servicioExistente = false;
         Element servicios = document.createElement("servicios");
         
-        // Recorremos la lista de IDs de servicios
-        
+        // Recorremos la lista de IDs de servicios con un get de servicios
        for (String id : medico.getServicios()) {
            
             // Verificamos si el servicio con el id existe en el HashMap
             if (serviciosactuales.containsKey(id)) {
+                
                 servicioExistente = true; // Se encontró al menos un servicio existente
+                
+                //Anadimos el elemento al xml 
                 Element elemID = document.createElement("id");
                 elemID.setTextContent(id);
+                
+                //Lo agregamos a servicios
                 servicios.appendChild(elemID);
             
             //Mensaje en caso de que no exista el servicio y no se agrega al medico
@@ -420,7 +424,7 @@ public class XMLWriter {
     
     
     
-    //Metodo para eliminar los medicos toma como parametro los atributos del medico
+    //Metodo para eliminar los medicos toma como la clase medico
     public void eliminarMedico(Medicos medico) { 
         
         //Obtenemos los elementos del documento xml
@@ -435,7 +439,7 @@ public class XMLWriter {
         for (int i = 0; i < medicos.getLength(); i++) {
             Element medicosxml = (Element) medicos.item(i); // Establecemos el elemento como el primero de la lista
         
-            // Si el obtenemos el atributo id y es igual que el id buscado del servicio como tal
+            // Si el obtenemos el atributo id y es igual que el id buscado del servicio como tal tomando en cuenta el get de idm 
             if (medicosxml.getAttribute("id_m").equals(medico.getId_m())) {
                 
                 // Eliminamos el médico de la lista enlazada 
@@ -462,6 +466,7 @@ public class XMLWriter {
         // Obtener la lista de médicos en el XML
         NodeList medicos = raiz.getElementsByTagName("medico");
         
+        //Esto nos servira en caso de que no se encuentre
         boolean medicoEncontrado = false;
         
         // Recorrer los médicos
@@ -479,15 +484,17 @@ public class XMLWriter {
                 //Establecemos un array para obtener los servicios existentes al medico
                 String[] serviciosArray = medico.getServicios().toArray(new String[0]);
                 
-                //Invocamos a la funcion modificarservios_M que nos permite modificar el tag de los servicios ya existentes en la clase servicios con un arraylist
+                //Invocamos a la funcion modificarservios_M que nos permite modificar el tag de los servicios ya existentes en la clase servicios con un arraylist de la clase medicos
                 modificarServicios_M(medicoxml, serviciosArray);
                 
+                //Cambiamos el estado 
                 medicoEncontrado = true;
        
             break;
             }
         }
         
+        //Si no se encontro manda un mensaje de error
         if (!medicoEncontrado) {
             System.out.println("Peligro inminente: El medico con ID " + medico.getId_m() + "no existe y no se modifica");
         }

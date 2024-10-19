@@ -476,6 +476,7 @@ public class XMLWriter {
                 medicoxml.getElementsByTagName("puesto").item(0).setTextContent(medico.getTelefono());
                 medicoxml.getElementsByTagName("telefono").item(0).setTextContent(medico.getPuesto());
                 
+                //Establecemos un array para obtener los servicios existentes al medico
                 String[] serviciosArray = medico.getServicios().toArray(new String[0]);
                 
                 //Invocamos a la funcion modificarservios_M que nos permite modificar el tag de los servicios ya existentes en la clase servicios con un arraylist

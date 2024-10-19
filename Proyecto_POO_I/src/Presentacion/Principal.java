@@ -7,7 +7,9 @@ package Presentacion;
 import Conceptos.Medicos;
 import Presentacion.Pacientes;
 import Presentacion.Servicios;
+import java.awt.Color;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 /**
@@ -20,9 +22,15 @@ public class Principal extends javax.swing.JFrame {
      * Creates new form Principal
      */
     public Principal() {
-                setTitle("Principal");
+        
+        setTitle("Principal");
 
         initComponents();
+        
+        this.setBackground(Color.CYAN);
+        this.setSize(1024, 768);
+        this.setVisible(true);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);  
     }
 
     /**
@@ -101,19 +109,14 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void MClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MClientesActionPerformed
-      SwingUtilities.invokeLater(new Runnable() {
-        @Override
-        public void run() {
-            // Instancia de la clase Pacientes, que debe extender JFrame
-            Pacientes ventanaPacientes = new Pacientes();
-            ventanaPacientes.setSize(800, 500);
-            ventanaPacientes.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            // Centrar la ventana en la pantalla
-            ventanaPacientes.setLocationRelativeTo(null);
-            // Mostrar la ventana
-            ventanaPacientes.setVisible(true);
+      try {
+            Pacientes mostrarClientes = new Pacientes(Principal.this, true);
+            mostrarClientes.setVisible(true);
+            
+        } catch (UnsupportedOperationException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudieron cargar las clientes\n"
+                    + "Contacte con soporte:\n" + ex, "Error con la pantalla", JOptionPane.ERROR_MESSAGE);
         }
-    });
     }//GEN-LAST:event_MClientesActionPerformed
 
     private void MServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MServicioActionPerformed

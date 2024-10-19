@@ -9,9 +9,11 @@ import Conceptos.Paciente;
 import Conceptos.Servicio;
 import Presentacion.Principal;
 import Util.XMLWriter;
+import java.util.List;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import util.XMLHandler;
+import java.util.Arrays;
 
 /**
  *
@@ -65,10 +67,15 @@ public class Main {
             // Cargar el XML existente
             generador.cargarXML("pacientes.xml");
             
+            // Crear instancia del paciente que se desea modificar si existe lo modifca
+            Paciente pacienteModificar1 = new Paciente("300001111", "Juan Perez Modificado", "7777-1111", "juan.pm@gmail.com");
+            Paciente pacienteModificar2 = new Paciente("300002222", "Ana Rojas Modificada", "7777-2222", "ana.rm@gmail.com");
+            Paciente pacienteModificar3 = new Paciente("300003333", "Pedro Arnaez Modificado", "7777-3333", "pedro.am@gmail.com");
+            
             // Modificar pacientes existente
-            generador.modificarPaciente("3000011114", "Juan Perez Modificado", "7777-1111", "juan.pm@gmail.com");
-            generador.modificarPaciente("300002222", "Ana Rojas Modificada", "7777-2222", "ana.rm@gmail.com");
-            generador.modificarPaciente("300003333", "Pedro Arnaez Modificado", "7777-3333", "pedro.am@gmail.com");
+            generador.modificarPaciente(pacienteModificar1);
+            generador.modificarPaciente(pacienteModificar2);
+            generador.modificarPaciente(pacienteModificar3);
             
             // Guardar los cambios
             generador.guardarXML("pacientes.xml");
@@ -96,9 +103,13 @@ public class Main {
             // Cargar el XML existente
             generador.cargarXML("pacientes.xml");
             
-            // Modificar pacientes existente
-            generador.agregarPaciente("300009999", "Christopher Vargas", "8888-1111", "jer.pm@gmail.com");
-            generador.agregarPaciente("300008888", "Jervis Esquivel", "1111-3333", "chris.rm@gmail.com");
+            // Crear pacientes
+            Paciente paciente1 = new Paciente("300009999", "Christopher Vargas", "8888-1111", "jer.pm@gmail.com");
+            Paciente paciente2 = new Paciente("300008888", "Jervis Esquivel", "1111-3333", "chris.rm@gmail.com");
+            
+            // Agregar pacientes usando el objeto
+            generador.agregarPaciente(paciente1);
+            generador.agregarPaciente(paciente2);
             
             // Guardar los cambios
             generador.guardarXML("pacientes.xml");
@@ -116,7 +127,7 @@ public class Main {
         System.out.println(paciente);}
         
         //Menciona que el agregar fue exitoso.
-        System.out.println("\nXML de Agregar de Pacientes Exitosa");
+        System.out.println("\nXML de Agregar de Pacientes Exitosa\n");
         
         
         //Probando eliminar pacientes
@@ -126,8 +137,12 @@ public class Main {
             // Cargar el XML existente
             generador.cargarXML("pacientes.xml");
             
-            // Modificar pacientes existente
-            generador.eliminarPaciente("3000099998", "Christopher Vargas", "8888-1111", "jer.pm@gmail.com");
+            // Paciente a eliminar
+            
+            Paciente pacienteEliminado = new Paciente("300009999", "Christopher Vargas", "8888-1111", "jer.pm@gmail.com");
+            
+            // Eliminar pacientes existente
+            generador.eliminarPaciente(pacienteEliminado);
             
             // Guardar los cambios
             generador.guardarXML("pacientes.xml");
@@ -160,9 +175,12 @@ public class Main {
             // Cargar el XML existente
             generador.cargarXML("servicios.xml");
             
+            Servicio nuevoservi1 = new Servicio("104", "Limpieza Bucal", 45000);
+            Servicio nuevoservi2 = new Servicio("106", "Cirugia 4", 75000);
+            
             // Modificar servicio existente
-            generador.agregarServicio("104", "Limpieza Bucal", 45000);
-            generador.agregarServicio("106", "Cirugia 4", 75000);
+            generador.agregarServicio(nuevoservi1);
+            generador.agregarServicio(nuevoservi2);
             
             // Guardar los cambios
             generador.guardarXML("servicios.xml");
@@ -180,7 +198,7 @@ public class Main {
         System.out.println(servicio);}
         
         //Menciona que el agregar fue exitoso.
-        System.out.println("\nXML de Agregar Servicios Exitosa");
+        System.out.println("\nXML de Agregar Servicios Exitosa\n");
         
         
         //Probando Modificar servicios
@@ -190,8 +208,10 @@ public class Main {
             // Cargar el XML existente
             generador.cargarXML("servicios.xml");
             
+            Servicio elimservi = new Servicio ("101", "Limpieza Bucal 23", 65000);
+            
             // Modificar servicio existente
-            generador.modificarServicios("109", "Limpieza Bucal 2", 65000);
+            generador.modificarServicios(elimservi);
             
             // Guardar los cambios
             generador.guardarXML("servicios.xml");
@@ -218,8 +238,10 @@ public class Main {
             // Cargar el XML existente
             generador.cargarXML("servicios.xml");
             
+            Servicio servicioElim = new Servicio ("107", "Cirugia 4", 75000);
+            
             // Eliminar servicio existente
-            generador.eliminarServicio("100", "Cirugia 4", 75000);
+            generador.eliminarServicio(servicioElim);
             
             // Guardar los cambios
             generador.guardarXML("servicios.xml");
@@ -258,10 +280,22 @@ public class Main {
             // Cargar el XML existente
             generador.cargarXML("medicos.xml");
             
-            // Agregar medico con un servicio existente
-            generador.agregarMedico("7777-8899", "Odontologo 84", "Rodrigo Perez 2", "210", "100");
+           Medicos nuevoMedico = new Medicos();
+           nuevoMedico.setId_m("210");
+           nuevoMedico.setNombre_medico("Dr. Perez");
+           nuevoMedico.setTelefono("12345678");
+           nuevoMedico.setPuesto("Dentista");
+
+            // Agregar servicios al médico
+           nuevoMedico.addServicio("100");
+           nuevoMedico.addServicio("101");
+           nuevoMedico.addServicio("102");
+
+
+           // Agregar el médico al XML
+           generador.agregarMedico(nuevoMedico);
             
-            // Guardar los cambios
+            // Guardar los cambios en el archivo XML
             generador.guardarXML("medicos.xml");
         
         //Excepcion
@@ -288,8 +322,10 @@ public class Main {
             // Cargar el XML existente
             generador.cargarXML("medicos.xml");
             
+            Medicos elimmedico = new Medicos ("9999-77777", "Odontologo", "Pedro Blanco", "202", "101", "", 0);
+            
             // Eliminar medico con un servicio existente
-            generador.eliminarMedico("9999-77777", "Odontologo", "Pedro Blanco", "202", "101");
+            generador.eliminarMedico(elimmedico);
             
             // Guardar los cambios
             generador.guardarXML("medicos.xml");
@@ -321,9 +357,16 @@ public class Main {
             // Cargar el XML existente
             generador.cargarXML("medicos.xml");
             
-            // Eliminar medico con un servicio existente
-            generador.modificarMedico("8888-9999", "Medico maxilofacial", "Maria Rojas 10", "201", new String[] {"102", "101", "100"});
+            Medicos medicoModi = new Medicos();
             
+            medicoModi.setId_m("201");
+            medicoModi.setNombre_medico("Maria Rojas 11");
+            medicoModi.setTelefono("9999-8765");
+            medicoModi.setPuesto("Becaria");
+            medicoModi.setServicios(Arrays.asList("100"));
+          
+            generador.modificarMedico(medicoModi);
+                    
             // Guardar los cambios
             generador.guardarXML("medicos.xml");
         

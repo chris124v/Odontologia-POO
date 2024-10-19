@@ -4,6 +4,12 @@
  */
 package Conceptos;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import Conceptos.Servicio;
+
 /**
  *
  * @author Christopher
@@ -14,6 +20,9 @@ public class Medicos extends Servicio {
     String puesto;
     String nombre_medico;
     String id_m;
+    private List<String> servicios;
+    
+    
     
     public Medicos(String telefono, String puesto, String nombre_medico, String id_m, String id, String nombre_servicio, double precio) {
         super(id, nombre_servicio, precio);
@@ -21,14 +30,19 @@ public class Medicos extends Servicio {
         this.puesto = puesto;
         this.nombre_medico = nombre_medico;
         this.id_m = id_m;
+        this.servicios = new ArrayList<>();
+        
     }
     
-     public Medicos() {
+    
+    public Medicos() {
         super();
         this.telefono = " ";
         this.puesto = " ";
         this.nombre_medico = " ";
         this.id_m = " ";
+        this.servicios = new ArrayList<>();
+        
     }
    
 
@@ -64,7 +78,24 @@ public class Medicos extends Servicio {
         this.id_m = id_m;
     }
     
+    public List<String> getServicios() {
+        return servicios;
+    }
+
+    public void setServicios(List<String> servicios) {
+        this.servicios = servicios;
+    }
+
+    public void addServicio(String servicio) {
+        this.servicios.add(servicio);
+    }
+
+    public void removeServicio(String servicio) {
+        this.servicios.remove(servicio);
+    }
+
     
+  
     @Override
     public String toString(){
         return "Medico :" + this.getNombre_medico()+ ", ID :" + this.getId_m() + ", Puesto :" + this.getPuesto() + ", Telefono :" + this.getTelefono() + ", Servicios: " + this.getId();

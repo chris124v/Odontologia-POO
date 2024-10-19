@@ -9,7 +9,11 @@ servicios y medicos esto mediante el uso del parser DOM de modificacion de archi
 */
 
 //Import que maneja el documento de XML
+import Conceptos.Medicos;
+import Conceptos.Paciente;
+import Conceptos.Servicio;
 import java.io.File;
+import java.util.List;
 
 //Manejo de errores de lectura y escritura en archivos XML
 import java.io.IOException;
@@ -75,45 +79,54 @@ public class XMLWriter {
     //Metodos para Pacientes: Agregar, Eliminar y Modificar
     
     
-    //Metodo para agregar los pacientes toma como parametro los atributos del paciente y
-    public void agregarPaciente(String id, String nombre, String telefono, String email) { 
+    //Metodo para agregar los pacientes toma como el objeto pacientes
+    public void agregarPaciente(Paciente paciente) { 
         
         
         //Tomamos un elemento del XML y establecemos una variable del tipo raiz
         Element raiz = document.getDocumentElement();
         
+        //Creamos un objeto de tipo paciente con valores vacios y un getID para el atributo
+        //En este caso seria la creacion de una instancia
+        Paciente nuevoPaci = new Paciente(paciente.getId(), "", "","");
+        
+        //Utilizamos el metodo set para establecer los atributos del nuevo paciente
+        nuevoPaci.setNombre(paciente.getNombre());
+        nuevoPaci.setTelefono(paciente.getTelefono());
+        nuevoPaci.setEmail(paciente.getEmail());
+        
         //Tomamos un elemento de tipo paciente y se agrega al documento segun el tag paciente
-        Element paciente = document.createElement("paciente");
+        Element pacientexml = document.createElement("paciente");
         
         
         //Sucede lo mismo en el caso del ID como la explicacion del nombre
-        paciente.setAttribute("id", id);
+        pacientexml.setAttribute("id", nuevoPaci.getId());
         
         //Nuevamente un elemento de tipo nombre es creado y se agrega al documento 
         Element elemNombre = document.createElement("nombre");
        
-        //A este elemento le vamos a anadir un set contente para que modifique lo de dentro
-        elemNombre.setTextContent(nombre);
+        //El contenido del texto del elemento elemNombre se establece mediante el metodo get del objeto para establcerlo en el XML
+        elemNombre.setTextContent(nuevoPaci.getNombre());
         
-        //Este elemento nombre se agrega como hijo al elemento padre paciente
-        paciente.appendChild(elemNombre);
+        //Este elemento nombre se agrega como hijo al elemento padre paciente para el xml
+        pacientexml.appendChild(elemNombre);
         
         //Sucede lo mismo en el caso del telefono
         Element elemtele = document.createElement("telefono");
-        elemtele.setTextContent(telefono);
-        paciente.appendChild(elemtele);
+        elemtele.setTextContent(nuevoPaci.getTelefono());
+        pacientexml.appendChild(elemtele);
         
         //Sucede lo mismo con el email
         Element elemEmail = document.createElement("email");
-        elemEmail.setTextContent(email);
-        paciente.appendChild(elemEmail);
+        elemEmail.setTextContent(nuevoPaci.getEmail());
+        pacientexml.appendChild(elemEmail);
         
-        //Finalmente se realiza el append del elemento de pacientes al elemento raiz que es la base del archivo xml 
-        raiz.appendChild(paciente);
+        //Finalmente se realiza el append del elemento de pacientes al elemento raiz que es la base del archivo xml  pasandolo como un objeto
+        raiz.appendChild(pacientexml);
     }
     
     //Metodo para eliminar los pacientes toma como parametro los atributos del paciente
-    public void eliminarPaciente(String id, String nombre, String telefono, String email) { 
+    public void eliminarPaciente(Paciente paciente) { 
         
         //Obtenemos los elementos del documento xml
         Element raiz = document.getDocumentElement();
@@ -125,30 +138,33 @@ public class XMLWriter {
         
         //Establecemos el ciclo for para recorrer los pacientes
         for (int i = 0; i < pacientes.getLength(); i++) {
-            Element paciente = (Element) pacientes.item(i); //Establecemos el elemento como el primero de la lista
             
-            //Si el obtenemos el atributo id y es igual que el id buscado del paciente como tal
-            if (paciente.getAttribute("id").equals(id)) {
+            Element pacientexml = (Element) pacientes.item(i); //Establecemos el elemento como el primero de la lista
+            
+            //Si el obtenemos el atributo id y es igual que el id buscado del paciente instanciado como tal
+            if (pacientexml.getAttribute("id").equals(paciente.getId())) {
                 
-                //Eliminamos el paciente de la lista enlazada 
-                raiz.removeChild(paciente);
+                    //Eliminamos el paciente de la lista enlazada osea el objeto
+                    raiz.removeChild(pacientexml);
                 
-                pacienteElim = true;
-                //Se sale de la funcion
-                break;
+                    pacienteElim = true;
+                    
+                    //Se sale de la funcion
+                    break;
                 
                 //Esto se repite con todos los elementso cliente de la lista enlazada
             }
         }
         
+        //Caso de que no se encuentre
         if (!pacienteElim) {
             
-            System.out.println("Peligro: El paciente con ID " + id + " no existe y no se eliminara");
+            System.out.println("Peligro: El paciente con ID " + paciente.getId() + " no existe y no se eliminara");
         }
     }
             
     //Metodo para modificar los pacientes toma como parametro los atributos del paciente
-    public void modificarPaciente(String id, String nombre, String telefono, String email) {
+    public void modificarPaciente(Paciente paciente) {
        
         //Obtenemos los elementos del documento xml
         Element raiz = document.getDocumentElement();
@@ -160,15 +176,16 @@ public class XMLWriter {
         
         //Establecemos el ciclo for para recorrer los pacientes
         for (int i = 0; i < pacientes.getLength(); i++) {
-            Element paciente = (Element) pacientes.item(i); //Establecemos el elemento como el primero de la lista
+            
+            Element pacientexml = (Element) pacientes.item(i); //Establecemos el elemento como el primero de la lista
             
             //Si el obtenemos el atributo id y es igual que el id buscado del paciente como tal
-            if (paciente.getAttribute("id").equals(id)) {
+            if (pacientexml.getAttribute("id").equals(paciente.getId())) {
                 
                 // Modificar los elementos del paciente segun el tag
-                paciente.getElementsByTagName("nombre").item(0).setTextContent(nombre);
-                paciente.getElementsByTagName("telefono").item(0).setTextContent(telefono);
-                paciente.getElementsByTagName("email").item(0).setTextContent(email);
+                pacientexml.getElementsByTagName("nombre").item(0).setTextContent(paciente.getNombre());
+                pacientexml.getElementsByTagName("telefono").item(0).setTextContent(paciente.getTelefono());
+                pacientexml.getElementsByTagName("email").item(0).setTextContent(paciente.getEmail());
                 
                 pacienteEncontrado = true;
                 
@@ -180,7 +197,7 @@ public class XMLWriter {
         }
         
         if (!pacienteEncontrado) {
-            System.out.println("Peligro: El paciente con ID " + id + " no existe y no se modificara.");
+            System.out.println("Peligro: El paciente con ID " + paciente.getId() + " no existe y no se modificara.");
         }
     }
     
@@ -192,39 +209,46 @@ public class XMLWriter {
     
     
     
-    //Metodo para agregar un servicio al XML meduiante un arbol
-    public void agregarServicio(String id, String nombre_servicio, double precio) { 
+    //Metodo para agregar un servicio al XML meduiante un arbol para el xml y instancias para la creacion del objeto
+    public void agregarServicio(Servicio servicio) { 
         
         
         //Tomamos un elemento del XML y establecemos una variable del tipo raiz
         Element raiz = document.getDocumentElement();
         
-        //Tomamos un elemento de tipo paciente y se agrega al documento segun el tag paciente
-        Element servicio = document.createElement("servicio");
+        //Creacion de un objeto paciente para la posteriormente ser capaz de cambiar sus atributos
+        Servicio servicioNuevo = new Servicio(servicio.getId(), "", 0);
         
-        //Sucede lo mismo en el caso del ID como la explicacion del nombre
-        servicio.setAttribute("id", id);
+        //Metodos set para agregar los nuevos valores a los pacientes
+        servicioNuevo.setNombre_servicio(servicio.getNombre_servicio());
+        servicioNuevo.setPrecio(servicio.getPrecio());
+        
+        //Tomamos un elemento de tipo paciente y se agrega al documento segun el tag paciente
+        Element servicioxml = document.createElement("servicio");
+        
+        //Sucede lo mismo en el caso del ID como la explicacion del nombre pero con el id y el get del objeto
+        servicioxml.setAttribute("id", servicioNuevo.getId());
         
         //Nuevamente un elemento de tipo nombre es creado y se agrega al documento 
         Element elemNombre_S = document.createElement("nombre_servicio");
        
         //A este elemento le vamos a anadir un set content para que modifique lo de dentro
-        elemNombre_S.setTextContent(nombre_servicio);
+        elemNombre_S.setTextContent(servicioNuevo.getNombre_servicio());
         
         //Este elemento nombre se agrega como hijo al elemento padre paciente
-        servicio.appendChild(elemNombre_S);
+        servicioxml.appendChild(elemNombre_S);
         
         //Sucede lo mismo en el caso del telefono
         Element elemPrecio = document.createElement("precio");
-        elemPrecio.setTextContent(String.valueOf(precio));
-        servicio.appendChild(elemPrecio);
+        elemPrecio.setTextContent(String.valueOf(servicio.getPrecio()));
+        servicioxml.appendChild(elemPrecio);
         
         //Finalmente se realiza el append del elemento de pacientes al elemento raiz que es la base del archivo xml 
-        raiz.appendChild(servicio);
+        raiz.appendChild(servicioxml);
     }
     
     //Metodo para eliminar los servicios toma como parametro los atributos del servicio
-    public void eliminarServicio(String id, String nombre_servicio, double precio) { 
+    public void eliminarServicio(Servicio servicio) { 
         
         //Obtenemos los elementos del documento xml
         Element raiz = document.getDocumentElement();
@@ -236,13 +260,14 @@ public class XMLWriter {
         
         //Establecemos el ciclo for para recorrer los pacientes
         for (int i = 0; i < servicios.getLength(); i++) {
-            Element servicio = (Element) servicios.item(i); //Establecemos el elemento como el primero de la lista
             
-            //Si el obtenemos el atributo id y es igual que el id buscado del servicio como tal
-            if (servicio.getAttribute("id").equals(id)) {
+            Element servicioxml = (Element) servicios.item(i); //Establecemos el elemento como el primero de la lista
+            
+            //Si el obtenemos el atributo id y es igual que el id buscado del servicio como tal creado en la instancia
+            if (servicioxml.getAttribute("id").equals(servicio.getId())) {
                 
                 //Eliminamos el paciente de la lista enlazada 
-                raiz.removeChild(servicio);
+                raiz.removeChild(servicioxml);
                 servicioEncontradoElim = true;
                 
                 //Se sale de la funcion
@@ -254,12 +279,12 @@ public class XMLWriter {
         
         if (!servicioEncontradoElim) {
             
-            System.out.println("Peligro: El servicio con ID " + id + " no existe y no se eliminara.");
+            System.out.println("Peligro: El servicio con ID " + servicio.getId() + " no existe y no se eliminara.");
         }
     }
     
     //Metodo para modificar los servicios toma como parametro los atributos del paciente
-    public void modificarServicios(String id, String nombre_servicio, double precio) {
+    public void modificarServicios(Servicio servicio) {
        
         //Obtenemos los elementos del documento xml
         Element raiz = document.getDocumentElement();
@@ -271,14 +296,14 @@ public class XMLWriter {
         
         //Establecemos el ciclo for para recorrer los servicios
         for (int i = 0; i < servicios.getLength(); i++) {
-            Element servicio = (Element) servicios.item(i); //Establecemos el elemento como el primero de la lista
+            Element servicioxml = (Element) servicios.item(i); //Establecemos el elemento como el primero de la lista
             
             //Si obtenemos el atributo id y es igual que el id buscado del servicio como tal
-            if (servicio.getAttribute("id").equals(id)) {
+            if (servicioxml.getAttribute("id").equals(servicio.getId())) {
                 
                 // Modificar los elementos del servicio segun el tag
-                servicio.getElementsByTagName("nombre_servicio").item(0).setTextContent(nombre_servicio);
-                servicio.getElementsByTagName("precio").item(0).setTextContent(String.valueOf(precio));
+                servicioxml.getElementsByTagName("nombre_servicio").item(0).setTextContent(servicio.getNombre_servicio());
+                servicioxml.getElementsByTagName("precio").item(0).setTextContent(String.valueOf(servicio.getPrecio()));
                 
                 servicioEncontrado = true;
                 
@@ -290,7 +315,7 @@ public class XMLWriter {
         }
         
         if (!servicioEncontrado) {
-             System.out.println("Peligro: El servicio con ID " + id + " no existe y no se modificara.");
+             System.out.println("Peligro: El servicio con ID " + servicio.getId() + " no existe y no se modificara.");
         }
     }
     
@@ -327,7 +352,8 @@ public class XMLWriter {
     }
     
     //Metodos para Medicos: Agregar, Eliminar y Modificar
-    public void agregarMedico(String telefono, String puesto, String nombre_medico, String id_m, String id_servicio) { 
+    //Tomamos como parametro el objeto 
+    public void agregarMedico(Medicos medico) { 
         
         //Tomamos un elemento del XML y establecemos una variable del tipo raiz
         Element raiz = document.getDocumentElement();
@@ -336,65 +362,66 @@ public class XMLWriter {
         Element medicos = document.createElement("medico");
         
         //Sucede lo mismo en el caso del ID como la explicacion del nombre
-        medicos.setAttribute("id_m", id_m);
+        medicos.setAttribute("id_m", medico.getId_m());
         
         //Nuevamente un elemento de tipo nombre es creado y se agrega al documento 
         Element elemNombre_M = document.createElement("nombre_medico");
        
-        //A este elemento le vamos a anadir un set content para que modifique lo de dentro
-        elemNombre_M.setTextContent(nombre_medico);
+        //A este elemento le vamos a anadir un set content para que modifique lo de dentro junto con el get
+        elemNombre_M.setTextContent(medico.getNombre_medico());
         
         //Este elemento nombre se agrega como hijo al elemento padre paciente
         medicos.appendChild(elemNombre_M);
         
         //Sucede lo mismo en el caso del telefono
         Element elemtele = document.createElement("telefono");
-        elemtele.setTextContent(telefono);
+        elemtele.setTextContent(medico.getTelefono());
         medicos.appendChild(elemtele);
         
         //Sucede lo mismo en el caso del puesto
         Element elemPuesto = document.createElement("puesto");
-        elemPuesto.setTextContent(puesto);
+        elemPuesto.setTextContent(medico.getPuesto());
         medicos.appendChild(elemPuesto);
         
-        //Caso de servicios con hashmap, mediante contains key, esto busca en el hashmap los servicios existentes
-        if (serviciosactuales.containsKey(id_servicio)) {
-            
-            //Creamos un elemento de tipo servicios que lo busca por tag name
-            Element servicios = document.createElement("servicios");
-            
-            //Creamos una variable que busque solamente el id 
-            Element elemID = document.createElement("id");
-            
-            //Establecemos que se pueda anadir un id valido de los servicios existentes
-            elemID.setTextContent(id_servicio);
-            
-            //Se anade el elem id a servicios
-            servicios.appendChild(elemID);
-            
-            //Esto se agrega al nodo grande de medicos
-            medicos.appendChild(servicios);
-            
-         }
+        //Se establece para verificar que si existe
+        boolean servicioExistente = false;
+        Element servicios = document.createElement("servicios");
         
-        else {
-            System.out.println("Peligro: El servicio con ID " + id_servicio + " no existe y no se agregara al medico.");
-            
-            // Llamar a eliminarMedico con los parámetros correspondientes
-            eliminarMedico(telefono, puesto, nombre_medico, id_m, id_servicio);
-            
-            return; // Salimos del método porque no se debe agregar el médico
-        }
+        // Recorremos la lista de IDs de servicios
+        
+       for (String id : medico.getServicios()) {
            
-        
-        //Finalmente se realiza el append del elemento de medicos al elemento raiz que es la base del archivo xml 
+            // Verificamos si el servicio con el id existe en el HashMap
+            if (serviciosactuales.containsKey(id)) {
+                servicioExistente = true; // Se encontró al menos un servicio existente
+                Element elemID = document.createElement("id");
+                elemID.setTextContent(id);
+                servicios.appendChild(elemID);
+            
+            //Mensaje en caso de que no exista el servicio y no se agrega al medico
+            } else {
+                System.out.println("Peligro: El servicio con ID " + id + " no existe y no se agregara al medico.");
+            }
+        }
+    
+        // Solo agregamos el elemento servicios si se encontraron servicios válidos
+        if (servicioExistente) {
+            medicos.appendChild(servicios);
+    
+        //No se agrega nada
+        } else {
+            System.out.println("No se agregara el médico porque no hay servicios válidos.");
+            return; // Salimos del método si no se encontraron servicios válidos
+        }
+    
+        // Finalmente, se realiza el append del elemento de medicos al elemento raiz
         raiz.appendChild(medicos);
     }
     
     
     
     //Metodo para eliminar los medicos toma como parametro los atributos del medico
-    public void eliminarMedico(String telefono, String puesto, String nombre_medico, String id_m, String id_servicio) { 
+    public void eliminarMedico(Medicos medico) { 
         
         //Obtenemos los elementos del documento xml
         Element raiz = document.getDocumentElement();
@@ -406,12 +433,13 @@ public class XMLWriter {
 
         // Establecemos el ciclo for para recorrer los médicos
         for (int i = 0; i < medicos.getLength(); i++) {
-            Element medico = (Element) medicos.item(i); // Establecemos el elemento como el primero de la lista
+            Element medicosxml = (Element) medicos.item(i); // Establecemos el elemento como el primero de la lista
         
             // Si el obtenemos el atributo id y es igual que el id buscado del servicio como tal
-            if (medico.getAttribute("id_m").equals(id_m)) {
+            if (medicosxml.getAttribute("id_m").equals(medico.getId_m())) {
+                
                 // Eliminamos el médico de la lista enlazada 
-                raiz.removeChild(medico);
+                raiz.removeChild(medicosxml);
                 medicoEncontrado = true; // Marcamos que se encontró y elimino el medico
                 
                 break; // Salimos del ciclo ya que hemos encontrado y eliminado al medico
@@ -421,12 +449,12 @@ public class XMLWriter {
         // Verificamos si se encontró el médico después del ciclo
         if (!medicoEncontrado) {
             
-        System.out.println("Peligro Inminente: El medico con ID " + id_m + " no existe en los medicos disponibles para borrar.");
+        System.out.println("Peligro Inminente: El medico con ID " + medico.getId_m() + " no existe en los medicos disponibles para borrar.");
         }
     }
     
     //Metodo de modificar los medicos y sus atributos 
-    public void modificarMedico(String telefono, String puesto, String nombre_medico, String id_m, String[] ids_servicios) {
+    public void modificarMedico(Medicos medico) {
         
         // Obtenemos los elementos del documento XML
         Element raiz = document.getDocumentElement();
@@ -434,24 +462,35 @@ public class XMLWriter {
         // Obtener la lista de médicos en el XML
         NodeList medicos = raiz.getElementsByTagName("medico");
         
+        boolean medicoEncontrado = false;
+        
         // Recorrer los médicos
         for (int i = 0; i < medicos.getLength(); i++) {
-            Element medico = (Element) medicos.item(i);
+            Element medicoxml = (Element) medicos.item(i);
             
             // Si el id del médico coincide con el proporcionado
-            if (medico.getAttribute("id_m").equals(id_m)) {
+            if (medicoxml.getAttribute("id_m").equals(medico.getId_m())) {
                 
                 // Modificar los elementos del médico
-                medico.getElementsByTagName("nombre_medico").item(0).setTextContent(nombre_medico);
-                medico.getElementsByTagName("puesto").item(0).setTextContent(puesto);
-                medico.getElementsByTagName("telefono").item(0).setTextContent(telefono);
+                medicoxml.getElementsByTagName("nombre_medico").item(0).setTextContent(medico.getNombre_medico());
+                medicoxml.getElementsByTagName("puesto").item(0).setTextContent(medico.getTelefono());
+                medicoxml.getElementsByTagName("telefono").item(0).setTextContent(medico.getPuesto());
                 
-                //Invocamos a la funcion modificarservios_M que nos permite modificar el tag de los servicios ya existentes en la clase servicios
-                modificarServicios_M(medico, ids_servicios);
+                String[] serviciosArray = medico.getServicios().toArray(new String[0]);
+                
+                //Invocamos a la funcion modificarservios_M que nos permite modificar el tag de los servicios ya existentes en la clase servicios con un arraylist
+                modificarServicios_M(medicoxml, serviciosArray);
+                
+                medicoEncontrado = true;
        
             break;
             }
         }
+        
+        if (!medicoEncontrado) {
+            System.out.println("Peligro inminente: El medico con ID " + medico.getId_m() + "no existe y no se modifica");
+        }
+
     }
     
     //Metodo que nos permite recorrer y modificar los servicios a los cuales tiene acceso el medico

@@ -5,6 +5,7 @@
 package Presentacion;
 
 import Conceptos.Medicos;
+import Conceptos.Servicio;
 import Presentacion.ServiciosValidados;
 import Util.XMLWriter;
 import java.io.File;
@@ -20,6 +21,9 @@ import javax.swing.table.DefaultTableModel;
  * @author Christopher
  */
 public class Medico extends javax.swing.JDialog {
+    
+    //Atributo de la clase medico en la ventana como arraylist que va a guardar los servicios seleccionados
+    private List<String> serviciosSeleccionados = new ArrayList<>();
 
     /**
      * Creates new form Medicos2
@@ -32,9 +36,11 @@ public class Medico extends javax.swing.JDialog {
         
     }
     
+    //Este metodo nos permite llenar la tabla de los medicos
     private void llenarTabla(){
+        
         try {
-            // Cargar los servicios desde el archivo XML
+            // Cargar los medicos desde el archivo XML
             ArrayList<Medicos> medicos;
             File xmlFile = new File("medicos.xml");
             medicos = util.XMLHandler.CargarMedico(xmlFile.getAbsolutePath());
@@ -49,9 +55,10 @@ public class Medico extends javax.swing.JDialog {
             // Crear la estructura de datos para las filas con el import de vector
             Vector<Vector<String>> rowData = new Vector<>();
 
-            // Rellenar la tabla con los datos de los pacientes
+            // Rellenar la tabla con los datos de los medicos usando el get implementado en la clase
             for (Medicos m : medicos) {
                 
+                //Mediante el vector agregamos todos elementos necesarios del arraylist
                 Vector<String> row = new Vector<>();
                 row.addElement(m.getId_m());
                 row.addElement(m.getNombre_medico());
@@ -79,6 +86,17 @@ public class Medico extends javax.swing.JDialog {
             e.printStackTrace();
         }
     }
+    
+    // Este método devuelve los servicios seleccionados
+    private List<String> obtenerServiciosSeleccionados() {
+        return this.serviciosSeleccionados; 
+   }
+    
+    //Este set nos permite asignar los servicios del medico mediante la lista y lo devuelve en servicios seleccionados
+    public void setServiciosSeleccionados(List<String> servicios) {
+        this.serviciosSeleccionados = servicios;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -136,8 +154,18 @@ public class Medico extends javax.swing.JDialog {
         });
 
         Modificar_Medico.setText("Modificar");
+        Modificar_Medico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Modificar_MedicoActionPerformed(evt);
+            }
+        });
 
         Borrar_Medico.setText("Borrar");
+        Borrar_Medico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Borrar_MedicoActionPerformed(evt);
+            }
+        });
 
         Bsaliur.setText("Salir");
         Bsaliur.addActionListener(new java.awt.event.ActionListener() {
@@ -254,51 +282,81 @@ public class Medico extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BVerAbrirSer(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BVerAbrirSer
+
+        try {
+        // Crear una instancia de ServiciosValidados esto para abrir la ventana donde vamos a establecer los servicios
+        ServiciosValidados mostrarServiciosV = new ServiciosValidados(this, true);
+        
+        // Mostrar el diálogo
+        mostrarServiciosV.setVisible(true); 
     
-    try {
-            // Crear una instancia de ServiciosValidados, pasando el diálogo padre y la modalidad
-            ServiciosValidados mostrarServiciosV = new ServiciosValidados(this, true);
-            mostrarServiciosV.setVisible(true); // Mostrar el diálogo
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error al mostrar los servicios: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    
+    //Exccepcion en caso de que haya un error al abrir la ventana
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al mostrar los servicios: " + ex.getMessage(), "Error Inmininente", JOptionPane.ERROR_MESSAGE);
+    }
+
     
     }//GEN-LAST:event_BVerAbrirSer
 
     private void Nuevo_MedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nuevo_MedicoActionPerformed
         
-        // Acción del botón para agregar un nuevo médico
+        //Boton para agregar un nuevo medico
         try {
-            // Obtener los datos del médico desde los campos de texto
+            
+            //Llamada al writer para modificar el xml
+            XMLWriter generador = new XMLWriter();
+            
+            //Cargamos los servicios para verificar su existencia
+            generador.cargarXML("servicios.xml");
+            generador.CargaServicios();
+            
+            //Cargamos el xml de medicos para hacer los cambios
+            generador.cargarXML("medicos.xml");
+            
+            //Establecemos los campos de texto para obtener su contenido y agregarlo al nuevo medico
             String id_m = E_IDM.getText();
             String nombre_medico = E_NombreMedico.getText();
             String telefono = E_Telefono.getText();
             String puesto = E_Puesto.getText();
-
-            // Crear un nuevo objeto médico
+        
+            // Obtener los servicios seleccionados en la otra ventana de servicios validados 
+            List<String> serviciosSeleccionados = obtenerServiciosSeleccionados();
+            
+            //Si no se selecciona nada tira un error
+            if (serviciosSeleccionados.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No se han seleccionado servicios. Seleccione un servicio.", "Peligro Inminente", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            //Creamos un nuevo objeto medicos
             Medicos nuevoMedico = new Medicos();
+            
+            //Mediante set establecemos los atributos del medico
             nuevoMedico.setId_m(id_m);
             nuevoMedico.setNombre_medico(nombre_medico);
             nuevoMedico.setTelefono(telefono);
             nuevoMedico.setPuesto(puesto);
-
-            // Mostrar la ventana de servicios validados y obtener servicios seleccionados
-            ServiciosValidados dialogoServicios = new ServiciosValidados(this, true);
-            List<String> serviciosSeleccionados = dialogoServicios.mostrarYObtenerServiciosSeleccionados();
-
-            // Llamar al writer para agregar el médico al XML
-            XMLWriter generador = new XMLWriter();
-    
-            // Cargar el XML existente
-            generador.cargarXML("medicos.xml");
-    
-            // Agregar el médico al XML
+            
+            //Con el writer de escritura agregamos el objeto medico y sus servicios
             generador.agregarMedico(nuevoMedico, serviciosSeleccionados);
-    
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            generador.guardarXML("medicos.xml");
+            
+            //Rellenamos la tabla
+            llenarTabla();
+            
+            // Limpiar campos después de agregar para la siguiente persona agregada
+            E_IDM.setText("");
+            E_NombreMedico.setText("");
+            E_Telefono.setText("");
+            E_Puesto.setText("");
+            
+            //Mensaje de que se agrego el medico correctamente
+            JOptionPane.showMessageDialog(this, "Medico agregado.", "Lo lograste!", JOptionPane.INFORMATION_MESSAGE);
+        
+        //Mensaje de excepcion en caso de que no se agregue nada
+        } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al agregar el medico: " + ex.getMessage(), "Error Inminente", JOptionPane.ERROR_MESSAGE);
+        }
 
     }//GEN-LAST:event_Nuevo_MedicoActionPerformed
 
@@ -324,6 +382,103 @@ public class Medico extends javax.swing.JDialog {
     }
     
     }//GEN-LAST:event_Tabla_MedicosMouseClicked
+
+    private void Borrar_MedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Borrar_MedicoActionPerformed
+    
+    //Boton para eliminar el medico segun el ID
+    try {
+        // Obtener solo el ID del médico 
+        String id_m = E_IDM.getText();
+
+        // Llamamos al writer
+        XMLWriter generador = new XMLWriter();
+        
+        // Cargar el XML existente
+        generador.cargarXML("medicos.xml");
+        
+        // Crear un nuevo objeto Medicos solo con el ID
+        Medicos medico1 = new Medicos("", "", "", id_m, "", "", 0); // Los otros parámetros no son necesarios para la eliminación
+        
+        // Llamar al metodo para eliminar el médico
+        generador.eliminarMedico(medico1);
+        
+        // Guardar los cambios en el archivo XML
+        generador.guardarXML("medicos.xml");
+        
+        // Invocamos el metodo llenar tabla para que lo actualice
+        llenarTabla();
+        
+        // Limpiar campos despues de borrar
+        E_IDM.setText("");
+        E_NombreMedico.setText("");
+        E_Telefono.setText("");
+        E_Puesto.setText("");
+
+        JOptionPane.showMessageDialog(this, "Medico eliminado.", "Exitos", JOptionPane.INFORMATION_MESSAGE);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al eliminar el medico: " + e.getMessage(), "Error Inminente", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    }//GEN-LAST:event_Borrar_MedicoActionPerformed
+
+    private void Modificar_MedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Modificar_MedicoActionPerformed
+        try {
+        // Llamada al writer para modificar el XML
+        XMLWriter generador = new XMLWriter();
+        
+        // Cargamos los servicios para verificar su existencia
+        generador.cargarXML("servicios.xml");
+        generador.CargaServicios();
+        
+        // Cargamos el XML de médicos para hacer los cambios
+        generador.cargarXML("medicos.xml");
+        
+        // Establecemos los campos de texto para obtener su contenido
+        String id_m = E_IDM.getText(); // ID del médico
+        String nombre_medico = E_NombreMedico.getText();
+        String telefono = E_Telefono.getText();
+        String puesto = E_Puesto.getText();
+        
+        // Obtener los servicios seleccionados en la otra ventana de servicios validados 
+        List<String> serviciosSeleccionados = obtenerServiciosSeleccionados();
+        
+        // Si no se selecciona nada, muestra un error
+        if (serviciosSeleccionados.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No se han seleccionado servicios. Seleccione un servicio.", "Peligro Inminente", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // Creamos un nuevo objeto Medicos
+        Medicos nuevoMedico = new Medicos();
+        
+        // Mediante set establecemos los atributos del médico
+        nuevoMedico.setId_m(id_m);
+        nuevoMedico.setNombre_medico(nombre_medico);
+        nuevoMedico.setTelefono(telefono);
+        nuevoMedico.setPuesto(puesto);
+        
+        // Con el writer de escritura modificamos el objeto médico y sus servicios
+        generador.modificarMedico(nuevoMedico); // Asegúrate de que este método esté implementado en XMLWriter
+        generador.guardarXML("medicos.xml");
+        
+        // Rellenamos la tabla
+        llenarTabla();
+        
+        // Limpiar campos después de modificar para la siguiente persona agregada
+        E_IDM.setText("");
+        E_NombreMedico.setText("");
+        E_Telefono.setText("");
+        E_Puesto.setText("");
+        
+        // Mensaje de que se modificó el médico correctamente
+        JOptionPane.showMessageDialog(this, "Médico modificado.", "Lo lograste!", JOptionPane.INFORMATION_MESSAGE);
+
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al modificar el médico: " + ex.getMessage(), "Error Inminente", JOptionPane.ERROR_MESSAGE);
+    }
+   
+    }//GEN-LAST:event_Modificar_MedicoActionPerformed
 
     /**
      * @param args the command line arguments

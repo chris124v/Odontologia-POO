@@ -17,6 +17,7 @@ import java.util.List;
 
 //Manejo de errores de lectura y escritura en archivos XML
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -324,31 +325,41 @@ public class XMLWriter {
     
     //Este metodo de cargar servicios nos ayudara a obtener los servicios ya existentes para luego darselos a los medicos
     //Esto dado a que un medico no puede crear sus propios servicios tienen que venir directamente desde la clase servicios
-    public void CargaServicios() {
+    public List<Servicio> CargaServicios() {
         
-        //Para eso utilizaremos un hashmap que sera capaz de identificar los servicios ya existentes
+        // Para eso utilizaremos un hashmap que será capaz de identificar los servicios ya existentes
         serviciosactuales = new HashMap<>();
-        
-        //Aqui establecemos una raiz del arbol
+
+        // Aquí establecemos una raíz del árbol
         Element raiz = document.getDocumentElement();
-        
-        //Aqui se indica el tag name porque el cual se van a buscar
+
+        // Aquí se indica el tag name por el cual se van a buscar
         NodeList servicios = raiz.getElementsByTagName("servicio");
-        
-        //Ciclo for que recorre los servicios existentes
+
+        // Lista para almacenar los servicios
+        List<Servicio> listaServicios = new ArrayList<>();
+
+        // Ciclo for que recorre los servicios existentes
         for (int i = 0; i < servicios.getLength(); i++) {
-            
-            //Se establece element en el inicio del arbol de servicios
+            // Se establece element en el inicio del árbol de servicios
             Element servicio = (Element) servicios.item(i);
-            
-            //Establecemos que solo vamos a indicarle al medico el ID del servicio
+
+            // Establecemos que solo vamos a indicarle al médico el ID del servicio
             String id = servicio.getAttribute("id");
-            
-            //Lo agregamos al hashmap
-            serviciosactuales.put(id, servicio);
-            
-        }
         
+            // Crear un objeto Servicio (asegúrate de tener un constructor adecuado)
+            Servicio nuevoServicio = new Servicio();
+            nuevoServicio.setId(id);
+            nuevoServicio.setNombre_servicio(servicio.getTextContent()); // O cualquier otro atributo que necesites
+
+            // Lo agregamos al hashmap
+            serviciosactuales.put(id, servicio);
+        
+            // Agregar a la lista de servicios
+            listaServicios.add(nuevoServicio);
+        }
+
+        return listaServicios; // Retornar la lista de servicios
     }
     
     //Metodos para Medicos: Agregar, Eliminar y Modificar

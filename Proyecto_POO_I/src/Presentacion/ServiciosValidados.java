@@ -5,11 +5,13 @@
 package Presentacion;
 
 import Conceptos.Servicio;
+import Conceptos.Medicos;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import Util.XMLWriter;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -17,17 +19,21 @@ import javax.swing.table.DefaultTableModel;
  * @author INTEL
  */
 public class ServiciosValidados extends javax.swing.JDialog {
-
-    /**
-     * Creates new form ServiciosValidados
-     */
+    
+    //Atributo de los servicios seleccionados
+    private List<String> serviciosSeleccionados;
+    
+    //Constructor de servicios validados 
     public ServiciosValidados(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
+        this.serviciosSeleccionados = new ArrayList<>();
+
         initComponents();
         llenarTablaServicios();
         this.setLocation(400, 200);
     }
     
+    //Metodo para llenar la tabla 
     private void llenarTablaServicios() {
         
         // Definir los nombres de las columnas
@@ -44,7 +50,7 @@ public class ServiciosValidados extends javax.swing.JDialog {
         // Crear la estructura de datos para las filas
         Vector<Vector<Object>> rowData = new Vector<>();
 
-
+        //For para recorrer y agregar todos los servicios de la clase servicio
         for (Servicio s : servicios) {
             
             Vector<Object> row = new Vector<>();
@@ -59,7 +65,7 @@ public class ServiciosValidados extends javax.swing.JDialog {
         DefaultTableModel model = new DefaultTableModel(rowData, columnNames) {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
-                if (columnIndex == 0) { // Primera columna es para checkboxes
+                if (columnIndex == 0) { // Primera columna es para checkbox entonces si se puede modificar
                     return Boolean.class;
                 }
                 return super.getColumnClass(columnIndex);
@@ -75,31 +81,36 @@ public class ServiciosValidados extends javax.swing.JDialog {
         Tabla_ServiciosV.setModel(model);
     }
     
+    //Metodo para obtener los servicios seleccionados por el usuario
     private List<String> obtenerServiciosSeleccionados() {
+        
+        //Instanciamos el arraylist
         List<String> serviciosSeleccionados = new ArrayList<>();
         
         DefaultTableModel model = (DefaultTableModel) Tabla_ServiciosV.getModel();
         
+        //Recorre todas las filas
         for (int i = 0; i < model.getRowCount(); i++) {
-            Boolean isSelected = (Boolean) model.getValueAt(i, 0); // Checkbox en la primera columna
-            
-                if (isSelected != null && isSelected) {
-                String servicioId = (String) model.getValueAt(i, 1); // ID del servicio en la segunda columna
-                serviciosSeleccionados.add(servicioId);
+            Boolean seleccionado = (Boolean) model.getValueAt(i, 0); // Checkbox en la primera columna
+                
+                //Si el checkbox es diferente de null 
+                if (seleccionado != null && seleccionado) {
+                String servicioId = (String) model.getValueAt(i, 1); // ID del servicio en la segunda columna //Obtiene el valor 1 como si estuviera seleccionado
+                
+                serviciosSeleccionados.add(servicioId);//Se agrega a los servicios seleccionados de la tabla
             }
         }
         
+        //Retorna dichos servicios seleccionados
         return serviciosSeleccionados;
     }
 
-    // Método para cerrar el diálogo y retornar los servicios seleccionados
-    public List<String> mostrarYObtenerServiciosSeleccionados() {
-        setVisible(true); // Mostrar el diálogo
-        return obtenerServiciosSeleccionados(); // Retornar los servicios seleccionados al cerrar el diálogo
-    }
-
     
- 
+    //Metodo para obtener los servicios seleccionados
+    public List<String> getServiciosSeleccionados() {
+        return this.serviciosSeleccionados; // Devolver la lista de servicios seleccionados
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -209,9 +220,35 @@ public class ServiciosValidados extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Boton_AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_AceptarActionPerformed
-        // Boton de Aceptar la implementacion solo llama a Agregar Medico
+    
+    //Boton para aceptar los servicios agregados al medico
+    
+    try {
         
+        //Mediante una lista de seleccionados usamos el metodo de obtener sevicios de la tabla
+        List<String> seleccionados = obtenerServiciosSeleccionados();
         
+        //Si no hay ningun seleccionado se devuelve un mensaje
+        if (seleccionados.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No se han seleccionado servicios.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        //Establecemos esto como atributo para usarlo posteriormente en el agregar
+        this.serviciosSeleccionados = seleccionados;
+        
+        // Pasar los servicios seleccionados a la clase de medicos con un metodo set
+        ((Medico)getParent()).setServiciosSeleccionados(this.serviciosSeleccionados);
+        
+        //Mensaje que menciona que los servicios se agregaron correctamente
+        JOptionPane.showMessageDialog(this, "Servicios asignados exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        this.dispose();
+    
+    //Mensaje de error en caso de que no se procesen los servicios
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al procesar los servicios: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+      
     }//GEN-LAST:event_Boton_AceptarActionPerformed
 
     private void BcancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BcancelarActionPerformed

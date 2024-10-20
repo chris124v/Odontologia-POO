@@ -271,32 +271,33 @@ public class Main {
         
         //Probando Agregar medicos
         try {
-            XMLWriter generador = new XMLWriter();
+           //Llamamos a la clase
+           XMLWriter generador = new XMLWriter();
             
-            //Llamamos tambien a servicios porque lo tiene que recorrer
-            generador.cargarXML("servicios.xml");
-            generador.CargaServicios();
+           //Llamamos tambien a servicios porque lo tiene que recorrer
+           generador.cargarXML("servicios.xml");
+           generador.CargaServicios();
             
-            // Cargar el XML existente
-            generador.cargarXML("medicos.xml");
-            
+           // Cargar el XML existente
+           generador.cargarXML("medicos.xml");
+           
            Medicos nuevoMedico = new Medicos();
            nuevoMedico.setId_m("210");
-           nuevoMedico.setNombre_medico("Dr. Perez");
+           nuevoMedico.setNombre_medico("Dr. Perez 89");
            nuevoMedico.setTelefono("12345678");
            nuevoMedico.setPuesto("Dentista");
 
-            // Agregar servicios al médico
-           nuevoMedico.addServicio("100");
-           nuevoMedico.addServicio("101");
-           nuevoMedico.addServicio("102");
-
+           // Agregar servicios al médico deseados
+           List<String> serviciosSeleccionados = new ArrayList<>();
+           serviciosSeleccionados.add("100");
+           serviciosSeleccionados.add("101");
+           serviciosSeleccionados.add("102");
 
            // Agregar el médico al XML
-           generador.agregarMedico(nuevoMedico);
+           generador.agregarMedico(nuevoMedico, serviciosSeleccionados);
             
-            // Guardar los cambios en el archivo XML
-            generador.guardarXML("medicos.xml");
+           // Guardar los cambios en el archivo XML
+           generador.guardarXML("medicos.xml");
         
         //Excepcion
         } catch (Exception e) {
@@ -361,7 +362,7 @@ public class Main {
             
             medicoModi.setId_m("201");
             medicoModi.setNombre_medico("Maria Rojas 11");
-            medicoModi.setTelefono("9999-8765");
+            medicoModi.setTelefono("9999-876---");
             medicoModi.setPuesto("Becaria");
             medicoModi.setServicios(Arrays.asList("100"));
           

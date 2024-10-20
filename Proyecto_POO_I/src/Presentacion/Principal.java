@@ -120,35 +120,27 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_MClientesActionPerformed
 
     private void MServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MServicioActionPerformed
-        SwingUtilities.invokeLater(new Runnable() {
-        @Override
-        public void run() {
-            // Instancia de la clase Pacientes, que debe extender JFrame
-            Servicios ventanaServicios = new Servicios();
-            ventanaServicios.setSize(800, 500);
-            ventanaServicios.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            // Centrar la ventana en la pantalla
-            ventanaServicios.setLocationRelativeTo(null);
-            // Mostrar la ventana
-            ventanaServicios.setVisible(true);
+       try {
+            Servicios mostrarServicios = new Servicios(Principal.this, true);
+            mostrarServicios.setVisible(true);
+            
+        } catch (UnsupportedOperationException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudieron cargar las clientes\n"
+                    + "Contacte con soporte:\n" + ex, "Error con la pantalla", JOptionPane.ERROR_MESSAGE);
         }
-    });
     }//GEN-LAST:event_MServicioActionPerformed
 
     private void MmedicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MmedicosActionPerformed
-        SwingUtilities.invokeLater(new Runnable() {
-        @Override
-        public void run() {
-            // Instancia de la clase Pacientes, que debe extender JFrame
-            Medico ventanaMedico = new Medico();
-            ventanaMedico.setSize(800, 500);
-            ventanaMedico.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            // Centrar la ventana en la pantalla
-            ventanaMedico.setLocationRelativeTo(null);
-            // Mostrar la ventana
-            ventanaMedico.setVisible(true);
+       
+        try {
+            Medico mostrarMedico = new Medico(Principal.this, true);
+            mostrarMedico.setVisible(true);
+            
+        } catch (UnsupportedOperationException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudieron cargar las clientes\n"
+                    + "Contacte con soporte:\n" + ex, "Error con la pantalla", JOptionPane.ERROR_MESSAGE);
         }
-    });
+        
     }//GEN-LAST:event_MmedicosActionPerformed
 
     /**

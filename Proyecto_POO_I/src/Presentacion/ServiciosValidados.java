@@ -4,6 +4,14 @@
  */
 package Presentacion;
 
+import Conceptos.Servicio;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import Util.XMLWriter;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author INTEL
@@ -13,11 +21,85 @@ public class ServiciosValidados extends javax.swing.JDialog {
     /**
      * Creates new form ServiciosValidados
      */
-    public ServiciosValidados(java.awt.Frame parent, boolean modal) {
+    public ServiciosValidados(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        llenarTablaServicios();
+        this.setLocation(400, 200);
+    }
+    
+    private void llenarTablaServicios() {
+        
+        // Definir los nombres de las columnas
+        Vector<String> columnNames = new Vector<>();
+        columnNames.add("Seleccionar"); // Columna para checkbox
+        columnNames.add("ID");
+        columnNames.add("Nombre Servicio");
+        
+        // Cargar los servicios desde el archivo XML
+        ArrayList<Servicio> servicios;
+        File xmlFile = new File("servicios.xml");
+        servicios = util.XMLHandler.CargarServicios(xmlFile.getAbsolutePath());
+
+        // Crear la estructura de datos para las filas
+        Vector<Vector<Object>> rowData = new Vector<>();
+
+
+        for (Servicio s : servicios) {
+            
+            Vector<Object> row = new Vector<>();
+            
+            row.add(false); 
+            row.addElement(s.getId());
+            row.addElement(s.getNombre_servicio());
+            rowData.add(row);
+        }
+
+        // Crear el modelo de tabla
+        DefaultTableModel model = new DefaultTableModel(rowData, columnNames) {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 0) { // Primera columna es para checkboxes
+                    return Boolean.class;
+                }
+                return super.getColumnClass(columnIndex);
+            }
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 0; // Solo la columna del checkbox es editable
+            }
+        };
+
+        // Establecer el modelo en la tabla
+        Tabla_ServiciosV.setModel(model);
+    }
+    
+    private List<String> obtenerServiciosSeleccionados() {
+        List<String> serviciosSeleccionados = new ArrayList<>();
+        
+        DefaultTableModel model = (DefaultTableModel) Tabla_ServiciosV.getModel();
+        
+        for (int i = 0; i < model.getRowCount(); i++) {
+            Boolean isSelected = (Boolean) model.getValueAt(i, 0); // Checkbox en la primera columna
+            
+                if (isSelected != null && isSelected) {
+                String servicioId = (String) model.getValueAt(i, 1); // ID del servicio en la segunda columna
+                serviciosSeleccionados.add(servicioId);
+            }
+        }
+        
+        return serviciosSeleccionados;
     }
 
+    // Método para cerrar el diálogo y retornar los servicios seleccionados
+    public List<String> mostrarYObtenerServiciosSeleccionados() {
+        setVisible(true); // Mostrar el diálogo
+        return obtenerServiciosSeleccionados(); // Retornar los servicios seleccionados al cerrar el diálogo
+    }
+
+    
+ 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,78 +110,82 @@ public class ServiciosValidados extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
         Bcancelar = new javax.swing.JButton();
-        bCEPTAR = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        Boton_Aceptar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Tabla_ServiciosV = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
-
         Bcancelar.setText("Cancelar");
-
-        bCEPTAR.setText("Aceptar");
-        bCEPTAR.addActionListener(new java.awt.event.ActionListener() {
+        Bcancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bCEPTARActionPerformed(evt);
+                BcancelarActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Validado");
+        Boton_Aceptar.setText("Aceptar");
+        Boton_Aceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Boton_AceptarActionPerformed(evt);
+            }
+        });
 
-        jLabel2.setText("Servicio");
+        jLabel2.setText("Servicios del medico");
+
+        Tabla_ServiciosV.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Verificar", "Title 2", "Title 3"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(Tabla_ServiciosV);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox3)
-                            .addComponent(jCheckBox2)
-                            .addComponent(jCheckBox1))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(36, 36, 36)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(Bcancelar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Boton_Aceptar))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(Bcancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
-                        .addComponent(bCEPTAR)
-                        .addGap(98, 98, 98))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addComponent(jLabel1)
-                .addGap(102, 102, 102)
-                .addComponent(jLabel2)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(170, 170, 170)
+                        .addComponent(jLabel2)))
+                .addGap(0, 80, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBox1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel2)
+                .addGap(38, 38, 38)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Bcancelar)
-                    .addComponent(bCEPTAR))
-                .addGap(23, 23, 23))
+                    .addComponent(Boton_Aceptar))
+                .addGap(48, 48, 48))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -122,13 +208,15 @@ public class ServiciosValidados extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bCEPTARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCEPTARActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bCEPTARActionPerformed
+    private void Boton_AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_AceptarActionPerformed
+        // Boton de Aceptar la implementacion solo llama a Agregar Medico
+        
+        
+    }//GEN-LAST:event_Boton_AceptarActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void BcancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BcancelarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_BcancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -157,29 +245,25 @@ public class ServiciosValidados extends javax.swing.JDialog {
         }
         //</editor-fold>
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                ServiciosValidados dialog = new ServiciosValidados(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+        try {
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            if ("Nimbus".equals(info.getName())) {
+                javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                break;
             }
-        });
+        }
+    } catch (Exception ex) {
+        java.util.logging.Logger.getLogger(ServiciosValidados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    }
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Bcancelar;
-    private javax.swing.JButton bCEPTAR;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton Boton_Aceptar;
+    private javax.swing.JTable Tabla_ServiciosV;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

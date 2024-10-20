@@ -86,22 +86,24 @@ public class Medicos extends Servicio {
         this.id_m = id_m;
     }
     
-    //Lista que obtiene los servicios existentes
+    // Lista que obtiene los servicios existentes
     public List<String> getServicios() {
         return servicios;
     }
-    
-    //Set de los servicios que va a tener el medico
+
+    // Set de los servicios que va a tener el médico
     public void setServicios(List<String> servicios) {
         this.servicios = servicios;
     }
-    
-    //Anadir servicio a lista
+
+    // Añadir servicio a la lista
     public void addServicio(String servicio) {
-        this.servicios.add(servicio);
+        if (!servicios.contains(servicio)) { // Evitar duplicados
+            this.servicios.add(servicio);
+        }
     }
-    
-    //Quitar servicio de la lista
+
+    // Quitar servicio de la lista
     public void removeServicio(String servicio) {
         this.servicios.remove(servicio);
     }
@@ -110,7 +112,7 @@ public class Medicos extends Servicio {
     //Override del parser de escritura.
     @Override
     public String toString(){
-        return "Medico :" + this.getNombre_medico()+ ", ID :" + this.getId_m() + ", Puesto :" + this.getPuesto() + ", Telefono :" + this.getTelefono() + ", Servicios: " + this.getId();
+        return "Medico :" + this.getNombre_medico()+ ", ID :" + this.getId_m() + ", Puesto :" + this.getPuesto() + ", Telefono :" + this.getTelefono() + ", Servicios: " + String.join(", ", servicios);
     }
     
     //Prueba

@@ -1,20 +1,77 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package Presentacion;
 
+import Conceptos.Servicio;
+import Util.XMLWriter;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
- * @author INTEL
+ * @author Christopher
  */
-public class Servicios extends javax.swing.JFrame {
+public class Servicios extends javax.swing.JDialog {
 
     /**
-     * Creates new form Servicios
+     * Creates new form Servicios2
      */
-    public Servicios() {
+    public Servicios(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        llenarTabla();
+        this.setLocation(400, 200);
+    }
+    
+    private void llenarTabla(){
+        try {
+            // Cargar los servicios desde el archivo XML
+            ArrayList<Servicio> servicios;
+            File xmlFile = new File("servicios.xml");
+            servicios = util.XMLHandler.CargarServicios(xmlFile.getAbsolutePath());
+
+            // Definir los nombres de las columnas para la tabla
+            Vector<String> columnNames = new Vector<>();
+            columnNames.addElement("ID");
+            columnNames.addElement("Nombre Servicio");
+            columnNames.addElement("Precio");
+
+            // Crear la estructura de datos para las filas con el import de vector
+            Vector<Vector<String>> rowData = new Vector<>();
+
+            // Rellenar la tabla con los datos de los pacientes
+            for (Servicio s : servicios) {
+                
+                Vector<String> row = new Vector<>();
+                row.addElement(s.getId());
+                row.addElement(s.getNombre_servicio());
+                row.addElement(String.valueOf(s.getPrecio())); //Usamos value of para pasar el precio a double a string
+                rowData.addElement(row);
+        }
+
+        // Crear un modelo de tabla no editable
+        DefaultTableModel m = new DefaultTableModel(rowData, columnNames) {
+            
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                
+                // Todas las celdas serán no editables
+                return false;
+            }
+        };
+
+            // Establecer el modelo de la tabla
+            this.Tabla_Servicios.setModel(m);
+       
+        //Excepcion final 
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        
     }
 
     /**
@@ -27,24 +84,41 @@ public class Servicios extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        Lservicios = new javax.swing.JLabel();
-        LID = new java.awt.Label();
-        LNombre = new java.awt.Label();
-        LPrecio = new java.awt.Label();
-        TID = new java.awt.TextField();
-        TNombre = new java.awt.TextField();
-        TPrecio = new java.awt.TextField();
-        BNuevo = new javax.swing.JButton();
-        BModificar = new javax.swing.JButton();
-        BBorrar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jScrollBar1 = new javax.swing.JScrollBar();
-        Bsalir = new javax.swing.JButton();
+        Tabla_Servicios = new javax.swing.JTable();
+        LID = new java.awt.Label();
+        E_ID = new java.awt.TextField();
+        LNombre = new java.awt.Label();
+        E_NombreServicio = new java.awt.TextField();
+        LPrecio = new java.awt.Label();
+        E_Precio = new java.awt.TextField();
+        Boton_Nuevo = new javax.swing.JButton();
+        Boton_Modificar = new javax.swing.JButton();
+        Boton_Borrar = new javax.swing.JButton();
+        Boton_Salir = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        Lservicios.setText("Servicios");
+        jLabel1.setText("Servicios");
+
+        Tabla_Servicios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3"
+            }
+        ));
+        Tabla_Servicios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Tabla_ServiciosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(Tabla_Servicios);
 
         LID.setText("ID");
 
@@ -52,145 +126,263 @@ public class Servicios extends javax.swing.JFrame {
 
         LPrecio.setText("Precio");
 
-        BNuevo.setText("Nuevo");
-        BNuevo.addActionListener(new java.awt.event.ActionListener() {
+        Boton_Nuevo.setText("Nuevo");
+        Boton_Nuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BNuevoActionPerformed(evt);
+                Boton_NuevoActionPerformed(evt);
             }
         });
 
-        BModificar.setText("Modificar");
-
-        BBorrar.setText("Borrar");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        Boton_Modificar.setText("Modificar");
+        Boton_Modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Boton_ModificarActionPerformed(evt);
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        });
+
+        Boton_Borrar.setText("Borrar");
+        Boton_Borrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Boton_BorrarActionPerformed(evt);
+            }
+        });
+
+        Boton_Salir.setText("Salir");
+        Boton_Salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Boton_SalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(344, 344, 344)
-                        .addComponent(Lservicios))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(147, 147, 147)
-                        .addComponent(LID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(1, 1, 1)
-                        .addComponent(TID, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(LPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(LNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(TNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(153, 153, 153)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(BModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BBorrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(169, 169, 169))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 769, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(155, 155, 155)
+                .addComponent(LID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(E_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(LNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(E_Precio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(E_NombreServicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(84, 84, 84)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Boton_Nuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Boton_Modificar, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
+                    .addComponent(Boton_Borrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Boton_Salir)
+                .addGap(64, 64, 64))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(433, 433, 433)
+                        .addComponent(jLabel1)))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Lservicios)
-                .addGap(45, 45, 45)
-                .addComponent(BNuevo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BModificar)
-                .addGap(7, 7, 7)
+                .addGap(17, 17, 17)
+                .addComponent(jLabel1)
+                .addGap(26, 26, 26)
+                .addComponent(Boton_Nuevo)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(LID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BBorrar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(LPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(181, 181, 181))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(E_ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(E_NombreServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(E_Precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(Boton_Modificar)))
+                .addGap(18, 18, 18)
+                .addComponent(Boton_Borrar)
+                .addGap(50, 50, 50)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(Boton_Salir)
+                .addContainerGap(53, Short.MAX_VALUE))
         );
-
-        Bsalir.setText("Salir");
-        Bsalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BsalirActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(Bsalir)
-                        .addGap(140, 140, 140))))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                .addComponent(Bsalir)
-                .addGap(30, 30, 30))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BNuevoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BNuevoActionPerformed
+    private void Boton_NuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_NuevoActionPerformed
+        
+        //Accion del boton nuevo servicio para agregar un servicio a la lista
+        try {
+            
+            // Obtener los datos de los campos de texto
+            String id = E_ID.getText();
+            String nombre_servicio = E_NombreServicio.getText();
+            double precio = Double.parseDouble(E_Precio.getText());
+            
+            //Llamamos al writer
+            XMLWriter generador = new XMLWriter();
+            
+            // Cargar el XML existente
+            generador.cargarXML("servicios.xml");
+            
+            // Crear un nuevo objeto servicio
+            Servicio servicio1 = new Servicio(id, nombre_servicio, precio);
+            
+            // Agregar servicios a lista de objetos y a la tabla junto con el xml, aplicando el xmlwriter
+            generador.agregarServicio(servicio1);
+            
+            // Guardar los cambios
+            generador.guardarXML("servicios.xml");
+            
+            //Invocamos el metodo llenar tabla para que lo actualice
+            llenarTabla();
+            
+            // Limpiar campos después de agregar para el siguiente servicio 
+            E_ID.setText("");
+            E_NombreServicio.setText("");
+            E_Precio.setText("");
+            
+         
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_Boton_NuevoActionPerformed
 
-    private void BsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BsalirActionPerformed
-if (ventanaPrincipal != null) {
-        ventanaPrincipal.setVisible(true); // Mostrar la ventana principal
+    private void Boton_SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_SalirActionPerformed
+        //Boton para salir del JDialog
+        
+        dispose();
+        
+    }//GEN-LAST:event_Boton_SalirActionPerformed
+
+    private void Tabla_ServiciosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Tabla_ServiciosMouseClicked
+    
+    // Obtener la fila seleccionada
+    int filaSeleccionada = Tabla_Servicios.getSelectedRow();
+    
+    if (filaSeleccionada != -1) {
+
+        // Llenar los campos de texto con los datos de la fila seleccionada
+        E_ID.setText(Tabla_Servicios.getValueAt(filaSeleccionada, 0).toString());
+        E_NombreServicio.setText(Tabla_Servicios.getValueAt(filaSeleccionada, 1).toString());
+        E_Precio.setText(Tabla_Servicios.getValueAt(filaSeleccionada, 2).toString());
     }
-    this.dispose();
-    }//GEN-LAST:event_BsalirActionPerformed
- private Principal ventanaPrincipal; // Referencia a la ventana principal
+    
+    }//GEN-LAST:event_Tabla_ServiciosMouseClicked
 
-public Servicios(Principal ventanaPrincipal) {
-    this.ventanaPrincipal = ventanaPrincipal;
-    initComponents();
-}
+    private void Boton_ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_ModificarActionPerformed
+       
+        //Accion del boton modificar servicio para modificar un servicio de la lista
+        try {
+            
+            // Obtener los datos de los campos de texto
+            String id = E_ID.getText();
+            String nombre_servicio = E_NombreServicio.getText();
+            double precio = Double.parseDouble(E_Precio.getText());
+            
+            //Llamamos al writer
+            XMLWriter generador = new XMLWriter();
+            
+            // Cargar el XML existente
+            generador.cargarXML("servicios.xml");
+            
+            // Crear un nuevo objeto servicio
+            Servicio servicio1 = new Servicio(id, nombre_servicio, precio);
+            
+            // Modificar servicios a lista de objetos y a la tabla junto con el xml, aplicando el xmlwriter
+            generador.modificarServicios(servicio1);
+            
+            // Guardar los cambios
+            generador.guardarXML("servicios.xml");
+            
+            //Invocamos el metodo llenar tabla para que lo actualice
+            llenarTabla();
+            
+            // Limpiar campos después de agregar para el siguiente servicio 
+            E_ID.setText("");
+            E_NombreServicio.setText("");
+            E_Precio.setText("");
+            
+         
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_Boton_ModificarActionPerformed
+
+    private void Boton_BorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_BorrarActionPerformed
+         
+        //Accion del boton eliminar servicio para eliminar un servicio de la lista
+        try {
+            
+            // Obtener los datos de los campos de texto
+            String id = E_ID.getText();
+            String nombre_servicio = E_NombreServicio.getText();
+            double precio = Double.parseDouble(E_Precio.getText());
+            
+            //Llamamos al writer
+            XMLWriter generador = new XMLWriter();
+            
+            // Cargar el XML existente
+            generador.cargarXML("servicios.xml");
+            
+            // Crear un nuevo objeto servicio
+            Servicio servicio1 = new Servicio(id, nombre_servicio, precio);
+            
+            // Eliminar servicios de lista de objetos y de la tabla junto con el xml, aplicando el xmlwriter
+            generador.eliminarServicio(servicio1);
+            
+            // Guardar los cambios
+            generador.guardarXML("servicios.xml");
+            
+            //Invocamos el metodo llenar tabla para que lo actualice
+            llenarTabla();
+            
+            // Limpiar campos después de agregar para el siguiente servicio 
+            E_ID.setText("");
+            E_NombreServicio.setText("");
+            E_Precio.setText("");
+            
+         
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_Boton_BorrarActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -214,30 +406,37 @@ public Servicios(Principal ventanaPrincipal) {
             java.util.logging.Logger.getLogger(Servicios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Servicios().setVisible(true);
+                Servicios dialog = new Servicios(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BBorrar;
-    private javax.swing.JButton BModificar;
-    private javax.swing.JButton BNuevo;
-    private javax.swing.JButton Bsalir;
+    private javax.swing.JButton Boton_Borrar;
+    private javax.swing.JButton Boton_Modificar;
+    private javax.swing.JButton Boton_Nuevo;
+    private javax.swing.JButton Boton_Salir;
+    private java.awt.TextField E_ID;
+    private java.awt.TextField E_NombreServicio;
+    private java.awt.TextField E_Precio;
     private java.awt.Label LID;
     private java.awt.Label LNombre;
     private java.awt.Label LPrecio;
-    private javax.swing.JLabel Lservicios;
-    private java.awt.TextField TID;
-    private java.awt.TextField TNombre;
-    private java.awt.TextField TPrecio;
+    private javax.swing.JTable Tabla_Servicios;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

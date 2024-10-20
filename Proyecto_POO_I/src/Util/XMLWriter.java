@@ -353,7 +353,7 @@ public class XMLWriter {
     
     //Metodos para Medicos: Agregar, Eliminar y Modificar
     //Tomamos como parametro el objeto 
-    public void agregarMedico(Medicos medico) { 
+    public void agregarMedico(Medicos medico, List<String> serviciosSeleccionado) { 
         
         //Tomamos un elemento del XML y establecemos una variable del tipo raiz
         Element raiz = document.getDocumentElement();
@@ -385,10 +385,11 @@ public class XMLWriter {
         
         //Se establece para verificar que si existe
         boolean servicioExistente = false;
+        
         Element servicios = document.createElement("servicios");
         
         // Recorremos la lista de IDs de servicios con un get de servicios
-       for (String id : medico.getServicios()) {
+       for (String id : serviciosSeleccionado) {
            
             // Verificamos si el servicio con el id existe en el HashMap
             if (serviciosactuales.containsKey(id)) {
@@ -478,8 +479,8 @@ public class XMLWriter {
                 
                 // Modificar los elementos del médico
                 medicoxml.getElementsByTagName("nombre_medico").item(0).setTextContent(medico.getNombre_medico());
-                medicoxml.getElementsByTagName("puesto").item(0).setTextContent(medico.getTelefono());
-                medicoxml.getElementsByTagName("telefono").item(0).setTextContent(medico.getPuesto());
+                medicoxml.getElementsByTagName("puesto").item(0).setTextContent(medico.getPuesto());
+                medicoxml.getElementsByTagName("telefono").item(0).setTextContent(medico.getTelefono());
                 
                 //Establecemos un array para obtener los servicios existentes al medico
                 String[] serviciosArray = medico.getServicios().toArray(new String[0]);

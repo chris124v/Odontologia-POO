@@ -6,13 +6,16 @@ package Presentacion;
 
 import Conceptos.Servicio;
 import Conceptos.Medicos;
+import Presentacion.Medico;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-import Util.XMLWriter;
+import java.util.Arrays;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -23,16 +26,17 @@ public class ServiciosValidados extends javax.swing.JDialog {
     //Atributo de los servicios seleccionados
     private List<String> serviciosSeleccionados;
     
+    
     //Constructor de servicios validados 
     public ServiciosValidados(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         this.serviciosSeleccionados = new ArrayList<>();
+        
 
         initComponents();
         llenarTablaServicios();
         this.setLocation(400, 200);
     }
-    
     //Metodo para llenar la tabla 
     private void llenarTablaServicios() {
         
@@ -110,6 +114,8 @@ public class ServiciosValidados extends javax.swing.JDialog {
     public List<String> getServiciosSeleccionados() {
         return this.serviciosSeleccionados; // Devolver la lista de servicios seleccionados
     }
+    
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -221,33 +227,35 @@ public class ServiciosValidados extends javax.swing.JDialog {
 
     private void Boton_AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_AceptarActionPerformed
     
-    //Boton para aceptar los servicios agregados al medico
-    
+     //Boton para aceptar los servicios agregados al medico
+
     try {
-        
+
         //Mediante una lista de seleccionados usamos el metodo de obtener sevicios de la tabla
         List<String> seleccionados = obtenerServiciosSeleccionados();
-        
+
         //Si no hay ningun seleccionado se devuelve un mensaje
         if (seleccionados.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No se han seleccionado servicios.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
         //Establecemos esto como atributo para usarlo posteriormente en el agregar
         this.serviciosSeleccionados = seleccionados;
-        
+
         // Pasar los servicios seleccionados a la clase de medicos con un metodo set
         ((Medico)getParent()).setServiciosSeleccionados(this.serviciosSeleccionados);
-        
+
         //Mensaje que menciona que los servicios se agregaron correctamente
         JOptionPane.showMessageDialog(this, "Servicios asignados exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         this.dispose();
-    
+
     //Mensaje de error en caso de que no se procesen los servicios
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(this, "Error al procesar los servicios: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
+
+    
       
     }//GEN-LAST:event_Boton_AceptarActionPerformed
 

@@ -16,8 +16,10 @@ import util.XMLHandler;
 import java.util.Arrays;
 
 /**
- *
- * @author Christopher
+ *  Integrantes de la pareja:
+ *  Christopher Daniel Vargas Villalta, Carnet: 2024108443
+ *  Jervis Esquivel Quiros, Carnet: 2024155599
+ * 
  */
 public class Main {
 

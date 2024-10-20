@@ -8,6 +8,8 @@ import Conceptos.Medicos;
 import Conceptos.Servicio;
 import Presentacion.ServiciosValidados;
 import Util.XMLWriter;
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ public class Medico extends javax.swing.JDialog {
     //Atributo de la clase medico en la ventana como arraylist que va a guardar los servicios seleccionados
     private List<String> serviciosSeleccionados = new ArrayList<>();
 
+
     /**
      * Creates new form Medicos2
      */
@@ -34,57 +37,84 @@ public class Medico extends javax.swing.JDialog {
         llenarTabla();
         this.setLocation(400, 200);
         
+        
+    
+        this.revalidate();
+        this.repaint();
+        
     }
     
     //Este metodo nos permite llenar la tabla de los medicos
     private void llenarTabla(){
         
         try {
-            // Cargar los medicos desde el archivo XML
+            
+         // Cargar los médicos desde el archivo XML
             ArrayList<Medicos> medicos;
             File xmlFile = new File("medicos.xml");
+
+            // Asegúrese de que el archivo XML exista
+            if (!xmlFile.exists()) {
+                System.out.println("El archivo medicos.xml no se encuentra.");
+                return;
+            }
+
+            // Cargar los médicos usando XMLHandler
             medicos = util.XMLHandler.CargarMedico(xmlFile.getAbsolutePath());
+            
+             // Verificar si se han cargado médicos
+            if (medicos == null || medicos.isEmpty()) {
+                System.out.println("No se han encontrado médicos en el archivo XML.");
+                return;
+            }
 
-            // Definir los nombres de las columnas para la tabla
-            Vector<String> columnNames = new Vector<>();
-            columnNames.addElement("ID");
-            columnNames.addElement("Nombre Medico");
-            columnNames.addElement("Puesto");
-            columnNames.addElement("Telefono");
+        // Definir los nombres de las columnas para la tabla
+        Vector<String> columnNames = new Vector<>();
+        columnNames.addElement("ID");
+        columnNames.addElement("Nombre Medico");
+        columnNames.addElement("Puesto");
+        columnNames.addElement("Telefono");
+        columnNames.addElement("Servicios");
 
-            // Crear la estructura de datos para las filas con el import de vector
-            Vector<Vector<String>> rowData = new Vector<>();
+        // Crear la estructura de datos para las filas
+        Vector<Vector<String>> rowData = new Vector<>();
 
-            // Rellenar la tabla con los datos de los medicos usando el get implementado en la clase
-            for (Medicos m : medicos) {
-                
-                //Mediante el vector agregamos todos elementos necesarios del arraylist
-                Vector<String> row = new Vector<>();
-                row.addElement(m.getId_m());
-                row.addElement(m.getNombre_medico());
-                row.addElement(m.getPuesto()); 
-                row.addElement(m.getTelefono()); 
+        // Rellenar la tabla con los datos de los médicos
+        for (Medicos m : medicos) {
+
+            Vector<String> row = new Vector<>();
+            row.addElement(m.getId_m());
+            row.addElement(m.getNombre_medico());
+            row.addElement(m.getPuesto());
+            row.addElement(m.getTelefono());
+
+            // Obtener los servicios del médico
+                List<String> servicios = m.getServicios();
+                if (servicios == null || servicios.isEmpty()) {
+                    System.out.println("El médico " + m.getNombre_medico() + " no tiene servicios.");
+                    row.addElement(""); // Si no hay servicios, dejar vacío
+                } else {
+                    String serviciosConcat = String.join(", ", servicios);
+                    row.addElement(serviciosConcat); // Añadir la cadena de servicios a la fila
+                }
+
                 rowData.addElement(row);
         }
 
         // Crear un modelo de tabla no editable
-        DefaultTableModel m = new DefaultTableModel(rowData, columnNames) {
-            
+        DefaultTableModel modeloTabla = new DefaultTableModel(rowData, columnNames) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                
-                // Todas las celdas serán no editables
                 return false;
             }
         };
 
-            // Establecer el modelo de la tabla
-            this.Tabla_Medicos.setModel(m);
-       
-        //Excepcion final 
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+        // Establecer el modelo de la tabla
+        this.Tabla_Medicos.setModel(modeloTabla);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
     }
     
     // Este método devuelve los servicios seleccionados
@@ -96,6 +126,12 @@ public class Medico extends javax.swing.JDialog {
     public void setServiciosSeleccionados(List<String> servicios) {
         this.serviciosSeleccionados = servicios;
     }
+    
+    //Metodo para obtener los servicios seleccionados
+    public List<String> getServiciosSeleccionados() {
+        return this.serviciosSeleccionados; // Devolver la lista de servicios seleccionados
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -176,13 +212,13 @@ public class Medico extends javax.swing.JDialog {
 
         Tabla_Medicos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
         Tabla_Medicos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -223,18 +259,17 @@ public class Medico extends javax.swing.JDialog {
                     .addComponent(Borrar_Medico, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(431, 431, 431)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 741, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addGap(431, 431, 431)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(Bsaliur)
                 .addGap(103, 103, 103))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(38, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 936, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(82, 82, 82))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,9 +295,9 @@ public class Medico extends javax.swing.JDialog {
                     .addComponent(jLabel6)
                     .addComponent(BVer)
                     .addComponent(Borrar_Medico))
-                .addGap(73, 73, 73)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addGap(51, 51, 51)
                 .addComponent(Bsaliur)
                 .addGap(49, 49, 49))
         );
@@ -271,7 +306,10 @@ public class Medico extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -423,60 +461,58 @@ public class Medico extends javax.swing.JDialog {
     }//GEN-LAST:event_Borrar_MedicoActionPerformed
 
     private void Modificar_MedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Modificar_MedicoActionPerformed
+       
+        //Metodo de modificar el medico
         try {
-        // Llamada al writer para modificar el XML
-        XMLWriter generador = new XMLWriter();
+            // Llamada al writer para modificar el XML
+            XMLWriter generador = new XMLWriter();
         
-        // Cargamos los servicios para verificar su existencia
-        generador.cargarXML("servicios.xml");
-        generador.CargaServicios();
+            //Cargamos los servicios para verificar su existencia
+            generador.cargarXML("servicios.xml");
+            generador.CargaServicios();
         
-        // Cargamos el XML de médicos para hacer los cambios
-        generador.cargarXML("medicos.xml");
-        
-        // Establecemos los campos de texto para obtener su contenido
-        String id_m = E_IDM.getText(); // ID del médico
-        String nombre_medico = E_NombreMedico.getText();
-        String telefono = E_Telefono.getText();
-        String puesto = E_Puesto.getText();
-        
-        // Obtener los servicios seleccionados en la otra ventana de servicios validados 
-        List<String> serviciosSeleccionados = obtenerServiciosSeleccionados();
-        
-        // Si no se selecciona nada, muestra un error
-        if (serviciosSeleccionados.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No se han seleccionado servicios. Seleccione un servicio.", "Peligro Inminente", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        // Creamos un nuevo objeto Medicos
-        Medicos nuevoMedico = new Medicos();
-        
-        // Mediante set establecemos los atributos del médico
-        nuevoMedico.setId_m(id_m);
-        nuevoMedico.setNombre_medico(nombre_medico);
-        nuevoMedico.setTelefono(telefono);
-        nuevoMedico.setPuesto(puesto);
-        
-        // Con el writer de escritura modificamos el objeto médico y sus servicios
-        generador.modificarMedico(nuevoMedico); // Asegúrate de que este método esté implementado en XMLWriter
-        generador.guardarXML("medicos.xml");
-        
-        // Rellenamos la tabla
-        llenarTabla();
-        
-        // Limpiar campos después de modificar para la siguiente persona agregada
-        E_IDM.setText("");
-        E_NombreMedico.setText("");
-        E_Telefono.setText("");
-        E_Puesto.setText("");
-        
-        // Mensaje de que se modificó el médico correctamente
-        JOptionPane.showMessageDialog(this, "Médico modificado.", "Lo lograste!", JOptionPane.INFORMATION_MESSAGE);
+            // Cargamos el XML de médicos para hacer los cambios
+            generador.cargarXML("medicos.xml");
 
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, "Error al modificar el médico: " + ex.getMessage(), "Error Inminente", JOptionPane.ERROR_MESSAGE);
-    }
+            // Establecemos los campos de texto para obtener su contenido
+            String id_m = E_IDM.getText(); // ID del médico a modificar
+            String nombre_medico = E_NombreMedico.getText();
+            String telefono = E_Telefono.getText();
+            String puesto = E_Puesto.getText();
+        
+            // Obtener los servicios seleccionados
+            List<String> serviciosSeleccionados = obtenerServiciosSeleccionados();
+
+            // Comprobar que se hayan seleccionado servicios
+            if (serviciosSeleccionados.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No se han seleccionado servicios. Seleccione un servicio.", "Peligro Inminente", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Crear un objeto medicos con los datos obtenidos
+            Medicos medicoModificado = new Medicos();
+            medicoModificado.setId_m(id_m);
+            medicoModificado.setNombre_medico(nombre_medico);
+            medicoModificado.setTelefono(telefono);
+            medicoModificado.setPuesto(puesto);
+            medicoModificado.setServicios(serviciosSeleccionados); // Esto debería funcionar ahora
+
+            // Llamar al metodo para modificar el médico en el XML
+            generador.modificarMedico(medicoModificado);
+
+            // Guardar cambios en el XML
+            generador.guardarXML("medicos.xml");
+
+            // Rellenamos la tabla después de modificar
+            llenarTabla();
+
+            // Mensaje de exito
+            JOptionPane.showMessageDialog(this, "Medico modificado exitosamente.", "Exitos", JOptionPane.INFORMATION_MESSAGE);
+        
+        //Excepcion Final 
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al modificar el médico: " + ex.getMessage(), "Error Inminente", JOptionPane.ERROR_MESSAGE);
+        }
    
     }//GEN-LAST:event_Modificar_MedicoActionPerformed
 

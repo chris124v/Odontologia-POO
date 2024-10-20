@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <medicos>
+  <medico id_m="200">
+    <nombre_medico>Rodrigo Perez</nombre_medico>
+    <puesto>Odontologo</puesto>
+    <telefono>7777-8888</telefono>
+    <servicios>
+      <id>100</id>
+      <id>101</id>
+    </servicios>
+  </medico>
   <medico id_m="201">
     <nombre_medico>Maria Rojas 11</nombre_medico>
     <puesto>Becaria</puesto>

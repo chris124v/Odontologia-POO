@@ -8,8 +8,6 @@ import Conceptos.Medicos;
 import Conceptos.Servicio;
 import Presentacion.ServiciosValidados;
 import Util.XMLWriter;
-import java.awt.BorderLayout;
-import java.awt.Component;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +24,7 @@ public class Medico extends javax.swing.JDialog {
     
     //Atributo de la clase medico en la ventana como arraylist que va a guardar los servicios seleccionados
     private List<String> serviciosSeleccionados = new ArrayList<>();
-
+    private List<String> servicios;
 
     /**
      * Creates new form Medicos2
@@ -37,84 +35,66 @@ public class Medico extends javax.swing.JDialog {
         llenarTabla();
         this.setLocation(400, 200);
         
-        
-    
-        this.revalidate();
-        this.repaint();
-        
     }
     
     //Este metodo nos permite llenar la tabla de los medicos
     private void llenarTabla(){
         
         try {
-            
-         // Cargar los médicos desde el archivo XML
+            // Cargar los medicos desde el archivo XML
             ArrayList<Medicos> medicos;
             File xmlFile = new File("medicos.xml");
-
-            // Asegúrese de que el archivo XML exista
-            if (!xmlFile.exists()) {
-                System.out.println("El archivo medicos.xml no se encuentra.");
-                return;
-            }
-
-            // Cargar los médicos usando XMLHandler
             medicos = util.XMLHandler.CargarMedico(xmlFile.getAbsolutePath());
+
+            // Definir los nombres de las columnas para la tabla
+            Vector<String> columnNames = new Vector<>();
+            columnNames.addElement("ID");
+            columnNames.addElement("Nombre Medico");
+            columnNames.addElement("Puesto");
+            columnNames.addElement("Telefono");
+            columnNames.addElement("Servicios");
+
+            // Crear la estructura de datos para las filas con el import de vector
+            Vector<Vector<String>> rowData = new Vector<>();
+
+            // Rellenar la tabla con los datos de los medicos usando el get implementado en la clase
+            for (Medicos m : medicos) {
+                
+                //Mediante el vector agregamos todos elementos necesarios del arraylist
+                Vector<String> row = new Vector<>();
+                row.addElement(m.getId_m());
+                row.addElement(m.getNombre_medico());
+                row.addElement(m.getPuesto()); 
+                row.addElement(m.getTelefono()); 
+                
+                // Obtener los servicios del medico
+                List<String> servicios = m.getServicios(); 
+                
+                String serviciosConcat = String.join(", ", servicios); // Combinar servicios en un String
+                
+                row.addElement(serviciosConcat); //Anadir los elementos o servicios a la columna
             
-             // Verificar si se han cargado médicos
-            if (medicos == null || medicos.isEmpty()) {
-                System.out.println("No se han encontrado médicos en el archivo XML.");
-                return;
-            }
-
-        // Definir los nombres de las columnas para la tabla
-        Vector<String> columnNames = new Vector<>();
-        columnNames.addElement("ID");
-        columnNames.addElement("Nombre Medico");
-        columnNames.addElement("Puesto");
-        columnNames.addElement("Telefono");
-        columnNames.addElement("Servicios");
-
-        // Crear la estructura de datos para las filas
-        Vector<Vector<String>> rowData = new Vector<>();
-
-        // Rellenar la tabla con los datos de los médicos
-        for (Medicos m : medicos) {
-
-            Vector<String> row = new Vector<>();
-            row.addElement(m.getId_m());
-            row.addElement(m.getNombre_medico());
-            row.addElement(m.getPuesto());
-            row.addElement(m.getTelefono());
-
-            // Obtener los servicios del médico
-                List<String> servicios = m.getServicios();
-                if (servicios == null || servicios.isEmpty()) {
-                    System.out.println("El médico " + m.getNombre_medico() + " no tiene servicios.");
-                    row.addElement(""); // Si no hay servicios, dejar vacío
-                } else {
-                    String serviciosConcat = String.join(", ", servicios);
-                    row.addElement(serviciosConcat); // Añadir la cadena de servicios a la fila
-                }
-
                 rowData.addElement(row);
         }
 
         // Crear un modelo de tabla no editable
-        DefaultTableModel modeloTabla = new DefaultTableModel(rowData, columnNames) {
+        DefaultTableModel m = new DefaultTableModel(rowData, columnNames) {
+            
             @Override
             public boolean isCellEditable(int row, int column) {
+                
+                // Todas las celdas serán no editables
                 return false;
             }
         };
 
-        // Establecer el modelo de la tabla
-        this.Tabla_Medicos.setModel(modeloTabla);
-
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
+            // Establecer el modelo de la tabla
+            this.Tabla_Medicos.setModel(m);
+       
+        //Excepcion final 
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
     
     // Este método devuelve los servicios seleccionados
@@ -320,12 +300,13 @@ public class Medico extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BVerAbrirSer(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BVerAbrirSer
-
+       
+        //Boton para abrir los servicios que tienen los medicos
         try {
         // Crear una instancia de ServiciosValidados esto para abrir la ventana donde vamos a establecer los servicios
         ServiciosValidados mostrarServiciosV = new ServiciosValidados(this, true);
         
-        // Mostrar el diálogo
+        // Mostrar el jdialog
         mostrarServiciosV.setVisible(true); 
     
     //Exccepcion en caso de que haya un error al abrir la ventana

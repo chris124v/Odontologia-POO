@@ -25,24 +25,4 @@
     <telefono>1111-3333</telefono>
     <email>chris.rm@gmail.com</email>
   </paciente>
-  <paciente id="300008888">
-    <nombre>Jervis Esquivel</nombre>
-    <telefono>1111-3333</telefono>
-    <email>chris.rm@gmail.com</email>
-  </paciente>
-  <paciente id="300008888">
-    <nombre>Jervis Esquivel</nombre>
-    <telefono>1111-3333</telefono>
-    <email>chris.rm@gmail.com</email>
-  </paciente>
-  <paciente id="300008888">
-    <nombre>Jervis Esquivel</nombre>
-    <telefono>1111-3333</telefono>
-    <email>chris.rm@gmail.com</email>
-  </paciente>
-  <paciente id="300008888">
-    <nombre>Jervis Esquivel</nombre>
-    <telefono>1111-3333</telefono>
-    <email>chris.rm@gmail.com</email>
-  </paciente>
 </pacientes>

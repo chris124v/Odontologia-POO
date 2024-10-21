@@ -20,36 +20,4 @@
     <nombre_servicio>Cirugia 4</nombre_servicio>
     <precio>75000.0</precio>
   </servicio>
-  <servicio id="104">
-    <nombre_servicio>Limpieza Bucal</nombre_servicio>
-    <precio>45000.0</precio>
-  </servicio>
-  <servicio id="106">
-    <nombre_servicio>Cirugia 4</nombre_servicio>
-    <precio>75000.0</precio>
-  </servicio>
-  <servicio id="104">
-    <nombre_servicio>Limpieza Bucal</nombre_servicio>
-    <precio>45000.0</precio>
-  </servicio>
-  <servicio id="106">
-    <nombre_servicio>Cirugia 4</nombre_servicio>
-    <precio>75000.0</precio>
-  </servicio>
-  <servicio id="104">
-    <nombre_servicio>Limpieza Bucal</nombre_servicio>
-    <precio>45000.0</precio>
-  </servicio>
-  <servicio id="106">
-    <nombre_servicio>Cirugia 4</nombre_servicio>
-    <precio>75000.0</precio>
-  </servicio>
-  <servicio id="104">
-    <nombre_servicio>Limpieza Bucal</nombre_servicio>
-    <precio>45000.0</precio>
-  </servicio>
-  <servicio id="106">
-    <nombre_servicio>Cirugia 4</nombre_servicio>
-    <precio>75000.0</precio>
-  </servicio>
 </servicios>

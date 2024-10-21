@@ -27,34 +27,13 @@
       <id>102</id>
     </servicios>
   </medico>
-  <medico id_m="210">
-    <nombre_medico>Dr. Perez 89</nombre_medico>
-    <telefono>12345678</telefono>
-    <puesto>Dentista</puesto>
+  <medico id_m="211">
+    <nombre_medico>3rtw3</nombre_medico>
+    <telefono>3wrw3</telefono>
+    <puesto>w3rw3</puesto>
     <servicios>
       <id>100</id>
       <id>101</id>
-      <id>102</id>
-    </servicios>
-  </medico>
-  <medico id_m="210">
-    <nombre_medico>Dr. Perez 89</nombre_medico>
-    <telefono>12345678</telefono>
-    <puesto>Dentista</puesto>
-    <servicios>
-      <id>100</id>
-      <id>101</id>
-      <id>102</id>
-    </servicios>
-  </medico>
-  <medico id_m="210">
-    <nombre_medico>Dr. Perez 89</nombre_medico>
-    <telefono>12345678</telefono>
-    <puesto>Dentista</puesto>
-    <servicios>
-      <id>100</id>
-      <id>101</id>
-      <id>102</id>
     </servicios>
   </medico>
 </medicos>

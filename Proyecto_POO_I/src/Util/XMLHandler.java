@@ -161,6 +161,7 @@ public class XMLHandler {
                 
                 //Establecemos un ciclo for para que recorra el nuevo tag
                 for (int j = 0; j < servicios.getLength(); j++) {
+                    
                     Node idServicioNode = servicios.item(j); //Se inicializa j desde la primera posicion
                     
                     //Si idsServicios verdaderamente es un elemento
@@ -171,11 +172,12 @@ public class XMLHandler {
                     }
                 }
                 
-                //Convertimos el arraylist en un tipo string que pase como parametro en medicos
-                String idServicioString = String.join(", ", idsServicios);
                 
                 // Crear el médico junto con los strings de idsServicios
-                Medicos medico = new Medicos(telefono, puesto, nombre_medico, id_m, idServicioString, "", 0.0); // Ajustar según lo que necesites
+                Medicos medico = new Medicos(telefono, puesto, nombre_medico, id_m, "", "", 0.0); // Ajustar según lo que necesites
+                
+                medico.setServicios(idsServicios);
+                
                 medicos.add(medico);
             }
         }

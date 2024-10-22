@@ -8,11 +8,12 @@ import Conceptos.Medicos;
 import Conceptos.Paciente;
 import Conceptos.Servicio;
 import Presentacion.Principal;
+import Util.XMLHandler;
 import Util.XMLWriter;
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.JFrame;
-import util.XMLHandler;
+import Util.XMLHandler;
 import java.util.Arrays;
 
 /**

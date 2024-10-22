@@ -49,7 +49,7 @@ public class ServiciosValidados extends javax.swing.JDialog {
         // Cargar los servicios desde el archivo XML
         ArrayList<Servicio> servicios;
         File xmlFile = new File("servicios.xml");
-        servicios = util.XMLHandler.CargarServicios(xmlFile.getAbsolutePath());
+        servicios = Util.XMLHandler.CargarServicios(xmlFile.getAbsolutePath());
 
         // Crear la estructura de datos para las filas
         Vector<Vector<Object>> rowData = new Vector<>();
@@ -128,12 +128,15 @@ public class ServiciosValidados extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         Bcancelar = new javax.swing.JButton();
         Boton_Aceptar = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla_ServiciosV = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        Bcancelar.setBackground(new java.awt.Color(102, 255, 204));
+        Bcancelar.setForeground(new java.awt.Color(0, 0, 0));
         Bcancelar.setText("Cancelar");
         Bcancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -141,6 +144,8 @@ public class ServiciosValidados extends javax.swing.JDialog {
             }
         });
 
+        Boton_Aceptar.setBackground(new java.awt.Color(102, 255, 204));
+        Boton_Aceptar.setForeground(new java.awt.Color(0, 0, 0));
         Boton_Aceptar.setText("Aceptar");
         Boton_Aceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,8 +153,8 @@ public class ServiciosValidados extends javax.swing.JDialog {
             }
         });
 
-        jLabel2.setText("Servicios del medico");
-
+        Tabla_ServiciosV.setBackground(new java.awt.Color(102, 255, 204));
+        Tabla_ServiciosV.setForeground(new java.awt.Color(0, 0, 0));
         Tabla_ServiciosV.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -171,6 +176,28 @@ public class ServiciosValidados extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(Tabla_ServiciosV);
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 255, 204)));
+
+        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel2.setText("Servicios del medico");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(jLabel2)
+                .addContainerGap(45, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -186,18 +213,17 @@ public class ServiciosValidados extends javax.swing.JDialog {
                                 .addComponent(Boton_Aceptar))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(170, 170, 170)
-                        .addComponent(jLabel2)))
+                        .addGap(142, 142, 142)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 80, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel2)
-                .addGap(38, 38, 38)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Bcancelar)
                     .addComponent(Boton_Aceptar))
@@ -308,6 +334,7 @@ public class ServiciosValidados extends javax.swing.JDialog {
     private javax.swing.JTable Tabla_ServiciosV;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

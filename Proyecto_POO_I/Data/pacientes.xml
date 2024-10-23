@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <pacientes>
   <paciente id="000000000">
-    <nombre>Sin Registro</nombre>
+    <nombre>Sin Registro </nombre>
     <telefono>NA</telefono>
     <email>NA</email>
   </paciente>

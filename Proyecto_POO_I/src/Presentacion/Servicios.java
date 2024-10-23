@@ -9,6 +9,7 @@ import Util.XMLWriter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -31,7 +32,7 @@ public class Servicios extends javax.swing.JDialog {
         try {
             // Cargar los servicios desde el archivo XML
             ArrayList<Servicio> servicios;
-            File xmlFile = new File("servicios.xml");
+            File xmlFile = new File("Data/servicios.xml");
             servicios = Util.XMLHandler.CargarServicios(xmlFile.getAbsolutePath());
 
             // Definir los nombres de las columnas para la tabla
@@ -96,12 +97,12 @@ public class Servicios extends javax.swing.JDialog {
         Boton_Modificar = new javax.swing.JButton();
         Boton_Borrar = new javax.swing.JButton();
         Boton_Salir = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        Tabla_Servicios.setBackground(new java.awt.Color(102, 255, 204));
+        jPanel1.setBackground(new java.awt.Color(235, 250, 255));
+
         Tabla_Servicios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -120,131 +121,132 @@ public class Servicios extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(Tabla_Servicios);
 
+        LID.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         LID.setText("ID");
 
+        E_ID.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
+
+        LNombre.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         LNombre.setText("Nombre");
 
+        E_NombreServicio.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
+
+        LPrecio.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         LPrecio.setText("Precio");
 
-        Boton_Nuevo.setBackground(new java.awt.Color(102, 255, 204));
-        Boton_Nuevo.setForeground(new java.awt.Color(0, 0, 0));
+        E_Precio.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
+
+        Boton_Nuevo.setBackground(new java.awt.Color(153, 215, 235));
+        Boton_Nuevo.setFont(new java.awt.Font("Lucida Sans Unicode", 1, 12)); // NOI18N
         Boton_Nuevo.setText("Nuevo");
+        Boton_Nuevo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(0, 0, 0), null, null));
         Boton_Nuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Boton_NuevoActionPerformed(evt);
             }
         });
 
-        Boton_Modificar.setBackground(new java.awt.Color(102, 255, 204));
-        Boton_Modificar.setForeground(new java.awt.Color(0, 0, 0));
+        Boton_Modificar.setBackground(new java.awt.Color(153, 215, 235));
+        Boton_Modificar.setFont(new java.awt.Font("Lucida Sans Unicode", 1, 12)); // NOI18N
         Boton_Modificar.setText("Modificar");
+        Boton_Modificar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(0, 0, 0), null, null));
         Boton_Modificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Boton_ModificarActionPerformed(evt);
             }
         });
 
-        Boton_Borrar.setBackground(new java.awt.Color(102, 255, 204));
-        Boton_Borrar.setForeground(new java.awt.Color(0, 0, 0));
+        Boton_Borrar.setBackground(new java.awt.Color(153, 215, 235));
+        Boton_Borrar.setFont(new java.awt.Font("Lucida Sans Unicode", 1, 12)); // NOI18N
         Boton_Borrar.setText("Borrar");
+        Boton_Borrar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(0, 0, 0), null, null));
         Boton_Borrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Boton_BorrarActionPerformed(evt);
             }
         });
 
+        Boton_Salir.setBackground(new java.awt.Color(153, 215, 235));
+        Boton_Salir.setFont(new java.awt.Font("Lucida Sans Unicode", 1, 12)); // NOI18N
         Boton_Salir.setText("Salir");
+        Boton_Salir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(0, 0, 0), null, null));
         Boton_Salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Boton_SalirActionPerformed(evt);
             }
         });
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 255, 204)));
-
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setFont(new java.awt.Font("Lucida Sans Unicode", 1, 12)); // NOI18N
         jLabel1.setText("Servicios");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jLabel1)
-                .addContainerGap(32, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(13, Short.MAX_VALUE))
-        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(176, 176, 176)
+                .addComponent(LID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(E_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(LNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(E_Precio, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                            .addComponent(E_NombreServicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(84, 84, 84)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Boton_Nuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Boton_Modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Boton_Borrar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(155, 155, 155)
-                        .addComponent(LID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(E_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(LPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(E_Precio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(E_NombreServicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(84, 84, 84)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(Boton_Nuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Boton_Modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Boton_Borrar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(107, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Boton_Salir)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(Boton_Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(64, 64, 64))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(94, 94, 94)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 732, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(75, 75, 75)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(LID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(E_ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(LNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(E_NombreServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(E_Precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(E_ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(111, 111, 111))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(91, 91, 91)
-                        .addComponent(Boton_Nuevo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Boton_Modificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Boton_Borrar)))
-                .addGap(91, 91, 91)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addComponent(jLabel1)
+                                .addGap(74, 74, 74)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(LNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(E_NombreServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(LPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(E_Precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(79, 79, 79)
+                                .addComponent(Boton_Nuevo)
+                                .addGap(18, 18, 18)
+                                .addComponent(Boton_Modificar)
+                                .addGap(18, 18, 18)
+                                .addComponent(Boton_Borrar)))
+                        .addGap(87, 87, 87)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(Boton_Salir)
@@ -275,13 +277,30 @@ public class Servicios extends javax.swing.JDialog {
             // Obtener los datos de los campos de texto
             String id = E_ID.getText();
             String nombre_servicio = E_NombreServicio.getText();
-            double precio = Double.parseDouble(E_Precio.getText());
+            String precioTexto = E_Precio.getText();  // Obtener precio como String
+
+            // Si alguno de los campos esta vacio
+            if (id.isEmpty() || nombre_servicio.isEmpty() || precioTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No has agregado nada en los campos de texto. Digita un servicio.", "Peligro Inminente", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Verificar si el campo de precio contiene un valor numerico valido
+            double precio;
+            
+            try {
+                precio = Double.parseDouble(precioTexto);  // Convertir el texto a double
+            
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "El precio no es valido. Ingrese un valor numerico.", "Error Inminente", JOptionPane.ERROR_MESSAGE);
+                return;
+            }           
             
             //Llamamos al writer
             XMLWriter generador = new XMLWriter();
             
             // Cargar el XML existente
-            generador.cargarXML("servicios.xml");
+            generador.cargarXML("Data/servicios.xml");
             
             // Crear un nuevo objeto servicio
             Servicio servicio1 = new Servicio(id, nombre_servicio, precio);
@@ -290,7 +309,7 @@ public class Servicios extends javax.swing.JDialog {
             generador.agregarServicio(servicio1);
             
             // Guardar los cambios
-            generador.guardarXML("servicios.xml");
+            generador.guardarXML("Data/servicios.xml");
             
             //Invocamos el metodo llenar tabla para que lo actualice
             llenarTabla();
@@ -337,13 +356,30 @@ public class Servicios extends javax.swing.JDialog {
             // Obtener los datos de los campos de texto
             String id = E_ID.getText();
             String nombre_servicio = E_NombreServicio.getText();
-            double precio = Double.parseDouble(E_Precio.getText());
+            String precioTexto = E_Precio.getText();  // Obtener precio como String
+
+            // Si alguno de los campos esta vacio
+            if (id.isEmpty() || nombre_servicio.isEmpty() || precioTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No se han seleccionado servicios para modificar. Seleccione un servicio.", "Peligro Inminente", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Verificar si el campo de precio contiene un valor numerico valido
+            double precio;
             
-            //Llamamos al writer
+            try {
+                precio = Double.parseDouble(precioTexto);  // Convertir el texto a double
+            
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "El precio no es valido. Ingrese un valor numerico.", "Error Inminente", JOptionPane.ERROR_MESSAGE);
+                return;
+            }           
+            
+             // Llamamos al writer
             XMLWriter generador = new XMLWriter();
-            
+
             // Cargar el XML existente
-            generador.cargarXML("servicios.xml");
+            generador.cargarXML("Data/servicios.xml");
             
             // Crear un nuevo objeto servicio
             Servicio servicio1 = new Servicio(id, nombre_servicio, precio);
@@ -352,7 +388,7 @@ public class Servicios extends javax.swing.JDialog {
             generador.modificarServicios(servicio1);
             
             // Guardar los cambios
-            generador.guardarXML("servicios.xml");
+            generador.guardarXML("Data/servicios.xml");
             
             //Invocamos el metodo llenar tabla para que lo actualice
             llenarTabla();
@@ -377,13 +413,30 @@ public class Servicios extends javax.swing.JDialog {
             // Obtener los datos de los campos de texto
             String id = E_ID.getText();
             String nombre_servicio = E_NombreServicio.getText();
-            double precio = Double.parseDouble(E_Precio.getText());
+            String precioTexto = E_Precio.getText();  // Obtener precio como String
+
+            // Si alguno de los campos esta vacio
+            if (id.isEmpty() || nombre_servicio.isEmpty() || precioTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No has agregado nada en los campos de texto para borrar. Selecciona un servicio.", "Peligro Inminente", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Verificar si el campo de precio contiene un valor numerico valido
+            double precio;
+            
+            try {
+                precio = Double.parseDouble(precioTexto);  // Convertir el texto a double
+            
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "El precio no es valido. Ingrese un valor numerico.", "Error Inminente", JOptionPane.ERROR_MESSAGE);
+                return;
+            }          
             
             //Llamamos al writer
             XMLWriter generador = new XMLWriter();
             
             // Cargar el XML existente
-            generador.cargarXML("servicios.xml");
+            generador.cargarXML("Data/servicios.xml");
             
             // Crear un nuevo objeto servicio
             Servicio servicio1 = new Servicio(id, nombre_servicio, precio);
@@ -392,7 +445,7 @@ public class Servicios extends javax.swing.JDialog {
             generador.eliminarServicio(servicio1);
             
             // Guardar los cambios
-            generador.guardarXML("servicios.xml");
+            generador.guardarXML("Data/servicios.xml");
             
             //Invocamos el metodo llenar tabla para que lo actualice
             llenarTabla();
@@ -466,7 +519,6 @@ public class Servicios extends javax.swing.JDialog {
     private javax.swing.JTable Tabla_Servicios;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

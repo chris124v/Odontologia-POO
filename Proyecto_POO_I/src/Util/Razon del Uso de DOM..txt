@@ -1,0 +1,9 @@
+Razon del Uso de DOM.
+
+En este caso para el proyecto de POO sobre la clinica odontológica, decidimos utilizar el parser tanto de escritura como lectura de tipo DOM.
+Esto debido por la simplicidad del manejo del xml en DOM que facilita la actualización del XML en tiempo real mientras se agregan los pacientes, servicios y
+medicos con sus métodos propios de clase. Un ejemplo de ello es que en el caso del DOM de lectura se pueden volver a implementar muchos métodos como GetValue, 
+cargar documento y demás que son usadas muchísimo. De igual forma en el caso del parser de escritura pudimos implementar métodos que combinaban tanto programación 
+orientada a objetos y construcción de XML para asi dividir los métodos en cada clase y que mientras se crease un objeto de tipo paciente por ejemplo, también 
+se crea un nodo o elemento mediante un arbol en XML. Siendo asi como estos métodos del parser de escritura y lectura de tipo DOM proveen una gran flexibilidad
+para el uso de diversos métodos en la parte grafica, esta básicamente siendo la razon por la cual decidimos usar el parser de tipo DOM.

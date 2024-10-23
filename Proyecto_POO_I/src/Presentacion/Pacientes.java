@@ -33,7 +33,7 @@ public class Pacientes extends javax.swing.JDialog {
         try {
             // Cargar los pacientes desde el archivo XML
             ArrayList<Paciente> pacientes;
-            File xmlFile = new File("pacientes.xml");
+            File xmlFile = new File("Data/pacientes.xml");
             pacientes = Util.XMLHandler.CargarPacientes(xmlFile.getAbsolutePath());
 
             // Definir los nombres de las columnas para la tabla
@@ -98,23 +98,22 @@ public class Pacientes extends javax.swing.JDialog {
         BModificar = new javax.swing.JButton();
         Bborrar = new javax.swing.JButton();
         Bsalir2 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        label1 = new java.awt.Label();
-        Ltelefono = new java.awt.Label();
-        E_ID = new java.awt.TextField();
-        E_Telefono = new java.awt.TextField();
-        Lnombre = new java.awt.Label();
-        Labelemail1 = new java.awt.Label();
-        E_Email = new java.awt.TextField();
-        E_Nombre = new java.awt.TextField();
+        jPanel3 = new javax.swing.JPanel();
         label3 = new java.awt.Label();
+        label1 = new java.awt.Label();
+        E_Nombre = new java.awt.TextField();
+        Lnombre = new java.awt.Label();
+        E_Email = new java.awt.TextField();
+        Ltelefono = new java.awt.Label();
+        E_Telefono = new java.awt.TextField();
+        Labelemail1 = new java.awt.Label();
+        E_ID = new java.awt.TextField();
         Nuevo_Paciente = new javax.swing.JButton();
         Modificar_Paciente = new javax.swing.JButton();
         Borrar_Paciente = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        Boton_Salir_Pacientes = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         Tabla_Pacientes = new javax.swing.JTable();
+        Boton_Salir_Pacientes = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -161,174 +160,78 @@ public class Pacientes extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setLayout(new java.awt.GridBagLayout());
+        jPanel3.setBackground(new java.awt.Color(235, 250, 255));
 
+        label3.setFont(new java.awt.Font("Lucida Sans Unicode", 1, 12)); // NOI18N
+        label3.setText("Pacientes");
+
+        label1.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         label1.setName("ID"); // NOI18N
         label1.setText("ID");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(29, 97, 0, 0);
-        jPanel1.add(label1, gridBagConstraints);
 
-        Ltelefono.setText("Telefono");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 61, 0, 0);
-        jPanel1.add(Ltelefono, gridBagConstraints);
+        E_Nombre.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
 
-        E_ID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                E_IDActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 96;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(29, 10, 0, 0);
-        jPanel1.add(E_ID, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.ipadx = 96;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 10, 0, 0);
-        jPanel1.add(E_Telefono, gridBagConstraints);
-
+        Lnombre.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         Lnombre.setText("Nombre");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(29, 106, 0, 0);
-        jPanel1.add(Lnombre, gridBagConstraints);
 
-        Labelemail1.setName("Email"); // NOI18N
-        Labelemail1.setText("Email");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 106, 0, 0);
-        jPanel1.add(Labelemail1, gridBagConstraints);
-
+        E_Email.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         E_Email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 E_EmailActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.ipadx = 126;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 10, 0, 0);
-        jPanel1.add(E_Email, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 126;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(29, 10, 0, 0);
-        jPanel1.add(E_Nombre, gridBagConstraints);
 
-        label3.setText("Pacientes");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 106, 0, 0);
-        jPanel1.add(label3, gridBagConstraints);
+        Ltelefono.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
+        Ltelefono.setText("Telefono");
 
-        Nuevo_Paciente.setBackground(new java.awt.Color(102, 255, 204));
-        Nuevo_Paciente.setForeground(new java.awt.Color(0, 0, 0));
+        E_Telefono.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
+        E_Telefono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                E_TelefonoActionPerformed(evt);
+            }
+        });
+
+        Labelemail1.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
+        Labelemail1.setName("Email"); // NOI18N
+        Labelemail1.setText("Email");
+
+        E_ID.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
+        E_ID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                E_IDActionPerformed(evt);
+            }
+        });
+
+        Nuevo_Paciente.setBackground(new java.awt.Color(153, 215, 235));
+        Nuevo_Paciente.setFont(new java.awt.Font("Lucida Sans Unicode", 1, 12)); // NOI18N
         Nuevo_Paciente.setText("Nuevo");
+        Nuevo_Paciente.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(0, 0, 0), null, null));
         Nuevo_Paciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Nuevo_PacienteActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipadx = 28;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(16, 61, 0, 0);
-        jPanel1.add(Nuevo_Paciente, gridBagConstraints);
 
-        Modificar_Paciente.setBackground(new java.awt.Color(102, 255, 204));
-        Modificar_Paciente.setForeground(new java.awt.Color(0, 0, 0));
+        Modificar_Paciente.setBackground(new java.awt.Color(153, 215, 235));
+        Modificar_Paciente.setFont(new java.awt.Font("Lucida Sans Unicode", 1, 12)); // NOI18N
         Modificar_Paciente.setText("Modificar");
+        Modificar_Paciente.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(0, 0, 0), null, null));
         Modificar_Paciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Modificar_PacienteActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 61, 0, 0);
-        jPanel1.add(Modificar_Paciente, gridBagConstraints);
 
-        Borrar_Paciente.setBackground(new java.awt.Color(102, 255, 204));
-        Borrar_Paciente.setForeground(new java.awt.Color(0, 0, 0));
+        Borrar_Paciente.setBackground(new java.awt.Color(153, 215, 235));
+        Borrar_Paciente.setFont(new java.awt.Font("Lucida Sans Unicode", 1, 12)); // NOI18N
         Borrar_Paciente.setText("Borrar");
+        Borrar_Paciente.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(0, 0, 0), null, null));
         Borrar_Paciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Borrar_PacienteActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 30;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(23, 61, 0, 0);
-        jPanel1.add(Borrar_Paciente, gridBagConstraints);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel1.add(jPanel2, gridBagConstraints);
-
-        Boton_Salir_Pacientes.setBackground(new java.awt.Color(102, 255, 204));
-        Boton_Salir_Pacientes.setForeground(new java.awt.Color(0, 0, 0));
-        Boton_Salir_Pacientes.setText("Salir");
-        Boton_Salir_Pacientes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Boton_Salir_PacientesActionPerformed(evt);
-            }
-        });
-
-        Tabla_Pacientes.setBackground(new java.awt.Color(102, 255, 204));
         Tabla_Pacientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -350,30 +253,106 @@ public class Pacientes extends javax.swing.JDialog {
         jScrollPane2.setViewportView(Tabla_Pacientes);
         Tabla_Pacientes.getAccessibleContext().setAccessibleName("");
 
+        Boton_Salir_Pacientes.setBackground(new java.awt.Color(153, 215, 235));
+        Boton_Salir_Pacientes.setFont(new java.awt.Font("Lucida Sans Unicode", 1, 12)); // NOI18N
+        Boton_Salir_Pacientes.setText("Salir");
+        Boton_Salir_Pacientes.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(0, 0, 0), null, null));
+        Boton_Salir_Pacientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Boton_Salir_PacientesActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(104, 104, 104)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(Ltelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(23, 23, 23)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(E_ID, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                            .addComponent(E_Telefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(83, 83, 83)
+                                .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(47, 47, 47)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(Lnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(E_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(Labelemail1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(E_Email, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Modificar_Paciente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Borrar_Paciente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Nuevo_Paciente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE))
+                .addGap(159, 159, 159))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Boton_Salir_Pacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(82, 82, 82))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(Nuevo_Paciente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(E_ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(Lnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(E_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(35, 35, 35)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Labelemail1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(E_Telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Ltelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(E_Email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(Modificar_Paciente, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(Borrar_Paciente, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(50, 50, 50)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addComponent(Boton_Salir_Pacientes)
+                .addGap(75, 75, 75))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 812, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(138, 138, 138)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Boton_Salir_Pacientes)
-                .addGap(77, 77, 77))
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(Boton_Salir_Pacientes)
-                .addContainerGap(743, Short.MAX_VALUE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -387,46 +366,6 @@ public class Pacientes extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_BborrarActionPerformed
 
-    private void Borrar_PacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Borrar_PacienteActionPerformed
-        
-        try {
-            // Obtener los datos de los textfields
-            String id = E_ID.getText();
-            String nombre = E_Nombre.getText();
-            String telefono = E_Telefono.getText();
-            String email = E_Email.getText();
-            
-            //Llamamos al writer
-            XMLWriter generador = new XMLWriter();
-            
-            // Cargar el XML existente
-            generador.cargarXML("pacientes.xml");
-            
-            // Crear un nuevo objeto Paciente
-            Paciente paciente1 = new Paciente(id, nombre, telefono, email);
-            
-            // Agregar pacientes usando el objeto
-            generador.eliminarPaciente(paciente1);
-            
-            // Guardar los cambios
-            generador.guardarXML("pacientes.xml");
-            
-            //Invocamos el metodo llenar tabla para que lo actualice
-            llenarTabla();
-            
-            // Limpiar campos después de agregar para la siguiente persona agregada
-            E_ID.setText("");
-            E_Nombre.setText("");
-            E_Telefono.setText("");
-            E_Email.setText("");
-         
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    
-                         
-    }//GEN-LAST:event_Borrar_PacienteActionPerformed
-
     private void Bsalir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bsalir2ActionPerformed
         
     }//GEN-LAST:event_Bsalir2ActionPerformed
@@ -438,53 +377,6 @@ public class Pacientes extends javax.swing.JDialog {
         dispose();
 
     }//GEN-LAST:event_Boton_Salir_PacientesActionPerformed
-
-    private void E_IDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_E_IDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_E_IDActionPerformed
-
-    private void E_EmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_E_EmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_E_EmailActionPerformed
-
-    private void Nuevo_PacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nuevo_PacienteActionPerformed
-    
-    try {
-            // Obtener los datos de los textfields
-            String id = E_ID.getText();
-            String nombre = E_Nombre.getText();
-            String telefono = E_Telefono.getText();
-            String email = E_Email.getText();
-            
-            //Llamamos al writer
-            XMLWriter generador = new XMLWriter();
-            
-            // Cargar el XML existente
-            generador.cargarXML("pacientes.xml");
-            
-            // Crear un nuevo objeto Paciente
-            Paciente paciente1 = new Paciente(id, nombre, telefono, email);
-            
-            // Agregar pacientes usando el objeto al metodo del parser de escritura
-            generador.agregarPaciente(paciente1);
-            
-            // Guardar los cambios
-            generador.guardarXML("pacientes.xml");
-            
-            //Invocamos el metodo llenar tabla para que lo actualice
-            llenarTabla();
-            
-            // Limpiar campos después de agregar para la siguiente persona agregada
-            E_ID.setText("");
-            E_Nombre.setText("");
-            E_Telefono.setText("");
-            E_Email.setText("");
-         
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    
-    }//GEN-LAST:event_Nuevo_PacienteActionPerformed
 
     private void Tabla_PacientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Tabla_PacientesMouseClicked
     
@@ -502,8 +394,53 @@ public class Pacientes extends javax.swing.JDialog {
 
     }//GEN-LAST:event_Tabla_PacientesMouseClicked
 
+    private void Borrar_PacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Borrar_PacienteActionPerformed
+
+        try {
+            // Obtener los datos de los campos de texto
+            String id = E_ID.getText();
+            String nombre = E_Nombre.getText();
+            String telefono = E_Telefono.getText();
+            String email = E_Email.getText();
+            
+            // Si alguno de los campos esta vacio
+            if (id.isEmpty() || nombre.isEmpty() || telefono.isEmpty() || email.isEmpty() ) {
+                JOptionPane.showMessageDialog(this, "No has seleccionado ningun paciente para borrar. Selecciona un paciente.", "Peligro Inminente", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            //Llamamos al writer
+            XMLWriter generador = new XMLWriter();
+
+            // Cargar el XML existente
+            generador.cargarXML("Data/pacientes.xml");
+
+            // Crear un nuevo objeto Paciente
+            Paciente paciente1 = new Paciente(id, nombre, telefono, email);
+
+            // Agregar pacientes usando el objeto
+            generador.eliminarPaciente(paciente1);
+
+            // Guardar los cambios
+            generador.guardarXML("Data/pacientes.xml");
+
+            //Invocamos el metodo llenar tabla para que lo actualice
+            llenarTabla();
+
+            // Limpiar campos después de agregar para la siguiente persona agregada
+            E_ID.setText("");
+            E_Nombre.setText("");
+            E_Telefono.setText("");
+            E_Email.setText("");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }//GEN-LAST:event_Borrar_PacienteActionPerformed
+
     private void Modificar_PacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Modificar_PacienteActionPerformed
-        
+
         //Boton para modificar los pacientes ya existentes
         try {
             // Obtener los datos de los textfields
@@ -512,35 +449,98 @@ public class Pacientes extends javax.swing.JDialog {
             String telefono = E_Telefono.getText();
             String email = E_Email.getText();
             
+            // Si alguno de los campos esta vacio
+            if (id.isEmpty() || nombre.isEmpty() || telefono.isEmpty() || email.isEmpty() ) {
+                JOptionPane.showMessageDialog(this, "No has seleccionado ningun paciente para modificar. Selecciona un paciente.", "Peligro Inminente", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             //Llamamos al writer
             XMLWriter generador = new XMLWriter();
-            
+
             // Cargar el XML existente
-            generador.cargarXML("pacientes.xml");
-            
+            generador.cargarXML("Data/pacientes.xml");
+
             // Crear un nuevo objeto Paciente
             Paciente paciente1 = new Paciente(id, nombre, telefono, email);
-            
+
             // Agregar pacientes usando el objeto, implementamos el metodo modificar paciente para cambiar los datos en el objeto
             generador.modificarPaciente(paciente1);
-            
+
             // Guardar los cambios
-            generador.guardarXML("pacientes.xml");
-            
+            generador.guardarXML("Data/pacientes.xml");
+
             //Invocamos el metodo llenar tabla para que lo actualice
             llenarTabla();
-            
+
             // Limpiar campos después de agregar para la siguiente persona agregada
             E_ID.setText("");
             E_Nombre.setText("");
             E_Telefono.setText("");
             E_Email.setText("");
-         
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
+
     }//GEN-LAST:event_Modificar_PacienteActionPerformed
+
+    private void Nuevo_PacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nuevo_PacienteActionPerformed
+
+        try {
+            // Obtener los datos de los textfields
+            String id = E_ID.getText();
+            String nombre = E_Nombre.getText();
+            String telefono = E_Telefono.getText();
+            String email = E_Email.getText();
+            
+            // Si alguno de los campos esta vacio
+            if (id.isEmpty() || nombre.isEmpty() || telefono.isEmpty() || email.isEmpty() ) {
+                JOptionPane.showMessageDialog(this, "No has agregado nada en los campos de texto para agregar un paciente. Digita en los campos de texto.", "Peligro Inminente", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            //Llamamos al writer
+            XMLWriter generador = new XMLWriter();
+
+            // Cargar el XML existente
+            generador.cargarXML("Data/pacientes.xml");
+
+            // Crear un nuevo objeto Paciente
+            Paciente paciente1 = new Paciente(id, nombre, telefono, email);
+
+            // Agregar pacientes usando el objeto al metodo del parser de escritura
+            generador.agregarPaciente(paciente1);
+
+            // Guardar los cambios
+            generador.guardarXML("Data/pacientes.xml");
+
+            //Invocamos el metodo llenar tabla para que lo actualice
+            llenarTabla();
+
+            // Limpiar campos después de agregar para la siguiente persona agregada
+            E_ID.setText("");
+            E_Nombre.setText("");
+            E_Telefono.setText("");
+            E_Email.setText("");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }//GEN-LAST:event_Nuevo_PacienteActionPerformed
+
+    private void E_EmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_E_EmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_E_EmailActionPerformed
+
+    private void E_IDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_E_IDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_E_IDActionPerformed
+
+    private void E_TelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_E_TelefonoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_E_TelefonoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -605,8 +605,7 @@ public class Pacientes extends javax.swing.JDialog {
     private javax.swing.JButton Modificar_Paciente;
     private javax.swing.JButton Nuevo_Paciente;
     private javax.swing.JTable Tabla_Pacientes;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;

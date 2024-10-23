@@ -8,7 +8,14 @@ import Conceptos.Medicos;
 import Presentacion.Pacientes;
 import Presentacion.Servicios;
 import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
@@ -27,7 +34,25 @@ public class Principal extends javax.swing.JFrame {
 
         initComponents();
         
-        this.setBackground(Color.CYAN);
+        //Cargar imagen
+        try {
+            
+             // Cargar la imagen original
+            ImageIcon iconoOriginal = new ImageIcon(ImageIO.read(new File("Imagenes/logo.jpg")));
+    
+            // Redimensionar la imagen para que coincida con el tamaño del JLabel
+            Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(jLabel4.getWidth(), jLabel4.getHeight(), Image.SCALE_SMOOTH);
+    
+            // Crear un nuevo ImageIcon con la imagen redimensionada
+            ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
+    
+            // Asignar la imagen redimensionada al JLabel
+            jLabel4.setIcon(iconoEscalado);
+            
+        } catch (IOException e) {
+            System.out.println("Imagen no existe!");
+        }
+        
         this.setSize(1024, 768);
         this.setVisible(true);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);  
@@ -42,25 +67,88 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        label1 = new java.awt.Label();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         MClientes = new javax.swing.JMenuItem();
         MServicio = new javax.swing.JMenuItem();
         Mmedicos = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        label1.setText("label1");
+        jPanel1.setBackground(new java.awt.Color(235, 250, 255));
+
+        jLabel1.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
+        jLabel1.setText("By ");
+
+        jLabel2.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
+        jLabel2.setText("Jervis Fabricio Esquivel Solano, Carnet: 2024155599");
+
+        jLabel3.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
+        jLabel3.setText("Christopher Daniel Vargas Villalta, Carnet: 2024108443");
+
+        jLabel4.setBackground(new java.awt.Color(51, 255, 255));
+        jLabel4.setForeground(new java.awt.Color(204, 204, 204));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(129, 129, 129)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(149, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 377, Short.MAX_VALUE)
+                        .addComponent(jLabel1))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18))
+        );
+
+        jMenuBar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(153, 153, 153), null, null));
 
         jMenu1.setText("Archivo");
+        jMenu1.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 14)); // NOI18N
+
+        jMenuItem1.setText("Salir");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setBackground(new java.awt.Color(0, 153, 153));
         jMenu2.setText("Util");
+        jMenu2.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 14)); // NOI18N
 
-        MClientes.setText("Clientes");
+        MClientes.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
+        MClientes.setText("Pacientes");
         MClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MClientesActionPerformed(evt);
@@ -68,6 +156,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu2.add(MClientes);
 
+        MServicio.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         MServicio.setText("Servicios");
         MServicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,6 +165,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu2.add(MServicio);
 
+        Mmedicos.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         Mmedicos.setText("Medicos");
         Mmedicos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,30 +176,30 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu3.setText("Clínica Odontológica Molares");
+        jMenu3.setFont(new java.awt.Font("Lucida Sans Unicode", 1, 14)); // NOI18N
+        jMenuBar1.add(jMenu3);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(201, Short.MAX_VALUE)
-                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(193, 193, 193))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(152, 152, 152)
-                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(178, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void MClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MClientesActionPerformed
-      try {
+      
+        //Entrar a los pacientes
+        try {
             Pacientes mostrarClientes = new Pacientes(Principal.this, true);
             mostrarClientes.setVisible(true);
             
@@ -120,7 +210,9 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_MClientesActionPerformed
 
     private void MServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MServicioActionPerformed
-       try {
+       
+        //Entrar a los servicios
+        try {
             Servicios mostrarServicios = new Servicios(Principal.this, true);
             mostrarServicios.setVisible(true);
             
@@ -132,6 +224,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void MmedicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MmedicosActionPerformed
        
+        //Entrar a los medicos
         try {
             Medico mostrarMedico = new Medico(Principal.this, true);
             mostrarMedico.setVisible(true);
@@ -142,6 +235,12 @@ public class Principal extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_MmedicosActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // Accion de Salir de la venatan principal
+       
+        dispose();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -182,9 +281,15 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem MClientes;
     private javax.swing.JMenuItem MServicio;
     private javax.swing.JMenuItem Mmedicos;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private java.awt.Label label1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

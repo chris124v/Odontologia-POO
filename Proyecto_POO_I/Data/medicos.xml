@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<medicos>
+  <medico id_m="200">
+    <nombre_medico>Rodrigo Perez</nombre_medico>
+    <puesto>Odontologo</puesto>
+    <telefono>7777-8888</telefono>
+    <servicios>
+      <id>100</id>
+      <id>101</id>
+    </servicios>
+  </medico>
+  <medico id_m="201">
+    <nombre_medico>Maria Rojas</nombre_medico>
+    <puesto>Medico maxilofacial</puesto>
+    <telefono>8888-9999</telefono>
+    <servicios>
+      <id>100</id>
+      <id>101</id>
+      <id>102</id>
+    </servicios>
+  </medico>
+  <medico id_m="202">
+    <nombre_medico>Pedro Blanco</nombre_medico>
+    <puesto>Odontologo</puesto>
+    <telefono>9999-77777</telefono>
+    <servicios>
+      <id>101</id>
+    </servicios>
+  </medico>
+</medicos>

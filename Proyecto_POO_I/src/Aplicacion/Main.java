@@ -29,6 +29,8 @@ public class Main {
      */
     public static void main(String[] args) {
         
+        /* Comentarios de Pruebas en el main preliminares no actualizadas
+        
         //Probando el parser lectura de todas las clases
         
         
@@ -388,8 +390,8 @@ public class Main {
         
         //Menciona que el modificar fue exitoso.
         System.out.println("\nXML de Modificar medicos Exitosa");
-        
-        
+        */
+              
     // Inicializar la ventana principal
     Principal principal = new Principal();
     
@@ -397,8 +399,8 @@ public class Main {
     principal.setVisible(true);
     
     
-    //Prueba
-}
+    
     }
+}
     
 

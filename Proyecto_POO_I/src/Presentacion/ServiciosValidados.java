@@ -48,7 +48,7 @@ public class ServiciosValidados extends javax.swing.JDialog {
         
         // Cargar los servicios desde el archivo XML
         ArrayList<Servicio> servicios;
-        File xmlFile = new File("servicios.xml");
+        File xmlFile = new File("Data/servicios.xml");
         servicios = Util.XMLHandler.CargarServicios(xmlFile.getAbsolutePath());
 
         // Crear la estructura de datos para las filas
@@ -99,7 +99,7 @@ public class ServiciosValidados extends javax.swing.JDialog {
                 
                 //Si el checkbox es diferente de null 
                 if (seleccionado != null && seleccionado) {
-                String servicioId = (String) model.getValueAt(i, 1); // ID del servicio en la segunda columna //Obtiene el valor 1 como si estuviera seleccionado
+                String servicioId = (String) model.getValueAt(i, 1); // ID del servicio en la segunda columna, obtiene el valor 1 como si estuviera seleccionado
                 
                 serviciosSeleccionados.add(servicioId);//Se agrega a los servicios seleccionados de la tabla
             }
@@ -130,31 +130,32 @@ public class ServiciosValidados extends javax.swing.JDialog {
         Boton_Aceptar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla_ServiciosV = new javax.swing.JTable();
-        jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        Bcancelar.setBackground(new java.awt.Color(102, 255, 204));
-        Bcancelar.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(235, 250, 255));
+
+        Bcancelar.setBackground(new java.awt.Color(153, 215, 235));
+        Bcancelar.setFont(new java.awt.Font("Lucida Sans Unicode", 1, 12)); // NOI18N
         Bcancelar.setText("Cancelar");
+        Bcancelar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(0, 0, 0), null, null));
         Bcancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BcancelarActionPerformed(evt);
             }
         });
 
-        Boton_Aceptar.setBackground(new java.awt.Color(102, 255, 204));
-        Boton_Aceptar.setForeground(new java.awt.Color(0, 0, 0));
+        Boton_Aceptar.setBackground(new java.awt.Color(153, 215, 235));
+        Boton_Aceptar.setFont(new java.awt.Font("Lucida Sans Unicode", 1, 12)); // NOI18N
         Boton_Aceptar.setText("Aceptar");
+        Boton_Aceptar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(0, 0, 0), null, null));
         Boton_Aceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Boton_AceptarActionPerformed(evt);
             }
         });
 
-        Tabla_ServiciosV.setBackground(new java.awt.Color(102, 255, 204));
-        Tabla_ServiciosV.setForeground(new java.awt.Color(0, 0, 0));
         Tabla_ServiciosV.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -176,54 +177,37 @@ public class ServiciosValidados extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(Tabla_ServiciosV);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 255, 204)));
-
+        jLabel2.setFont(new java.awt.Font("Lucida Sans Unicode", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
         jLabel2.setText("Servicios del medico");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jLabel2)
-                .addContainerGap(45, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addContainerGap(20, Short.MAX_VALUE))
-        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(48, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(191, 191, 191))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(Bcancelar)
+                                .addComponent(Bcancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(Boton_Aceptar))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(142, 142, 142)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 80, Short.MAX_VALUE))
+                                .addComponent(Boton_Aceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(38, 38, 38))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Bcancelar)
                     .addComponent(Boton_Aceptar))
@@ -285,7 +269,10 @@ public class ServiciosValidados extends javax.swing.JDialog {
     }//GEN-LAST:event_Boton_AceptarActionPerformed
 
     private void BcancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BcancelarActionPerformed
-        // TODO add your handling code here:
+        //Boton para cancelar
+        
+        dispose();
+        
     }//GEN-LAST:event_BcancelarActionPerformed
 
     /**
@@ -334,7 +321,6 @@ public class ServiciosValidados extends javax.swing.JDialog {
     private javax.swing.JTable Tabla_ServiciosV;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

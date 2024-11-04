@@ -27,4 +27,40 @@
       <id>101</id>
     </servicios>
   </medico>
+  <medico id_m="678">
+    <nombre_medico>Chris</nombre_medico>
+    <telefono>7777-0000</telefono>
+    <puesto>Odontologo I</puesto>
+    <servicios>
+      <id>101</id>
+      <id>102</id>
+    </servicios>
+  </medico>
+  <medico id_m="679">
+    <nombre_medico>w3rt3</nombre_medico>
+    <telefono>r3wr</telefono>
+    <puesto>Odontologo ii</puesto>
+    <servicios>
+      <id>100</id>
+      <id>101</id>
+    </servicios>
+  </medico>
+  <medico id_m="rsgwe">
+    <nombre_medico>ewr</nombre_medico>
+    <telefono>werwer</telefono>
+    <puesto>wetw</puesto>
+    <servicios>
+      <id>100</id>
+      <id>102</id>
+    </servicios>
+  </medico>
+  <medico id_m="456456">
+    <nombre_medico>drtert</nombre_medico>
+    <telefono>wtwetw4</telefono>
+    <puesto>6456</puesto>
+    <servicios>
+      <id>100</id>
+      <id>101</id>
+    </servicios>
+  </medico>
 </medicos>

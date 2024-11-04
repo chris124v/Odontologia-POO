@@ -6,14 +6,9 @@
     <email>NA</email>
   </paciente>
   <paciente id="300001111">
-    <nombre>Juan Perez</nombre>
+    <nombre>Juan Perez 34</nombre>
     <telefono>7777-1000</telefono>
     <email>juan.p@gmail</email>
-  </paciente>
-  <paciente id="300002222">
-    <nombre>Ana Rojas</nombre>
-    <telefono>7777-2000</telefono>
-    <email>ana.r@gmail</email>
   </paciente>
   <paciente id="300003333">
     <nombre>Pedro Arnaez</nombre>

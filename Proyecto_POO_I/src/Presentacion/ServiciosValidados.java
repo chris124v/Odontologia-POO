@@ -37,6 +37,7 @@ public class ServiciosValidados extends javax.swing.JDialog {
         llenarTablaServicios();
         this.setLocation(400, 200);
     }
+    
     //Metodo para llenar la tabla 
     private void llenarTablaServicios() {
         
@@ -95,6 +96,7 @@ public class ServiciosValidados extends javax.swing.JDialog {
         
         //Recorre todas las filas
         for (int i = 0; i < model.getRowCount(); i++) {
+            
             Boolean seleccionado = (Boolean) model.getValueAt(i, 0); // Checkbox en la primera columna
                 
                 //Si el checkbox es diferente de null 

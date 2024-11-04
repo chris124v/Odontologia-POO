@@ -2,6 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
 package Util;
 
 /* Esta java class de XMLWriter corresponde a la clase que modifica, agrega y elemina los pacientes,

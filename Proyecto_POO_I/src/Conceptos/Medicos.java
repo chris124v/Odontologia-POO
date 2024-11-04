@@ -115,6 +115,8 @@ public class Medicos extends Servicio {
         return "Medico :" + this.getNombre_medico()+ ", ID :" + this.getId_m() + ", Puesto :" + this.getPuesto() + ", Telefono :" + this.getTelefono() + ", Servicios: " + String.join(", ", servicios);
     }
     
+    
+    
     //Prueba
     
 }

@@ -4,9 +4,11 @@
  */
 package Aplicacion;
 
+import Conceptos.Estado;
 import Conceptos.Medicos;
 import Conceptos.Paciente;
 import Conceptos.Servicio;
+import Conceptos.Solicitud;
 import Presentacion.Principal;
 import Util.XMLHandler;
 import Util.XMLWriter;
@@ -398,7 +400,29 @@ public class Main {
     // Hacer la ventana visible
     principal.setVisible(true);
     
+    //Probando el parser lectura de estado
+        
+        
+    // Cargar estados desde el archivo XML
+    ArrayList<Estado> estados = XMLHandler.CargarEstado("Data/estados.xml");
     
+    // Mostrar los estados cargados con parser lectura
+    System.out.println("\nEstados cargados:");
+    
+    for (Estado estado : estados) {
+    System.out.println(estado);
+    }
+    
+    
+    // Cargar solicitudes desde el archivo XML
+    ArrayList<Solicitud> solicitudes = XMLHandler.CargarSolicitud("Data/solicitudes.xml");
+        
+    // Mostrar las solicitudes cargadas con parser lectura
+    System.out.println("\nSolicitudes cargadas:");
+    
+    for (Solicitud solicitud : solicitudes) {
+    System.out.println(solicitud);
+    }
     
     }
 }

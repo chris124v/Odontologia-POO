@@ -1,42 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <solicitudes>
-
   <solicitud id="000001">
-
     <fecha_hora>2023-10-05T14:30:00</fecha_hora>
-
-    <servicio id_s="100"> 
-	<nombre_servicio>Blanqueamiento dental</nombre_servicio>
-        <precio>35000</precio>
+    <servicio id_s="100">
+      <nombre_servicio>Blanqueamiento dental</nombre_servicio>
+      <precio>35000</precio>
     </servicio>
-
-    <Paciente id_p="300001111"> 
-	<nombre_p>Juan Perez</nombre_p>
-        <telefono_p>7777-1000</telefono_p>
-        <email>juan.p@gmail</email>
+    <Paciente id_p="300001111">
+      <nombre_p>Juan Perez</nombre_p>
+      <telefono_p>7777-1000</telefono_p>
+      <email>juan.p@gmail</email>
     </Paciente>
-
-    <Medico id_m="200"> 
-	<nombre_medico>Rodrigo Perez</nombre_medico>
-        <puesto>Odontologo</puesto>
-        <telefono_m>7777-8888</telefono_m>
-        <servicios_m>
-          <id_sl>100</id_sl>
-          <id_sl>101</id_sl>
-        </servicios_m>
+    <Medico id_m="200">
+      <nombre_medico>Rodrigo Perez</nombre_medico>
+      <puesto>Odontologo</puesto>
+      <telefono_m>7777-8888</telefono_m>
+      <servicios_m>
+        <id_sl>100</id_sl>
+        <id_sl>101</id_sl>
+      </servicios_m>
     </Medico>
-
-    <estado id_e="003"> 
-	<nombre_e>Pendiente de Resultados</nombre_e>
+    <estado id_e="003">
+      <nombre_e>Pendiente de Resultados</nombre_e>
     </estado>
-
     <observaciones>Este paciente requiere atencion especial en el departamento de dermatologia.</observaciones>
-
     <otros_servicios>
       <id_lista_servi>000</id_lista_servi>
       <id_lista_servi>001</id_lista_servi>
     </otros_servicios>
-
   </solicitud>
-
-</solicitudes>
+ </solicitudes>

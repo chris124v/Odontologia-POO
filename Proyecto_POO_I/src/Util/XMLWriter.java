@@ -13,11 +13,13 @@ servicios y medicos esto mediante el uso del parser DOM de modificacion de archi
 import Conceptos.Medicos;
 import Conceptos.Paciente;
 import Conceptos.Servicio;
+import Conceptos.Solicitud;
 import java.io.File;
 import java.util.List;
 
 //Manejo de errores de lectura y escritura en archivos XML
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
@@ -561,6 +563,300 @@ public class XMLWriter {
         while (ids.getLength() > ids_servicios.length) {
             servicios.removeChild(ids.item(ids.getLength() - 1));
         }
+    }
+    
+    /*Los siguientes metodos de escritura van a funcionar para solicitudes*/
+    
+    //Inicializamos el hashmap de paciente para guardar alli los objetos de pacientes ya existentes
+    Map<String, Paciente> pacientes_existentes = new HashMap<>();
+    
+    //Verifiacion de los pacientes existentes
+    public List<Paciente> verificacion_pacientes() {
+        
+        //Iniciamos el elemento raiz
+        Element raiz = document.getDocumentElement();
+        
+        //Inicializamos el tag por el cual los va a buscar
+        NodeList pacientes = raiz.getElementsByTagName("paciente");
+        
+        //Creamos un arraylist que los va a guardar
+        List<Paciente> lista_pacientes = new ArrayList<>();
+        
+        //Ciclo for para recorrer el arbol
+        for (int i = 0; i < pacientes.getLength(); i++) {
+            
+            //Inicializamos el objeto paciente
+            Element paciente = (Element) pacientes.item(i);
+            
+            //Obtenemos el id
+            String id = paciente.getAttribute("id");
+            
+            //Creamos el objeto
+            Paciente paciente_actual = new Paciente();
+            
+            //Le establecemos como objeto los atributos que le pertenecen
+            paciente_actual.setId(id);
+            paciente_actual.setNombre(paciente.getElementsByTagName("nombre").item(0).getTextContent());
+            paciente_actual.setTelefono(paciente.getElementsByTagName("telefono").item(0).getTextContent());
+            paciente_actual.setEmail(paciente.getElementsByTagName("email").item(0).getTextContent());
+            
+            //En el hashmap agregamos el paciente
+            pacientes_existentes.put(id, paciente_actual);
+            
+            //Agregamos el objeto al hashmap
+            lista_pacientes.add(paciente_actual);
+        }
+        
+        //Retorna la lista de los paciente
+        return lista_pacientes;
+    }
+    
+    //Creamos el hashmap necesario para recorrer los servicios
+    Map<String, Servicio> servicios_existentes = new HashMap<>();
+    
+    //Metodo para cargar los servicios existentes
+    public List<Servicio> verificacion_servicios() {
+        
+        //Establecemos un elemento raiz para recorrerlo
+        Element raiz = document.getDocumentElement();
+        
+        //Establecemos un nodelist por el cual se van a recorrer los servicios existentes por el tag servicio
+        NodeList servicios = raiz.getElementsByTagName("servicio");
+        
+        //Creamos el arraylist donde tendremos la lista de los servicios
+        List<Servicio> lista_servicios = new ArrayList<>();
+        
+        // For que recorre el nodelist de servicios
+        for (int i = 0; i < servicios.getLength(); i++) {
+            
+            //Establecemos el elemento inicial
+            Element servicio = (Element) servicios.item(i);
+            String id = servicio.getAttribute("id");
+
+            // Crear objeto servicio y establecer los atributos
+            Servicio nuevoServicio = new Servicio();
+            
+            //Establecemos los atributos
+            nuevoServicio.setId(id);
+            nuevoServicio.setNombre_servicio(servicio.getElementsByTagName("nombre_servicio").item(0).getTextContent());
+            nuevoServicio.setPrecio(Double.parseDouble(servicio.getElementsByTagName("precio").item(0).getTextContent()));
+
+            // Agregar al hashmap y a la lista
+            servicios_existentes.put(id, nuevoServicio);
+            lista_servicios.add(nuevoServicio);
+        }
+        
+        //Retornamos la lista de los servicios cargados
+        return lista_servicios;
+    }
+    
+    
+    //Metodo para crear una solicitud inicial
+    
+    /*Aqui tomamos en cuenta que inicialmente la solicitud solo tomara los objetos de "Paciente", "Servicio"
+    como los ya existentes mientras que en medicos, otros_servicios y estado solo es necesario obtener 
+    el tag inicial esto posteriormente se hara en el metodo de atender solicitudes, en donde si verificamos
+    el estado, medicos y otros servicios. Por ende aqui para esos elementos mencionados anteriormente solo 
+    crearemos su espacio en el xml
+    */
+    
+    //Metodo para crear la solicitud
+    public void crearSolicitud(Solicitud solicitud) {
+        
+        // Obtener el elemento raíz del XML
+        Element raiz = document.getDocumentElement();
+
+        // Crear un nuevo elemento de solicitud
+        Element solicitud_nueva = document.createElement("solicitud");
+        solicitud_nueva.setAttribute("id", solicitud.getId());
+
+        // Establecer la fecha de la solicitud, para eso llamamos al formato usado en la clase
+        Element fecha_hora = document.createElement("fecha_hora");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        fecha_hora.setTextContent(solicitud.getFecha_hora().format(formatter)); 
+        solicitud_nueva.appendChild(fecha_hora);
+
+        // Validar y agregar servicio usando el hashmap, mientras el get sea diferente de null
+        if (solicitud.getTipo_servicio() != null) {
+            
+            //Establecemos un string que va a obtener directamente el id del servicio, aqui llamamos a metodos de servicios
+            String servicioId = solicitud.getTipo_servicio().getId();
+            
+            //Si justamente el hashmap tiene ese id del servicio
+            if (servicios_existentes.containsKey(servicioId)) {
+                
+                //Establecemos una variable de tipo servicio para obtener justamente el servicio escogido
+                Servicio servicio = servicios_existentes.get(servicioId);
+                
+                //Creamos un elemento de servicio en el xml
+                Element servicio_elemento = document.createElement("servicio");
+                
+                //Primero establecemos el atributo del id del servicio
+                servicio_elemento.setAttribute("id_s", servicio.getId());
+                
+                //Posteriormente creamos los elementos respectivos como el nombre y precio
+                Element nombre_s = document.createElement("nombre_servicio");
+                nombre_s.setTextContent(servicio.getNombre_servicio());
+                servicio_elemento.appendChild(nombre_s);
+                
+                //Este seria el precio
+                Element precioServicioElem = document.createElement("precio");
+                precioServicioElem.setTextContent(String.valueOf(servicio.getPrecio()));
+                servicio_elemento.appendChild(precioServicioElem);
+                
+                //Agregamos el servicio directamente a la solicitud
+                solicitud_nueva.appendChild(servicio_elemento);
+            
+            //Este else lo hacemos en caso de que dicho servicio ingresado no existe en el hashmap
+            } else {
+                System.out.println("Error: Servicio con ID " + servicioId + " no encontrado. Peligro Inminente");
+            }
+        }
+
+        // Validar y agregar paciente funciona de manera igual a servicios en este caso dado que para crear si necesitamos el id de la persona
+        if (solicitud.getId_paciente() != null) {
+            
+            //Establecemos una variable que guardara al paciente
+            String pacienteId = solicitud.getId_paciente().getId();
+            
+            //Si en el hashmap se encuentra el id de esta persona
+            if (pacientes_existentes.containsKey(pacienteId)) {
+                
+                //Establecemos un objeto de tipo paciente que obtenga la variable contenida que tiene la info del paciente
+                Paciente paciente = pacientes_existentes.get(pacienteId);
+                
+                //Aqui creamos el tag inicial de paciente
+                Element paciente_elemento = document.createElement("Paciente");
+                
+                //Establecemos primero como atributo el id
+                paciente_elemento.setAttribute("id_p", paciente.getId());
+                
+                //Posteriormente creamos un elemento que cree el tag del nombre y obtenemos el nombre con get
+                Element nombre_p = document.createElement("nombre_p");
+                nombre_p.setTextContent(paciente.getNombre());
+                paciente_elemento.appendChild(nombre_p);
+                
+                //Aqui hacemos lo mismo con el telefono
+                Element telefono_p = document.createElement("telefono_p");
+                telefono_p .setTextContent(paciente.getTelefono());
+                paciente_elemento.appendChild(telefono_p );
+                
+                //Hacemos lo mismo con el email del paciente
+                Element emailPacienteElem = document.createElement("email");
+                emailPacienteElem.setTextContent(paciente.getEmail());
+                paciente_elemento.appendChild(emailPacienteElem);
+                
+                //Agregamos el paciente a la solicitud
+                solicitud_nueva.appendChild(paciente_elemento);
+            
+            //Else en caso de que no encontremos el paciente en el hashmap
+            } else {
+                System.out.println("Error: Paciente con ID " + pacienteId + " no encontrado. Peligro Inminente");
+            }
+        }
+        
+        // Caso de agregar el Medico en este caso solo vamos a agregar un espacio en blanco dado a que esto se hace en atender pero aqui por el momento dejamos el tag hecho
+        Element medico_elemento = document.createElement("Medico");
+        
+        //Establecemos el atributo de id del medico y lo instanciamos como espacio en blanco
+        medico_elemento.setAttribute("id_m", solicitud.getMedico() != null ? solicitud.getMedico().getId() : " ");
+        
+        //Aqui creamos el elemento del nombre del medico y mientras sea diferente de nulo ponemos un espacio en blanco y usamos el metodo get
+        Element nombre_m = document.createElement("nombre_medico");
+        nombre_m.setTextContent(solicitud.getMedico() != null ? solicitud.getMedico().getNombre_medico() : " ");
+        medico_elemento.appendChild(nombre_m);
+        
+        //Sucede lo mismo para el puesto del medico
+        Element puesto_m = document.createElement("puesto");
+        puesto_m.setTextContent(solicitud.getMedico() != null ? solicitud.getMedico().getPuesto() : " ");
+        medico_elemento.appendChild(puesto_m);
+        
+        //Tambien pasa lo mismo con el telefono del medico
+        Element telefono_m = document.createElement("telefono_m");
+        telefono_m.setTextContent(solicitud.getMedico() != null ? solicitud.getMedico().getTelefono() : " ");
+        medico_elemento.appendChild(telefono_m);
+        
+        //Aqui viene la parte de los servicios a los que se dedica el medico
+        Element servicios_me = document.createElement("servicios_m");
+        
+        //Mientras el medico no sea inexistente o no tenga nada y hayan servicios 
+        if (solicitud.getMedico() != null && solicitud.getMedico().getServicios() != null) {
+            
+            //En este ciclo for obtenemos los servicios del medico pero no inicializamos nada solo dejamos el espacio hecho
+            for (String id_servi : solicitud.getMedico().getServicios()) {
+                Element elemento_se = document.createElement("id_sl");
+                elemento_se.setTextContent(id_servi);
+                servicios_me.appendChild(elemento_se);
+            }
+        
+        //En caso de que haya medicos creamos el id de los servicios que proove por si hay algun error, nuevamente con el espacio en blanco
+        } else {
+            Element id_servici = document.createElement("id_sl");
+            id_servici.setTextContent(" ");
+            servicios_me.appendChild(id_servici);
+        }
+        
+        //Anadimos los servicios al medico
+        medico_elemento.appendChild(servicios_me);
+        
+        //Anadimos el medico a la solicitud
+        solicitud_nueva.appendChild(medico_elemento);
+        
+
+        // Crear el estado o inicializarlo siempre en nuevo
+        if (solicitud.getEstado() != null) {
+            
+            //Creamos el tag del estado
+            Element estado_elemento = document.createElement("estado");
+            
+            //Establecemos primeramente el atributo del id
+            estado_elemento.setAttribute("id_e", solicitud.getEstado().getId());
+            
+            //Creamos el tag del nombre
+            Element nombre_e = document.createElement("nombre_e");
+            nombre_e.setTextContent(solicitud.getEstado().getNombre());
+            
+            //Anadimos el nombre del estado al elemento
+            estado_elemento.appendChild(nombre_e);
+            
+            //Este estado se pone en la solicitud
+            solicitud_nueva.appendChild(estado_elemento);
+        }
+        
+        // Agregar las observaciones de la solicitud nada mas creamos el tag
+        Element observacionesElem = document.createElement("observaciones");
+        observacionesElem.setTextContent(solicitud.getObservaciones() != null ? solicitud.getObservaciones() : " ");
+        solicitud_nueva.appendChild(observacionesElem);
+
+        // Crear los otros servicios solo el tag nuevamente 
+        Element otros_serviciii = document.createElement("otros_servicios");
+        
+        //Mientras la lista no este vacia o sea diferente de null
+        if (solicitud.getOtros_servicios() != null && !solicitud.getOtros_servicios().isEmpty()) {
+            
+            //Creamos un objeto de servicio
+            for (Servicio otro_servicio : solicitud.getOtros_servicios()) {
+                
+                //Definimos solamente el id
+                Element otrooooo = document.createElement("id_lista_servi");
+                otrooooo.setTextContent(otro_servicio.getId());
+                otros_serviciii.appendChild(otrooooo);
+            }
+        
+        //En caso de que la lista no este vacia
+        } else {
+            
+            //Tambien anadimos el id del servicio esto es en caso de error y nuevamente con espacio en blanco
+            Element otrosssss = document.createElement("id_lista_servi");
+            otrosssss.setTextContent(" ");
+            otros_serviciii.appendChild(otrosssss);
+        }
+        
+        //Anadimos estos tag inicializados a la solicitud
+        solicitud_nueva.appendChild(otros_serviciii);
+
+        // Finalmente agregamos toda la solicitud a la raiz
+        raiz.appendChild(solicitud_nueva);
     }
 
     

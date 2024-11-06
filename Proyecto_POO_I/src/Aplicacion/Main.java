@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import Util.XMLHandler;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 /**
@@ -311,7 +312,7 @@ public class Main {
             e.printStackTrace();
         }
         
-         //Ensena los medicos agregados
+        //Ensena los medicos agregados
         System.out.println("\nMedicos Agregados:");
         
         //Print de todos los medicos
@@ -400,6 +401,7 @@ public class Main {
     // Hacer la ventana visible
     principal.setVisible(true);
     
+    
     //Probando el parser lectura de estado
         
         
@@ -413,6 +415,11 @@ public class Main {
     System.out.println(estado);
     }
     
+    //Finalizacion parser de lectura estado
+    
+    
+    //Probando el parser de lectura de solicitudes
+    
     
     // Cargar solicitudes desde el archivo XML
     ArrayList<Solicitud> solicitudes = XMLHandler.CargarSolicitud("Data/solicitudes.xml");
@@ -424,7 +431,109 @@ public class Main {
     System.out.println(solicitud);
     }
     
+    
+    //Finalizacion parser de lectura solicitudes
+    
+    
+    
+    //Probando parser de escritura para crear solicitudes
+    
+    
+    try {
+        
+        // Crear instancia del XMLWriter
+        XMLWriter generador = new XMLWriter();
+        
+        // Cargar el XML de servicios y pacientes para la verificacion del hashmap
+        generador.cargarXML("Data/servicios.xml");
+        generador.verificacion_servicios();
+        generador.cargarXML("Data/pacientes.xml");
+        generador.verificacion_pacientes();
+
+        // Cargar el XML de solicitudes
+        generador.cargarXML("Data/solicitudes.xml");
+
+        // Crear una nueva solicitud
+        Solicitud solicitud_n = new Solicitud();
+        
+        //Establecemos un id propio, la hora actual y un comentario de observaciones
+        solicitud_n.setId("3001");
+        solicitud_n.setFecha_hora(LocalDateTime.now());
+        solicitud_n.setObservaciones("Necesito una limpieza dental profunda");
+
+        //Establecemos un nuevo servicio para la solicitud que ya existe
+        Servicio servicio = new Servicio();
+        servicio.setId("100"); // ID de un servicio existente
+        solicitud_n.setTipo_servicio(servicio);
+
+        // Establecemos un paciente ya existente
+        Paciente paciente = new Paciente();
+        paciente.setId("300002222"); // ID de un paciente existente
+        solicitud_n.setId_paciente(paciente); //Usamos el metodo propio de nuestra clase
+        
+        // Crear un Medico con valores por defecto (
+        Medicos medico = new Medicos();
+        
+        //Usamos los metodos de set para establecer que como la solicitud es nueva aun no hay un medico
+        medico.setId_m("000000");
+        medico.setNombre_medico("No hay");
+        medico.setPuesto("No hay");
+        medico.setTelefono("No hay");
+        medico.setServicios(new ArrayList<>(Arrays.asList("No hay")));
+        solicitud_n.setMedico(medico);
+
+        // Creamos un Estado con valores por defecto de nuevo que si existe, siempre sera nuevo
+        Estado estado = new Estado();
+        estado.setId("000");
+        estado.setNombre("Nuevo");
+        solicitud_n.setEstado(estado);
+        
+        // Establecemos servicios no asignados dado a que esto no se hace aqui
+        List<Servicio> otrosServicios = new ArrayList<>();
+            
+        // Creamos un servicio con id "No hat" y agregarlo a la lista
+        Servicio servicioOtros = new Servicio();
+        servicioOtros.setId("No hay");  
+        otrosServicios.add(servicioOtros);
+        
+        //Lo agregamos a la solicitud
+        solicitud_n.setOtros_servicios(otrosServicios);
+
+        // Agregar la solicitud al XML
+        generador.crearSolicitud(solicitud_n);
+
+        // Guardar los cambios en el archivo XML
+        generador.guardarXML("Data/solicitudes.xml");
+    
+    //Excepcion en caso de errores
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+
+    // Mostrar solicitudes agregadas
+    System.out.println("\nSolicitudes Agregadas:");
+    
+    // Imprimir todas las solicitudes cargadas
+    for (Solicitud solicitud : solicitudes) {
+        System.out.println(solicitud);
+    }
+    
+    // Confirmacion de que el agregado fue bueno
+    System.out.println("\nXML de Agregar Solicitudes Exitosa\n");
+    
+    
+    //Finalizacion crear solicitud
+    
+    
+    //Probando atender solicitud
+    
 }
+    
+    
+    
+    
+    
+}
+
     
 

@@ -4,6 +4,30 @@
  */
 package Presentacion;
 
+import Conceptos.Estado;
+import Conceptos.Medicos;
+import Conceptos.Paciente;
+import Conceptos.Servicio;
+import Conceptos.Solicitud;
+import static Util.XMLHandler.CargarPacientes;
+import static Util.XMLHandler.CargarServicios;
+import Util.XMLWriter;
+import java.awt.Component;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author INTEL
@@ -16,8 +40,54 @@ public class CrearSolicitud extends javax.swing.JDialog {
     public CrearSolicitud(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        llenarComboPacientes();
+        llenarComboServicio();
     }
-
+    
+    //Metodo que permite llenar el combo de pacientes
+    public void llenarComboPacientes() {
+        
+        //Llamamos al arraylist que carga a los pacientes existentes
+        ArrayList<Paciente> pacientes = CargarPacientes("Data/pacientes.xml");
+        
+        //Utilizamos default combobox para inicializar el modelo
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        
+        //Recorremos los pacientes del arraylist
+        for(Paciente paciente : pacientes) {
+            
+            // Solo agregamos id y nombre al combo
+            String item = paciente.getId() + " - " + paciente.getNombre();
+            model.addElement(item);
+        }
+        
+        //Establecemos el modelo en el combo que ocupamos
+        Combo_paciente.setModel(model);
+    }
+    
+    //Metodo de llenarcomboservicoo que funciona para llenar el combo de los servicios
+    public void llenarComboServicio() {
+        
+        //Llamamos al arraylist de carga los servicios o en este caso al metodo del handler
+        ArrayList<Servicio> servicios = CargarServicios("Data/servicios.xml");
+        
+        //Establecemos el modelo del comboboxo
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        
+        //Recorremos todos los servicios existentes
+        for(Servicio servicio : servicios) {
+            
+            // Solo agregamos iD y nombre al combo
+            String item = servicio.getId() + " - " + servicio.getNombre_servicio();
+            
+            //Se anade al modelo
+            model.addElement(item);
+        }
+        
+        //Llamamos al combo de servicio 
+        Combo_servicio.setModel(model);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,154 +101,320 @@ public class CrearSolicitud extends javax.swing.JDialog {
         jPopupMenu2 = new javax.swing.JPopupMenu();
         jPopupMenu3 = new javax.swing.JPopupMenu();
         jPanel1 = new javax.swing.JPanel();
-        Bsalir = new javax.swing.JButton();
-        TextID = new javax.swing.JTextField();
+        Observaciones_campo = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        Calendario_combo = new com.toedter.calendar.JDateChooser();
+        jLabel3 = new javax.swing.JLabel();
+        Combo_servicio = new javax.swing.JComboBox<>();
+        Id_solicitud_campo = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         Paciente = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        Combopaciente = new javax.swing.JComboBox<>();
-        Comboespecialidad = new javax.swing.JComboBox<>();
-        TextObservaciones = new javax.swing.JTextField();
-        Bguardar = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        Combo_paciente = new javax.swing.JComboBox<>();
+        Boton_guardar = new javax.swing.JButton();
+        Boton_salir = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        Bsalir.setText("Salir");
-        Bsalir.addActionListener(new java.awt.event.ActionListener() {
+        Observaciones_campo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BsalirActionPerformed(evt);
+                Observaciones_campoActionPerformed(evt);
             }
         });
+
+        jLabel5.setText("Observaciones");
+
+        jLabel4.setText("Fecha Hora");
+
+        jLabel3.setText("Especialidad");
+
+        Combo_servicio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        Combo_servicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Combo_servicioActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("ID");
+
+        Paciente.setText("Paciente");
+
+        Combo_paciente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        Combo_paciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Combo_pacienteActionPerformed(evt);
+            }
+        });
+
+        Boton_guardar.setText("Guardar");
+        Boton_guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Boton_guardarActionPerformed(evt);
+            }
+        });
+
+        Boton_salir.setText("Salir");
+        Boton_salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Boton_salirActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Servicio");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(Bsalir)
-                .addContainerGap(596, Short.MAX_VALUE))
+                .addGap(44, 44, 44)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel6))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(Id_solicitud_campo)
+                            .addComponent(Combo_servicio, 0, 183, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Paciente, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Combo_paciente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Calendario_combo, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(Boton_guardar)
+                        .addGap(80, 80, 80)
+                        .addComponent(Boton_salir)
+                        .addGap(183, 183, 183)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(140, 140, 140)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(Observaciones_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(204, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Bsalir)
-                .addGap(27, 27, 27))
+                .addGap(43, 43, 43)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(Id_solicitud_campo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Paciente)
+                    .addComponent(Combo_paciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(jLabel3)
+                        .addComponent(Combo_servicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Calendario_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(51, 51, 51)
+                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
+                .addComponent(Observaciones_campo, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Boton_guardar)
+                    .addComponent(Boton_salir))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
-
-        jLabel1.setText("ID");
-
-        Paciente.setText("Paciente");
-
-        jLabel3.setText("Especialidad");
-
-        jLabel4.setText("Fecha Hora");
-
-        jLabel5.setText("Observaciones");
-
-        Combopaciente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        Comboespecialidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        TextObservaciones.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextObservacionesActionPerformed(evt);
-            }
-        });
-
-        Bguardar.setText("Guardar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(TextID, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(36, 36, 36)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(50, 50, 50)
-                                        .addComponent(Paciente)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(Combopaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(Comboespecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addGap(47, 47, 47)
-                                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(TextObservaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 6, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Bguardar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(Paciente)
-                    .addComponent(TextID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Combopaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(Comboespecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4))
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(TextObservaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                .addComponent(Bguardar)
-                .addGap(29, 29, 29))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BsalirActionPerformed
-    this.dispose();
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BsalirActionPerformed
+    private void Boton_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_salirActionPerformed
+        
+        //Salir del crear solicitud
+        dispose();
+        
+    }//GEN-LAST:event_Boton_salirActionPerformed
 
-    private void TextObservacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextObservacionesActionPerformed
+    private void Observaciones_campoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Observaciones_campoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TextObservacionesActionPerformed
+    }//GEN-LAST:event_Observaciones_campoActionPerformed
+
+    private void Combo_pacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Combo_pacienteActionPerformed
+        
+        //Combo de los pacientes existentes para seleccionarlos
+        
+        //Definimos un string que almacena el paciente seleccionado
+        String seleccion = (String) Combo_paciente.getSelectedItem();
+        
+        //Si verdaderamente se almaceno algo aqui
+        if (seleccion != null) {
+            
+            //Printeamos el paciente seleccionado (esto no es practico solo lo uso para verificar)
+            System.out.println("Paciente seleccionado: " + seleccion);
+        }
+
+    }//GEN-LAST:event_Combo_pacienteActionPerformed
+
+    private void Combo_servicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Combo_servicioActionPerformed
+        //Combo de los servicios existentes para seleccionarlos
+        
+        String seleccion = (String) Combo_servicio.getSelectedItem();
+        
+        if (seleccion != null) {
+            // Aquí ya tienes el paciente seleccionado en formato "ID - Nombre"
+            System.out.println("Servicio seleccionado: " + seleccion);
+        }
+        
+    }//GEN-LAST:event_Combo_servicioActionPerformed
+
+    private void Boton_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_guardarActionPerformed
+        
+        // Boton para guardar la solicitud
+        try {
+            
+            //Aqui obtenemos los campos de textto definidos como 
+            String id_solicitud = Id_solicitud_campo.getText();
+            String observaciones = Observaciones_campo.getText();
+            
+            //Esto nos sirve para obtenerlo desde el calendario
+            Date fecha = Calendario_combo.getDate();
+            
+            //Aqui verificamos que todos los campos esten llenos
+            if (id_solicitud.isEmpty() || observaciones.isEmpty() || fecha == null || Combo_paciente.getSelectedItem() == null) {
+                
+                //Aqui un dialogo en caso de que no se seleccionen todos
+                JOptionPane.showMessageDialog(this, "Por favor complete todos los campos requeridos", "Campos Incompletos", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            //Aqui verificamos que todos los campos esten llenos
+            if (Combo_servicio.getSelectedItem() == null || Calendario_combo.getDate() == null) {
+                
+                //Aqui un dialogo en caso de que no se seleccionen todos
+                JOptionPane.showMessageDialog(this, "Por favor complete todos los campos requeridos", "Campos Incompletos", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Convertir la fecha del calendario
+            LocalDateTime fechaHora;
+            
+            //Este try funciona para convertir lo que nos da el calendario a un local date time
+            try {
+                
+                // Convertir Date a LocalDateTime
+                fechaHora = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+            
+            //Este seria un error en caso de que no podamos procesar la fecha 
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error al procesar la fecha seleccionada", "Error de Fecha", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+    
+            //Crear instancia del XMLWriter
+            XMLWriter generador = new XMLWriter();
+    
+            // Cargar los XML necesarios y verificar
+            generador.cargarXML("Data/servicios.xml");
+            generador.verificacion_servicios();
+            generador.cargarXML("Data/pacientes.xml");
+            generador.verificacion_pacientes();
+            generador.cargarXML("Data/solicitudes.xml");
+    
+            // Creamos la nueva solicitud
+            Solicitud solicitud_n = new Solicitud();
+    
+            // Establecer datos basicos
+            solicitud_n.setId(id_solicitud);
+            solicitud_n.setFecha_hora(fechaHora); 
+            solicitud_n.setObservaciones(observaciones);
+    
+            // Establecer el servicio
+            Servicio servicio = new Servicio();
+            
+            String seleccion_servicio = (String) Combo_servicio.getSelectedItem();
+            String id_servicio = seleccion_servicio.split(" - ")[0];
+            servicio.setId(id_servicio);
+            solicitud_n.setTipo_servicio(servicio);
+    
+            // Establecer el paciente que queremos segun el combo de pacientes 
+            Paciente paciente = new Paciente();
+            
+            //Aqui establecemos como string el paciente que seleccionamos del combo
+            String seleccionPaciente = (String) Combo_paciente.getSelectedItem();
+            String idPaciente = seleccionPaciente.split(" - ")[0];
+            paciente.setId(idPaciente);
+            solicitud_n.setId_paciente(paciente);
+    
+            //Crear medico por defecto osea que no se ha inicializado
+            Medicos medico = new Medicos();
+            
+            //Aca establecemos sus atributos solo para que aparezcan en el xml
+            medico.setId_m("000000");
+            medico.setNombre_medico("No hay");
+            medico.setPuesto("No hay");
+            medico.setTelefono("No hay");
+            medico.setServicios(new ArrayList<>(Arrays.asList("No hay")));
+            
+            //Lo anadimos a la solicitud
+            solicitud_n.setMedico(medico);
+    
+            // Crear estado siempre en nuevo una vez se da la solicitud
+            Estado estado = new Estado();
+            
+            //Establecemos los atributos
+            estado.setId("000");
+            estado.setNombre("Nuevo");
+            solicitud_n.setEstado(estado);
+    
+            //Aqui solo iniciamos el objeto servicios y lo anadimos al xml
+            List<Servicio> otrosServicios = new ArrayList<>();
+            Servicio servicio_otros = new Servicio();
+            servicio_otros.setId("No hay");
+            otrosServicios.add(servicio_otros);
+            solicitud_n.setOtros_servicios(otrosServicios);
+    
+            //Guardar la solicitud
+            generador.crearSolicitud(solicitud_n);
+            generador.guardarXML("Data/solicitudes.xml");
+    
+            // Limpiar los campos dados 
+            Id_solicitud_campo.setText("");
+            Observaciones_campo.setText("");
+            Calendario_combo.setDate(null); 
+            Combo_paciente.setSelectedIndex(0);
+            Combo_servicio.setSelectedIndex(0);
+    
+            //Mostrar mensaje de exito si si se agrega la solicitud
+            JOptionPane.showMessageDialog(this, "Solicitud guardada exitosamente", "Exito lo lograste", JOptionPane.INFORMATION_MESSAGE);
+            
+            //Excepcion de guardar la solicitud
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al guardar la solicitud: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+        
+    }//GEN-LAST:event_Boton_guardarActionPerformed
 
     /**
      * @param args the command line arguments
      */
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -208,10 +444,12 @@ public class CrearSolicitud extends javax.swing.JDialog {
             public void run() {
                 CrearSolicitud dialog = new CrearSolicitud(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }
+                    
                 });
                 dialog.setVisible(true);
             }
@@ -219,18 +457,19 @@ public class CrearSolicitud extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Bguardar;
-    private javax.swing.JButton Bsalir;
-    private javax.swing.JComboBox<String> Comboespecialidad;
-    private javax.swing.JComboBox<String> Combopaciente;
+    private javax.swing.JButton Boton_guardar;
+    private javax.swing.JButton Boton_salir;
+    private com.toedter.calendar.JDateChooser Calendario_combo;
+    private javax.swing.JComboBox<String> Combo_paciente;
+    private javax.swing.JComboBox<String> Combo_servicio;
+    private javax.swing.JTextField Id_solicitud_campo;
+    private javax.swing.JTextField Observaciones_campo;
     private javax.swing.JLabel Paciente;
-    private javax.swing.JTextField TextID;
-    private javax.swing.JTextField TextObservaciones;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenu2;

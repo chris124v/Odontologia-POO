@@ -394,14 +394,9 @@ public class Main {
         //Menciona que el modificar fue exitoso.
         System.out.println("\nXML de Modificar medicos Exitosa");
         */
-              
-    // Inicializar la ventana principal
-    Principal principal = new Principal();
-    
-    // Hacer la ventana visible
-    principal.setVisible(true);
     
     
+    /*
     //Probando el parser lectura de estado
         
         
@@ -526,7 +521,6 @@ public class Main {
     
     
     //Probando atender solicitud
-    
     try {
         
         // Crear instancia del XMLWriter
@@ -589,17 +583,16 @@ public class Main {
     } catch (Exception e) {
         e.printStackTrace();
     }
+    */
     
+    // Inicializar la ventana principal
+    Principal principal = new Principal();
     
-    
-    
+    // Hacer la ventana visible
+    principal.setVisible(true);
     
 }
-    
-    
-    
-    
-    
+
 }
 
     

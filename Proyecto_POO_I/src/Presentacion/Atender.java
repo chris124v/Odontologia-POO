@@ -4,6 +4,25 @@
  */
 package Presentacion;
 
+import Conceptos.Estado;
+import Conceptos.Medicos;
+import Conceptos.Paciente;
+import Conceptos.Servicio;
+import Conceptos.Solicitud;
+import static Util.XMLHandler.CargarEstado;
+import static Util.XMLHandler.CargarMedico;
+import static Util.XMLHandler.CargarPacientes;
+import static Util.XMLHandler.CargarSolicitud;
+import Util.XMLWriter;
+import java.io.File;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author INTEL
@@ -16,7 +35,134 @@ public class Atender extends javax.swing.JDialog {
     public Atender(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        llenarcomboMedicos();
+        llenarcomboEstado();
+        llenarTablaOtrosServicios();
+        Combo_Solicitudes();
+        
     }
+    
+    public void llenarcomboMedicos() {
+        
+        //Llamamos al arraylist que carga a los medicos existentes
+        ArrayList<Medicos> medicos_c = CargarMedico("Data/medicos.xml");
+        
+        //Utilizamos default combobox para inicializar el modelo
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        
+        //Recorremos los medicos del arraylist
+        for(Medicos medicos : medicos_c) {
+            
+            // Solo agregamos id y nombre al combo
+            String item = medicos.getId_m() + " - " + medicos.getNombre_medico();
+            model.addElement(item);
+        }
+        
+        //Establecemos el modelo en el combo que ocupamos
+        Combo_medico.setModel(model);
+    }
+    
+    public void llenarcomboEstado () {
+        
+        //Llamamos al arraylist que carga a los estados existentes
+        ArrayList<Estado> estados = CargarEstado("Data/estados.xml");
+        
+        //Utilizamos default combobox para inicializar el modelo
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        
+        //Recorremos los estados del arraylist
+        for(Estado estado : estados) {
+            
+            // Solo agregamos id y nombre al combo
+            String item = estado.getId() + " - " + estado.getNombre();
+            model.addElement(item);
+        }
+        
+        //Establecemos el modelo en el combo que ocupamos
+        Combo_estado.setModel(model);    
+    }
+    
+    //Este seria el metodo para obtener las solicitudes del combo
+    private void Combo_Solicitudes() {
+        
+        //Llamamos al arraylist que carga a las solicitudes existentes
+        ArrayList<Solicitud> solicitudes = CargarSolicitud("Data/solicitudes.xml");
+        
+        //Utilizamos default combobox para inicializar el modelo
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        
+        //Recorremos las solicitudes del arraylist
+        for(Solicitud solicitud : solicitudes) {
+            
+            // Solo agregamos id de la solicitud
+            String item = solicitud.getId();
+            model.addElement(item);
+        }
+        
+        //Establecemos el modelo en el combo que ocupamos
+        Combo_solicitud.setModel(model); 
+        
+    }
+    
+    
+    //Metodo para llenar la tabla de los servicios adicionales
+    private void llenarTablaOtrosServicios() {
+        
+        // Definir los nombres de las columnas
+        Vector<String> columnNames = new Vector<>();
+        columnNames.add("Seleccionar"); // Columna para checkbox
+        columnNames.add("ID");
+        columnNames.add("Nombre Servicio");
+        
+        // Cargar los servicios desde el archivo XML
+        ArrayList<Servicio> servicios;
+        File xmlFile = new File("Data/servicios.xml");
+        servicios = Util.XMLHandler.CargarServicios(xmlFile.getAbsolutePath());
+
+        // Crear la estructura de datos para las filas
+        Vector<Vector<Object>> rowData = new Vector<>();
+
+        //For para recorrer y agregar todos los servicios de la clase servicio
+        for (Servicio s : servicios) {
+            
+            Vector<Object> row = new Vector<>();
+            
+            row.add(false); 
+            row.addElement(s.getId());
+            row.addElement(s.getNombre_servicio());
+            rowData.add(row);
+        }
+
+        // Crear el modelo de tabla
+        DefaultTableModel model = new DefaultTableModel(rowData, columnNames) {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 0) { // Primera columna es para checkbox entonces si se puede modificar
+                    return Boolean.class;
+                }
+                return super.getColumnClass(columnIndex);
+            }
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 0; // Solo la columna del checkbox es editable
+            }
+        };
+
+        // Establecer el modelo en la tabla
+        Tabla_servicios_adicionales.setModel(model);
+    }
+    
+    // Método auxiliar para marcar los servicios (aun no funca)
+    private void marcarServiciosAdicionales(List<Servicio> serviciosAdicionales) {
+        DefaultTableModel model = (DefaultTableModel) Tabla_servicios_adicionales.getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String idServicio = (String) model.getValueAt(i, 1);
+            boolean estaSeleccionado = serviciosAdicionales.stream().anyMatch(s -> s.getId().equals(idServicio));model.setValueAt(estaSeleccionado, i, 0);
+        }
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,43 +173,65 @@ public class Atender extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
-        Comboservicio = new javax.swing.JComboBox<>();
-        Textid = new javax.swing.JTextField();
-        Comboespecialidad = new javax.swing.JComboBox<>();
-        Combomedico = new javax.swing.JComboBox<>();
-        Comboestado = new javax.swing.JComboBox<>();
-        Fechayhora = new com.toedter.calendar.JDateChooser();
-        Textobservaciones = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        Combo_solicitud = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        Campo_id_paciente = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        Combo_estado = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
+        Combo_medico = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        Campo_observaciones = new javax.swing.JTextField();
         Observaciones = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Tabla_servicios_adicionales = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-
-        jCheckBoxMenuItem1.setSelected(true);
-        jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
+        Boton_salvar = new javax.swing.JButton();
+        Boton_Cancelar = new javax.swing.JButton();
+        fecha_hora_campo = new javax.swing.JTextField();
+        servicio_solici = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        Comboservicio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        Combo_solicitud.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        Combo_solicitud.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Combo_solicitudActionPerformed(evt);
+            }
+        });
 
-        Comboespecialidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jLabel1.setText("Solicitud");
 
-        Combomedico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jLabel4.setText("ID Paciente");
 
-        Comboestado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jLabel5.setText("Fecha/Hora");
 
-        Fechayhora.setToolTipText("ras");
+        jLabel2.setText("Especialidad");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        Combo_estado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        Combo_estado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Combo_estadoActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Estado");
+
+        Combo_medico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        Combo_medico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Combo_medicoActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Medico");
+
+        Observaciones.setText("Observaciones");
+
+        Tabla_servicios_adicionales.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -82,167 +250,261 @@ public class Atender extends javax.swing.JDialog {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
+        jScrollPane1.setViewportView(Tabla_servicios_adicionales);
+        if (Tabla_servicios_adicionales.getColumnModel().getColumnCount() > 0) {
+            Tabla_servicios_adicionales.getColumnModel().getColumn(2).setResizable(false);
         }
-
-        jLabel1.setText("#Servicio");
-
-        jLabel2.setText("Especialidad");
-
-        jLabel3.setText("Medico");
-
-        jLabel4.setText("ID");
-
-        jLabel5.setText("Fecha/Hora");
-
-        jLabel6.setText("Estado");
-
-        Observaciones.setText("Observaciones");
 
         jLabel7.setText("Otros servicios (Adicionales)");
 
-        jButton1.setText("cancelar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Boton_salvar.setText("Salvar");
+        Boton_salvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Boton_salvarActionPerformed(evt);
+            }
+        });
+
+        Boton_Cancelar.setText("Cancelar");
+        Boton_Cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 salir(evt);
             }
         });
 
-        jButton2.setText("Salvar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(134, 134, 134)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(Combo_solicitud, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Combo_medico, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(servicio_solici, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGap(95, 95, 95)
+                                            .addComponent(jLabel5))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                            .addGap(122, 122, 122)
+                                            .addComponent(jLabel6)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGap(98, 98, 98)
+                                        .addComponent(jLabel4)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(Combo_estado, 0, 152, Short.MAX_VALUE)
+                                    .addComponent(Campo_id_paciente)
+                                    .addComponent(fecha_hora_campo)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(171, 171, 171)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Observaciones)
+                            .addComponent(Campo_observaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(265, 265, 265)
+                        .addComponent(Boton_salvar)
+                        .addGap(85, 85, 85)
+                        .addComponent(Boton_Cancelar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(114, 114, 114)
+                        .addComponent(jLabel7))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(147, 147, 147)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(166, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Combo_solicitud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(fecha_hora_campo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(servicio_solici, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(84, 84, 84)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Campo_id_paciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))))
+                .addGap(14, 14, 14)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Combo_medico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Combo_estado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(46, 46, 46)
+                .addComponent(Observaciones)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Campo_observaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(jLabel7)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Boton_salvar)
+                    .addComponent(Boton_Cancelar))
+                .addContainerGap(62, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(85, 85, 85)
-                        .addComponent(Observaciones)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Textobservaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(130, 130, 130)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 316, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(37, 37, 37)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel3)
-                                .addGap(16, 16, 16)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Comboservicio, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(85, 85, 85)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Textid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(160, 160, 160)
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(Comboespecialidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(125, 125, 125)))
-                                .addComponent(Fechayhora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Combomedico, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(64, 64, 64)
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(Comboestado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(jLabel7)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(48, 48, 48)
-                .addComponent(jButton1)
-                .addGap(89, 89, 89))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(Textid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(Comboservicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Comboespecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(Fechayhora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Combomedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Comboestado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(Observaciones)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                        .addComponent(Textobservaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)))
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(60, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void salir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salir
-    this.dispose();
-        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_salir
+
+    private void Boton_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_salvarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Boton_salvarActionPerformed
+
+    private void Combo_medicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Combo_medicoActionPerformed
+
+        // Codigo para seleccionar el medico para la solicitud
+        
+        //Definimos un string que almacena el estado seleccionado
+        String seleccion = (String) Combo_medico.getSelectedItem();
+        
+        //Si verdaderamente se almaceno algo aqui
+        if (seleccion != null) {
+            
+            //Printeamos el paciente seleccionado (esto no es practico solo lo uso para verificar)
+            System.out.println("Medico seleccionado: " + seleccion);
+        }
+        
+    }//GEN-LAST:event_Combo_medicoActionPerformed
+
+    private void Combo_estadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Combo_estadoActionPerformed
+        // Codigo para seleccionar el estado para la solicitud
+        
+        //Definimos un string que almacena el estado seleccionado
+        String seleccion = (String) Combo_estado.getSelectedItem();
+        
+        //Si verdaderamente se almaceno algo aqui
+        if (seleccion != null) {
+            
+            //Printeamos el paciente seleccionado (esto no es practico solo lo uso para verificar)
+            System.out.println("Medico seleccionado: " + seleccion);
+        }
+        
+    }//GEN-LAST:event_Combo_estadoActionPerformed
+
+    private void Combo_solicitudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Combo_solicitudActionPerformed
+        
+        // Combo de la solicitud
+        
+        //Utilizamos un try justo aqui establecemos que se puede modificar y que no
+        try {
+            
+        // Obtener el ID seleccionado en el combo
+        String id_selecccc = (String) Combo_solicitud.getSelectedItem();
+        
+        //Si el id de la solicitud seleccionado es diferente de null
+        if (id_selecccc != null) {
+            
+            // Cargar las solicitudes y buscar la seleccionada
+            ArrayList<Solicitud> solicitudes = CargarSolicitud("Data/solicitudes.xml");
+            
+            //Almacenamos la solicitud seleccionada y verificamos que coincida con el id existente
+            Solicitud solicitud_selecccc = solicitudes.stream().filter(s -> s.getId().equals(id_selecccc)).findFirst().orElse(null);
+            
+            //Nuevamente si la que seleccionamos es distinta de null
+            if (solicitud_selecccc != null) {
+                
+                // El campo del id del paciente se establece como el que le pertenece pero no se puede modificar
+                Campo_id_paciente.setText(solicitud_selecccc.getId());
+                
+                //Aqui lo bloqueamos
+                Campo_id_paciente.setEnabled(false);
+                
+                // Aqui sucede lo mismo con la especialidad o el servicio unico
+                if (solicitud_selecccc.getTipo_servicio() != null) {
+                    
+                    //Establecemos que solo aparezca el id del servicio y el nombre
+                    servicio_solici.setText(solicitud_selecccc.getTipo_servicio().getId() + " - " + solicitud_selecccc.getTipo_servicio().getNombre_servicio());
+                    
+                    //Hacemos que se bloquee
+                    servicio_solici.setEnabled(false);
+                }
+                
+                // Hacemos lo mismo que con el servicio pero con el caso del paciente
+                if (solicitud_selecccc.getId_paciente() != null) {
+                    
+                    //Nuevamente nombre y id
+                    Campo_id_paciente.setText(solicitud_selecccc.getId_paciente().getId() +  " - " + solicitud_selecccc.getId_paciente().getNombre());
+                    
+                    //El campo lo establecemos como falso
+                    Campo_id_paciente.setEnabled(false);
+                }
+                
+                // Campo de la fecha y hora 
+                if (solicitud_selecccc.getFecha_hora() != null) {
+                    
+                    //Aqui nada mas nos aseguramos que sea del formato que establecimos en el constructor
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                    
+                    //Definimos la fecha y hora como bloqueada
+                    fecha_hora_campo.setText(solicitud_selecccc.getFecha_hora().format(formatter));
+                    fecha_hora_campo.setEnabled(false);
+                }
+                
+                // Combo Estado en este caso solo que hacemos que se actualice por el que esta ahora mismo
+                if (solicitud_selecccc.getEstado() != null) {
+                    
+                    //Aqui nuevamente obtenemos id y nombre
+                    String estadoActual = solicitud_selecccc.getEstado().getId() +  " - " + solicitud_selecccc.getEstado().getNombre();
+                    Combo_estado.setSelectedItem(estadoActual);
+                }
+                
+                // Combo del medico nuevamente si se edita pero se actualiza
+                if (solicitud_selecccc.getMedico() != null) {
+                    
+                    //Aqui nuevamente solo el id y el nombre del medico
+                    String medicoActual = solicitud_selecccc.getMedico().getId_m() + " - " + solicitud_selecccc.getMedico().getNombre_medico();
+                    Combo_medico.setSelectedItem(medicoActual);
+                }
+                
+                // Marcar servicios en la tabla (aun no me funciona)
+                marcarServiciosAdicionales(solicitud_selecccc.getOtros_servicios());
+                
+            }
+        }
+        
+        //Excepcion en caso de que no se carge ni 
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar los datos de la solicitud: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_Combo_solicitudActionPerformed
 
     /**
      * @param args the command line arguments
@@ -287,17 +549,16 @@ public class Atender extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> Comboespecialidad;
-    private javax.swing.JComboBox<String> Comboestado;
-    private javax.swing.JComboBox<String> Combomedico;
-    private javax.swing.JComboBox<String> Comboservicio;
-    private com.toedter.calendar.JDateChooser Fechayhora;
+    private javax.swing.JButton Boton_Cancelar;
+    private javax.swing.JButton Boton_salvar;
+    private javax.swing.JTextField Campo_id_paciente;
+    private javax.swing.JTextField Campo_observaciones;
+    private javax.swing.JComboBox<String> Combo_estado;
+    private javax.swing.JComboBox<String> Combo_medico;
+    private javax.swing.JComboBox<String> Combo_solicitud;
     private javax.swing.JLabel Observaciones;
-    private javax.swing.JTextField Textid;
-    private javax.swing.JTextField Textobservaciones;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
+    private javax.swing.JTable Tabla_servicios_adicionales;
+    private javax.swing.JTextField fecha_hora_campo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -305,7 +566,8 @@ public class Atender extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField servicio_solici;
     // End of variables declaration//GEN-END:variables
 }

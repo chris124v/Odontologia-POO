@@ -528,5 +528,9 @@ public class XMLHandler {
         return solicitudes;
     }
 
+    public static ArrayList<Solicitud> CargarSolicitudes(String datasolicitudesxml) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
  
 }

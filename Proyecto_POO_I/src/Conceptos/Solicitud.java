@@ -142,6 +142,18 @@ public class Solicitud {
             id, id_paciente != null ? id_paciente.getNombre() : "No hay nada", tipo_servicio != null ? tipo_servicio.getNombre_servicio() : "No hay nada", fecha_hora != null ? fecha_hora.toString() : "No hay nada",
             medico != null ? medico.getNombre_medico() : "No hay ", estado != null ? estado.getNombre() : "No hay", observaciones != null ? observaciones : "No hay nada", otros_servicios_crea);
     }
+
+    public Object getFechaHora() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public Object getServicio() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public String getIdPaciente() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
    
     
 }

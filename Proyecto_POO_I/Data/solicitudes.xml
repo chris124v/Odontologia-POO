@@ -84,4 +84,58 @@
       <id_lista_servi>No hay</id_lista_servi>
     </otros_servicios>
   </solicitud>
+  <solicitud id="3001">
+    <fecha_hora>2024-11-06T19:15:07</fecha_hora>
+    <servicio id_s="100">
+      <nombre_servicio>Blanqueamiento dental</nombre_servicio>
+      <precio>35000.0</precio>
+    </servicio>
+    <Paciente id_p="300002222">
+      <nombre_p>Ana Rojas</nombre_p>
+      <telefono_p>7777-2000</telefono_p>
+      <email>ana.r@gmail</email>
+    </Paciente>
+    <Medico id_m=" ">
+      <nombre_medico>No hay</nombre_medico>
+      <puesto>No hay</puesto>
+      <telefono_m>No hay</telefono_m>
+      <servicios_m>
+        <id_sl>No hay</id_sl>
+      </servicios_m>
+    </Medico>
+    <estado id_e="000">
+      <nombre_e>Nuevo</nombre_e>
+    </estado>
+    <observaciones>Necesito una limpieza dental profunda</observaciones>
+    <otros_servicios>
+      <id_lista_servi>No hay</id_lista_servi>
+    </otros_servicios>
+  </solicitud>
+  <solicitud id="3001">
+    <fecha_hora>2024-11-06T19:17:58</fecha_hora>
+    <servicio id_s="100">
+      <nombre_servicio>Blanqueamiento dental</nombre_servicio>
+      <precio>35000.0</precio>
+    </servicio>
+    <Paciente id_p="300002222">
+      <nombre_p>Ana Rojas</nombre_p>
+      <telefono_p>7777-2000</telefono_p>
+      <email>ana.r@gmail</email>
+    </Paciente>
+    <Medico id_m=" ">
+      <nombre_medico>No hay</nombre_medico>
+      <puesto>No hay</puesto>
+      <telefono_m>No hay</telefono_m>
+      <servicios_m>
+        <id_sl>No hay</id_sl>
+      </servicios_m>
+    </Medico>
+    <estado id_e="000">
+      <nombre_e>Nuevo</nombre_e>
+    </estado>
+    <observaciones>Necesito una limpieza dental profunda</observaciones>
+    <otros_servicios>
+      <id_lista_servi>No hay</id_lista_servi>
+    </otros_servicios>
+  </solicitud>
 </solicitudes>

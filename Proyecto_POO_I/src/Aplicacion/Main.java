@@ -527,6 +527,73 @@ public class Main {
     
     //Probando atender solicitud
     
+    try {
+        
+        // Crear instancia del XMLWriter
+        XMLWriter generador = new XMLWriter();
+
+        // Cargar los archivos XML necesarios para la verificacion de hashmaps
+        generador.cargarXML("Data/medicos.xml");
+        generador.verificacion_medicos();
+        generador.cargarXML("Data/servicios.xml");
+        generador.CargaServicios();
+        generador.cargarXML("Data/estados.xml");
+        generador.verificacion_estados();
+
+        // Cargar el XML de solicitudes
+        generador.cargarXML("Data/solicitudes.xml");
+
+        // Crear un objeto de tipo solicitud con los datos que se van a actualizar
+        Solicitud solicitud_modificada = new Solicitud();
+    
+        // Asignamos el ID de la solicitud que queremos modificar osea que existe
+        solicitud_modificada.setId("3001"); 
+
+        // Modificar el estado de la solicitud
+        Estado nuevo_estado = new Estado();
+        nuevo_estado.setId("001"); 
+        nuevo_estado.setNombre("En Revision");
+        solicitud_modificada.setEstado(nuevo_estado);
+
+        // Establecer observaciones actualizadas
+        solicitud_modificada.setObservaciones("Paciente requiere atencion urgente debido a sensibilidad dental.");
+
+        // Asignar un medico a la solicitud que exista
+        Medicos medico_asig = new Medicos();
+        medico_asig.setId_m("200"); 
+        solicitud_modificada.setMedico(medico_asig);
+
+        // Agregar servicios adicionales
+        List<Servicio> otrosServicios = new ArrayList<>();
+        Servicio servicio_extra = new Servicio();
+        
+        //Tiene si o si que existir
+        servicio_extra.setId("102");
+        otrosServicios.add(servicio_extra);
+        solicitud_modificada.setOtros_servicios(otrosServicios);
+
+        // Invocar el metodo para atender la solicitud y aplicar las modificaciones en el XML
+        generador.atender_solicitud(solicitud_modificada);
+
+        // Guardar los cambios en el archivo XML
+        generador.guardarXML("Data/solicitudes.xml");
+
+        // Confirmacion de actualización exitosahdfgj
+        System.out.println("\nActualizacion de Solicitud Exitosa\n");
+
+        // Imprimir todas las solicitudes cargadas
+        for (Solicitud solicitud : solicitudes) {
+            System.out.println(solicitud);
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    
+    
+    
+    
+    
 }
     
     

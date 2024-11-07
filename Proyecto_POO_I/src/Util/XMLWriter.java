@@ -10,6 +10,7 @@ servicios y medicos esto mediante el uso del parser DOM de modificacion de archi
 */
 
 //Import que maneja el documento de XML
+import Conceptos.Estado;
 import Conceptos.Medicos;
 import Conceptos.Paciente;
 import Conceptos.Servicio;
@@ -40,6 +41,7 @@ import javax.xml.transform.stream.StreamResult;
 //Imports propios de un parser de escritura DOM
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -858,7 +860,295 @@ public class XMLWriter {
         // Finalmente agregamos toda la solicitud a la raiz
         raiz.appendChild(solicitud_nueva);
     }
+    
+    //Aqui iniciariamos con los metodos de atender para modificar el medico, estado, otros servicios y seleccionar la solicitud
+    
+    // HashMap para almacenar los medicos existentes
+    Map<String, Medicos> medicos_existentes = new HashMap<>();
+    
+    //Metodo para verificar los medicos inicializados como objetos
+    public List<Medicos> verificacion_medicos() {
+        
+        //Obtenemos el elemento raiz
+        Element raiz = document.getDocumentElement();
+        
+        //Buscamos a los que tengan el tag medico
+        NodeList medicos = raiz.getElementsByTagName("medico");
+        
+        //Creamos un arraylist para guardar alli los medicos
+        List<Medicos> lista_medicos = new ArrayList<>();
 
+        // Iterar sobre los elementos medico en el XML
+        for (int i = 0; i < medicos.getLength(); i++) {
+            
+            //Guardamos en un elemento la iteracion
+            Element medico_elemento = (Element) medicos.item(i);
+            
+            //Primero establecemos el atributo del id
+            String id = medico_elemento.getAttribute("id_m");
+
+            // Crear y configurar el objeto medico
+            Medicos medico = new Medicos();
+            
+            //Le asignamos a este objeto todo los atributos que posee
+            medico.setId_m(id);
+            medico.setNombre_medico(medico_elemento.getElementsByTagName("nombre_medico").item(0).getTextContent());
+            medico.setTelefono(medico_elemento.getElementsByTagName("telefono").item(0).getTextContent());
+            medico.setPuesto(medico_elemento.getElementsByTagName("puesto").item(0).getTextContent());
+
+            // Obtener los servicios del medico y asignarlos
+            NodeList servicios = medico_elemento.getElementsByTagName("id");
+            
+            //Para ello los guradamos en un arrtaylist
+            List<String> servicios_del_medico = new ArrayList<>();
+            
+            //Aqui iteramos sobre los servicios que posee el medico
+            for (int j = 0; j < servicios.getLength(); j++) {
+                //Agregamos el servicio a la rama del servicio como tal
+                servicios_del_medico.add(servicios.item(j).getTextContent());
+            }
+            
+            //Usamos el set servicios para asignarlos al medico
+            medico.setServicios(servicios_del_medico);
+
+            // Agregar al hashmap y a la lista
+            medicos_existentes.put(id, medico);
+            lista_medicos.add(medico);
+        }
+        
+        //Retornamos la lista de medicos 
+        return lista_medicos;
+    }
+    
+    //Metodo para verificar que el estado existe
+    Map<String, Estado> estados_existentes = new HashMap<>();
+    
+    //Metodo para verificar los estados existentes
+    public List<Estado> verificacion_estados() {
+        
+        //Inicializamos la raiz del documento como tal
+        Element raiz = document.getDocumentElement();
+        
+        //Buscamos en el xml lo que coincida con estado
+        NodeList estados = raiz.getElementsByTagName("estado");
+        
+        //Creamos un arraylist que guarde todos los estados
+        List<Estado> lista_estados = new ArrayList<>();
+    
+        // Iterar sobre los elementos estado en el XML
+        for (int i = 0; i < estados.getLength(); i++) {
+            
+            //Establecemos el elemento donde guardamos los estados para el xml
+            Element estado_elemento = (Element) estados.item(i);
+            
+            //Definimos el atributo ID del estado
+            String id = estado_elemento.getAttribute("id");
+        
+            // Crear y configurar el objeto Estado
+            Estado estado = new Estado();
+            
+            //Establecemos el id al objeto
+            estado.setId(id);
+        
+            // Verificar que existe el estado y lo buscamos por su nombre
+            NodeList nombre_elemento = estado_elemento.getElementsByTagName("nombre");
+            
+            //Si el nombre que existe es diferente de null (osea que no hay) y es mayor que 0
+            if (nombre_elemento != null && nombre_elemento.getLength() > 0) {
+                
+                //Establecemos el nodo en el que se va a iterar
+                Node nombre_iterarer = nombre_elemento.item(0);
+                
+                //Si es diferente de null entonces vamos a obtener el text que hay en el xml y se lo pasamos al objeto estado
+                if (nombre_iterarer != null) {
+                    estado.setNombre(nombre_iterarer.getTextContent());
+                
+                //Caso de else
+                } else {
+                    
+                    // Manejar el caso cuando no hay nombre
+                    estado.setNombre("Sin nombre, error. Peligro Inminente"); 
+                    System.out.println("Advertencia: Estado con ID " + id + " no tiene nombre. Error maximo");
+                }
+            
+            // Manejar el caso cuando no existe el elemento nombre
+            } else {
+            estado.setNombre("Sin nombre, error. Peligro Inminente"); 
+            System.out.println("Advertencia: Estado con ID " + id + " no tiene elemento nombre. Error maximo");
+            }   
+        
+            // Agregar al Hashmap y a la lista
+            estados_existentes.put(id, estado);
+            lista_estados.add(estado);
+        }
+        
+        return lista_estados;
+    }
+    
+    /*En este metodo siguiente de atender solicitud lo que logramos es cambiar el estado inicial de la solicitud del paciente
+    en donde basicamente le asignamos un medico, otro servicios que requiera, mas observaciones esta vez de parte del medico y
+    finalmente el cambio de estado de la solicitud en caso de que se haya completado o siga en revision*/
+    
+    //Metodo de atender solicitud
+    public void atender_solicitud(Solicitud solicitud) {
+        
+        // Obtener el elemento raíz del XML
+        Element raiz = document.getDocumentElement();
+        
+        //Buscamos y lo establecemos desde la raiz solicitud
+        NodeList solicitudes = raiz.getElementsByTagName("solicitud");
+        
+        //Establecemos una variable booleana
+        boolean solicitud_real = false;
+    
+        // Buscar la solicitud a modificar
+        for (int i = 0; i < solicitudes.getLength(); i++) {
+            
+            //Establecemos un elemento llamado solicitud para que itere sobre el y busque en el xml
+            Element solicitud_elemento = (Element) solicitudes.item(i);
+            
+            //Si el id que vamos a buscar coinicide con la solicitud existente
+            if (solicitud_elemento.getAttribute("id").equals(solicitud.getId())) {
+                
+                //Establecemos el valor booleano como true
+                solicitud_real = true;
+            
+                // Aqui verificamos si el el medico existe
+                if (solicitud.getMedico() != null) {
+                    
+                    //Establecemos un valor string que va a obtener el medico y su id
+                    String medico_id = solicitud.getMedico().getId_m();
+                    
+                    //Si dicho medico existe en el hashmap
+                    if (medicos_existentes.containsKey(medico_id)) {
+                        
+                        //Inicializamos dichho objeto del hashmap
+                        Medicos medico = medicos_existentes.get(medico_id);
+                        
+                        //Aqui establecemos que vamos a buscar el medico por el tag Medico
+                        Element medico_elemento = (Element) solicitud_elemento.getElementsByTagName("Medico").item(0);
+                        
+                        // Todo esto en realidad solo funciona para establecer los datos que tiene el objeto medico al xml y inicializarlo como objeto existente
+                        
+                        // Actualizar atributos del medico
+                        medico_elemento.setAttribute("id_m", medico.getId_m());
+                    
+                        // Actualizamos los elementos del medico en este caso el nombre por el cual contiene el id
+                        Element nombre_med = (Element) medico_elemento.getElementsByTagName("nombre_medico").item(0);
+                        nombre_med.setTextContent(medico.getNombre_medico());
+                        
+                        //Hacemos lo mismo pero para el pusto
+                        Element puesto_med = (Element) medico_elemento.getElementsByTagName("puesto").item(0);
+                        puesto_med.setTextContent(medico.getPuesto());
+                        
+                        //Hacemos lo mismo para el telefo
+                        Element telefono_med = (Element) medico_elemento.getElementsByTagName("telefono_m").item(0);
+                        telefono_med.setTextContent(medico.getTelefono());
+                    
+                        // Aqui actualizamos los servicios del medico osea lo que ya tiene
+                        Element servicios_medico = (Element) medico_elemento.getElementsByTagName("servicios_m").item(0);
+                        
+                        //Aqui borramos los servicios que habian en primera instancia en caso de que se haya inicializado mal en el xml
+                        while (servicios_medico.hasChildNodes()) {
+                            servicios_medico.removeChild(servicios_medico.getFirstChild());
+                        }
+                        
+                        // Agregar nuevos servicios al medico o en este caso los que ya tiene
+                        for (String id_serviciii : medico.getServicios()) {
+                            
+                            //LO vamos a anadir al xml por el nombre id_sl
+                            Element servicioId = document.createElement("id_sl");
+                            servicioId.setTextContent(id_serviciii);
+                            
+                            //Lo anadimos a los servicios
+                            servicios_medico.appendChild(servicioId);
+                        }
+                        
+                        //Esto en caso de que haya algun error al agregar el medico
+                        } else {
+                            System.out.println("Error: Medico con ID " + medico_id + " no encontrado. Error maximo");
+                        }
+                }
+            
+                // Modificar estado si existe en el hashmap y sea diferente de null
+                if (solicitud.getEstado() != null) {
+                    
+                    //Creamos un string de estado para que se le asigne el objeto y el id
+                    String estado_id = solicitud.getEstado().getId();
+                    
+                    //Si dicho estado verdaderamente esta en el hashmap de los estados existentes
+                    if (estados_existentes.containsKey(estado_id)) {
+                        
+                        //Llamamos a dicho objeto del hashmap
+                        Estado estado = estados_existentes.get(estado_id);
+                        
+                        //Aqui buscaremos en el xml los tags de estado
+                        Element estado_elemento = (Element) solicitud_elemento.getElementsByTagName("estado").item(0);
+                    
+                        // Actualizar atributos del estado como el id
+                        estado_elemento.setAttribute("id_e", estado.getId());
+                        
+                        //actualizamos el nombre del estado al que se le tenga que asignar
+                        Element nombre_stado = (Element) estado_elemento.getElementsByTagName("nombre_e").item(0);
+                        nombre_stado.setTextContent(estado.getNombre());
+                    
+                    //Else en caso de que el estado no exista
+                    } else {
+                        System.out.println("Error: Estado con ID " + estado_id + " no encontrado.");
+                    }
+                }
+            
+                // Modificar observaciones ya existentes si hubo algun cambio por parte del medico
+                Element observaciones_e = (Element) solicitud_elemento.getElementsByTagName("observaciones").item(0);
+                observaciones_e.setTextContent(solicitud.getObservaciones() != null ? solicitud.getObservaciones() : "");
+            
+                // Modificar otros servicios si existen en el hashmap esto por si hay alguna cosa mas por hacer para eso llamamos al metodo
+                if (solicitud.getOtros_servicios() != null) {
+                    
+                    //Establecemos el elemento que busca el tag de servicios
+                    Element otros_servicios_elemss = (Element) solicitud_elemento.getElementsByTagName("otros_servicios").item(0);
+                
+                    // Limpiar servicios actuales en caso de que haya para reiniciarlo
+                    while (otros_servicios_elemss.hasChildNodes()) {
+                        
+                        //Aca solo usamos un remove child para que se quiten los qu
+                        otros_servicios_elemss.removeChild(otros_servicios_elemss.getFirstChild());
+                    }
+                
+                    // Agregar nuevos servicios
+                    for (Servicio servicio : solicitud.getOtros_servicios()) {
+                        
+                        //Si el servicio esta en servicios actuales osea el hashmap
+                        if (serviciosactuales.containsKey(servicio.getId())) {
+                            
+                            //Creamos el elemento de id lista servicio 
+                            Element servicioId = document.createElement("id_lista_servi");
+                            
+                            //Establecemos el servicio y usamos el metodo get
+                            servicioId.setTextContent(servicio.getId());
+                            
+                            //Lo agregamos al elemento principal de otros servicio
+                            otros_servicios_elemss.appendChild(servicioId);
+                        
+                        //Este else fuinciona en caso de que el servicio no exista en el hashmap
+                        } else {
+                        System.out.println("Error: Servicio con ID " + servicio.getId() + " no encontrado.");
+                        }
+                    }
+                }
+                
+                //Salimos del metodo
+                break;
+            }
+        }
+    
+        //Si no se encontro la solicitud indicamos que no existe
+        if (!solicitud_real) {
+            System.out.println("Error: Solicitud con ID " + solicitud.getId() + " no encontrada. Peligro inmininente");
+        }
+    }
+    
+    
     
     
     //Metodo para guardar los cambios en el XML

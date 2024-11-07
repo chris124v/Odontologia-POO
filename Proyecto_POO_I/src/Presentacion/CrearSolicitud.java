@@ -277,7 +277,7 @@ public class CrearSolicitud extends javax.swing.JDialog {
         String seleccion = (String) Combo_servicio.getSelectedItem();
         
         if (seleccion != null) {
-            // Aquí ya tienes el paciente seleccionado en formato "ID - Nombre"
+            // Esto lo uso solo para verifiacar que se si lo selecciona pero no es necesario
             System.out.println("Servicio seleccionado: " + seleccion);
         }
         

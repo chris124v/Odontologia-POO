@@ -153,17 +153,57 @@ public class Atender extends javax.swing.JDialog {
         Tabla_servicios_adicionales.setModel(model);
     }
     
-    // Método auxiliar para marcar los servicios (aun no funca)
-    private void marcarServiciosAdicionales(List<Servicio> serviciosAdicionales) {
-        DefaultTableModel model = (DefaultTableModel) Tabla_servicios_adicionales.getModel();
-        for (int i = 0; i < model.getRowCount(); i++) {
-            String idServicio = (String) model.getValueAt(i, 1);
-            boolean estaSeleccionado = serviciosAdicionales.stream().anyMatch(s -> s.getId().equals(idServicio));model.setValueAt(estaSeleccionado, i, 0);
+    //Metodo que nos sirve para marcar otros servicios tomamos como parametro un list
+    private void marca_check_otros_servici(List<Servicio> servicios_otrosss) {
+        
+        //Iniciamos el try para recorrer la lista de servicios adicionales
+        try {
+            // Obtenemos el modelo de la tabla de dichos servicios adicionales
+            DefaultTableModel model = (DefaultTableModel) Tabla_servicios_adicionales.getModel();
+        
+            // Primero desmarcamos todos los checkboxes para que inician como limpios
+            for (int i = 0; i < model.getRowCount(); i++) {
+                model.setValueAt(false, i, 0);
+            }
+        
+            // Verificamos de con null si la lista esta vacia
+            if (servicios_otrosss == null || servicios_otrosss.isEmpty()) {
+                System.out.println("No hay servicios adicionales para la solicitud");
+                return;
+            }
+        
+            // Recorremos cada fila de la tabla
+            for (int i = 0; i < model.getRowCount(); i++) {
+                
+                String id_servicio_ta = String.valueOf(model.getValueAt(i, 1));
+                String nombre_servicio_otroo = String.valueOf(model.getValueAt(i, 2));
+            
+                // Buscamos coincidencia ya sea por ID o por nombre del servicio
+                for (Servicio servicio : servicios_otrosss) {
+                    
+                    //Aqui hacemos un gran and que busca las coinicidencias de nombre y servicio
+                    if (servicio.getId().equals(id_servicio_ta) || servicio.getNombre_servicio().equals(id_servicio_ta) ||
+                        servicio.getId().equals(nombre_servicio_otroo) ||
+                        servicio.getNombre_servicio().equals(nombre_servicio_otroo)) {
+                    
+                            // Si encontramos coincidencia, marcamos el checkbox posicionandolo como true
+                            model.setValueAt(true, i, 0);
+                            
+                            //Salimos de la funcion
+                            break;
+                    }   
+                }
+            }
+        
+            // Refrescamos la tabla esto para que se vea correctamente
+            Tabla_servicios_adicionales.repaint();
+        
+        //Esta seria una excpecion en caso de que se carge mal el metodo
+        } catch (Exception e) {
+            System.err.println("Error al marcar servicios adicionales: "); e.printStackTrace(); JOptionPane.showMessageDialog(this, "Error al marcar los servicios adicionales: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -384,7 +424,138 @@ public class Atender extends javax.swing.JDialog {
     }//GEN-LAST:event_salir
 
     private void Boton_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_salvarActionPerformed
-        // TODO add your handling code here:
+        // Boton para modificar la solicitud como tal
+        
+        //Aqui basicamente inicializamos el try para hacer el atender o modificar respectivo
+        try {
+            // Obtener la solicitud seleccionada del combo de solicitud
+            String id_solicitud = (String) Combo_solicitud.getSelectedItem();
+            
+            //Si el id esta vacio o no se selecciono nada 
+            if (id_solicitud == null || id_solicitud.isEmpty()) {
+                
+                //Vamos a tirar un mensaje de que seleccione lalgo
+                JOptionPane.showMessageDialog(this, "Por favor seleccione una solicitud", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Creamos instancia del parser de escritura
+            XMLWriter generador = new XMLWriter();
+        
+            // Cargar y verificar los xml necesarios algo similar al main
+            generador.cargarXML("Data/medicos.xml");
+            generador.verificacion_medicos();
+            generador.cargarXML("Data/servicios.xml");
+            generador.CargaServicios();
+            generador.cargarXML("Data/estados.xml");
+            generador.verificacion_estados();
+            generador.cargarXML("Data/solicitudes.xml");
+
+            // Crear la solicitud modificada
+            Solicitud solicitud_modificada = new Solicitud();
+            solicitud_modificada.setId(id_solicitud);
+
+            // Obtener y establecer el medico seleccionado en el combo
+            String medico_ha_selec = (String) Combo_medico.getSelectedItem();
+            
+            //Si el que se selecciono no es nulo y no esta vacio diganos
+            if (medico_ha_selec != null && !medico_ha_selec.isEmpty()) {
+                
+                //Establecemos primero un espacio entre el id y el nombre
+                String idMedico = medico_ha_selec.split(" - ")[0];
+                
+                //Creamos un nuevo objeto medico
+                Medicos medico = new Medicos();
+                
+                //Le asignamos id el resto de cosas ya se pasan
+                medico.setId_m(idMedico);
+                
+                //Establecemos dicho medico a la solicitud
+                solicitud_modificada.setMedico(medico);
+            }
+
+            // Obtener y establecer el estado seleccionado
+            String estado_selec = (String) Combo_estado.getSelectedItem();
+            
+            //Nuevamente si no es nulo ni esta vacio
+            if (estado_selec != null && !estado_selec.isEmpty()) {
+                
+                //Establecemos un espacio
+                String idEstado = estado_selec.split(" - ")[0];
+                
+                //Creamos el nuevo objeto estado
+                Estado estado = new Estado();
+                
+                //Le establecemos tanto id como nombre
+                estado.setId(idEstado);
+                estado.setNombre(estado_selec.split(" - ")[1]);
+                
+                //Agregamos el estado a la solicitud
+                solicitud_modificada.setEstado(estado);
+            }
+
+            // Obtener y establecer las observaciones nuevas que dictamine el medico
+            String observaciones = Campo_observaciones.getText();
+            solicitud_modificada.setObservaciones(observaciones);
+
+            // Obtener los otros seleccionados directamente de la tabla
+            List<Servicio> servicios_otros_lis = new ArrayList<>();
+            
+            //Establecemos el modelo base de la tabla
+            DefaultTableModel model = (DefaultTableModel) Tabla_servicios_adicionales.getModel();
+            
+            //Recorremos con un ciclo for las filas de la tabla de los otros servicio
+            
+            for (int i = 0; i < model.getRowCount(); i++) {
+                
+                //Aqui definimos una variable booleano para determinar la seleccion
+                Boolean seleccionado = (Boolean) model.getValueAt(i, 0);
+                
+                //Si seleccionado es true
+                if (seleccionado) {
+                    
+                    //Creamos un nuevo servicio
+                    Servicio servicio = new Servicio();
+                    
+                    //Obtenemos el valor de la tabla y lo agregamos al arraylist
+                    String idServicio = model.getValueAt(i, 1).toString();
+                    servicio.setId(idServicio);
+                    servicios_otros_lis.add(servicio);
+                }
+            }
+            
+            //Establecemos dicha lista a la solicitu
+            solicitud_modificada.setOtros_servicios(servicios_otros_lis);
+
+            // Mantener los datos que no se modifican llamando al xml
+            ArrayList<Solicitud> solicitudes_que_existen = CargarSolicitud("Data/solicitudes.xml");
+            Solicitud solicitud_original = solicitudes_que_existen.stream().filter(s -> s.getId().equals(id_solicitud)).findFirst().orElse(null);
+            
+            //Ahora bien si la solicitud original se verifca que esta llen
+            if (solicitud_original != null) {
+                // Mantener datos que no se modifican 
+                solicitud_modificada.setTipo_servicio(solicitud_original.getTipo_servicio());
+                solicitud_modificada.setId_paciente(solicitud_original.getId_paciente());
+                solicitud_modificada.setFecha_hora(solicitud_original.getFecha_hora());
+            }
+
+            // Aplicar las modificaciones llamando directamente al parser de escritura
+            generador.atender_solicitud(solicitud_modificada);
+            
+            //Guardamos todo en el xml
+            generador.guardarXML("Data/solicitudes.xml");
+
+            // Mostrar mensaje de exito
+            JOptionPane.showMessageDialog(this, "Solicitud atendida exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+
+            // Opcionalmente, cerrar la ventana
+            dispose();
+
+    } catch (Exception e) {
+        System.err.println("Error al actualizar la solicitud: "); e.printStackTrace(); JOptionPane.showMessageDialog(this, "Error al actualizar la solicitud: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+        
+        
     }//GEN-LAST:event_Boton_salvarActionPerformed
 
     private void Combo_medicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Combo_medicoActionPerformed
@@ -493,13 +664,13 @@ public class Atender extends javax.swing.JDialog {
                     Combo_medico.setSelectedItem(medicoActual);
                 }
                 
-                // Marcar servicios en la tabla (aun no me funciona)
-                marcarServiciosAdicionales(solicitud_selecccc.getOtros_servicios());
-                
+                // Luego llamamos al metodo que logra marcar el checkbox en donde se seleccionan los seervicios otros de la solicitud
+                marca_check_otros_servici(solicitud_selecccc.getOtros_servicios());
+                    
             }
         }
         
-        //Excepcion en caso de que no se carge ni 
+        //Excepcion en caso de que no se carge na
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al cargar los datos de la solicitud: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }

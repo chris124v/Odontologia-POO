@@ -29,31 +29,4 @@
       <id_lista_servi>001</id_lista_servi>
     </otros_servicios>
   </solicitud>
-  <solicitud id="708">
-    <fecha_hora>2024-11-12T02:12:52</fecha_hora>
-    <servicio id_s="102">
-      <nombre_servicio>Cirugia maxilofacial</nombre_servicio>
-      <precio>1000000.0</precio>
-    </servicio>
-    <Paciente id_p="300003333">
-      <nombre_p>Pedro Arnaez</nombre_p>
-      <telefono_p>7777-3000</telefono_p>
-      <email>pedro.a@gmail</email>
-    </Paciente>
-    <Medico id_m=" ">
-      <nombre_medico>No hay</nombre_medico>
-      <puesto>No hay</puesto>
-      <telefono_m>No hay</telefono_m>
-      <servicios_m>
-        <id_sl>No hay</id_sl>
-      </servicios_m>
-    </Medico>
-    <estado id_e="000">
-      <nombre_e>Nuevo</nombre_e>
-    </estado>
-    <observaciones>Necesita limpieza dental.</observaciones>
-    <otros_servicios>
-      <id_lista_servi>No hay</id_lista_servi>
-    </otros_servicios>
-  </solicitud>
-</solicitudes>
+ </solicitudes>

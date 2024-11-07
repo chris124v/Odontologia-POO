@@ -73,13 +73,17 @@ public class Principal extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+        Consultar_menu = new javax.swing.JMenuItem();
+        Crear_solicitud_menu = new javax.swing.JMenuItem();
+        Atender_menu = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         MClientes = new javax.swing.JMenuItem();
         MServicio = new javax.swing.JMenuItem();
         Mmedicos = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -130,18 +134,41 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(153, 153, 153), null, null));
 
-        jMenu1.setText("Archivo");
-        jMenu1.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 14)); // NOI18N
+        jMenu3.setText("Clínica Odontológica Molares");
+        jMenu3.setFont(new java.awt.Font("Lucida Sans Unicode", 1, 14)); // NOI18N
+        jMenuBar1.add(jMenu3);
 
-        jMenuItem1.setText("Salir");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jMenu4.setText("Solicitudes");
+        jMenu4.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 14)); // NOI18N
+
+        Consultar_menu.setFont(new java.awt.Font("Lucida Sans", 0, 12)); // NOI18N
+        Consultar_menu.setText("Consultar");
+        Consultar_menu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                Consultar_menuActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu4.add(Consultar_menu);
 
-        jMenuBar1.add(jMenu1);
+        Crear_solicitud_menu.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
+        Crear_solicitud_menu.setText("Crear Solicitud");
+        Crear_solicitud_menu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Crear_solicitud_menuActionPerformed(evt);
+            }
+        });
+        jMenu4.add(Crear_solicitud_menu);
+
+        Atender_menu.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
+        Atender_menu.setText("Atender Solicitud");
+        Atender_menu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Atender_menuActionPerformed(evt);
+            }
+        });
+        jMenu4.add(Atender_menu);
+
+        jMenuBar1.add(jMenu4);
 
         jMenu2.setBackground(new java.awt.Color(0, 153, 153));
         jMenu2.setText("Util");
@@ -176,9 +203,18 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
-        jMenu3.setText("Clínica Odontológica Molares");
-        jMenu3.setFont(new java.awt.Font("Lucida Sans Unicode", 1, 14)); // NOI18N
-        jMenuBar1.add(jMenu3);
+        jMenu1.setText("Archivo");
+        jMenu1.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 14)); // NOI18N
+
+        jMenuItem1.setText("Salir");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
 
@@ -238,9 +274,45 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // Accion de Salir de la venatan principal
-       
         dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void Consultar_menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Consultar_menuActionPerformed
+        //Entrar a las consultas
+        try {
+            Consultar mostrarConsulta = new Consultar(Principal.this, true);
+            mostrarConsulta.setVisible(true);
+            
+        } catch (UnsupportedOperationException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudieron cargar las consultas\n" + "Contacte con soporte:\n" + ex, "Error con la pantalla", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_Consultar_menuActionPerformed
+
+    private void Crear_solicitud_menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Crear_solicitud_menuActionPerformed
+        
+        //Entrar a crear solicitudes
+        try {
+            CrearSolicitud crear_consulta = new CrearSolicitud(Principal.this, true);
+            crear_consulta.setVisible(true);
+            
+        } catch (UnsupportedOperationException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudieron cargar las consultas\n" + "Contacte con soporte:\n" + ex, "Error con la pantalla", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_Crear_solicitud_menuActionPerformed
+
+    private void Atender_menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Atender_menuActionPerformed
+        
+        //Entrar a atender solicitud
+        try {
+            Atender crear_atender = new Atender(Principal.this, true);
+            crear_atender.setVisible(true);
+            
+        } catch (UnsupportedOperationException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudieron cargar las consultas\n" + "Contacte con soporte:\n" + ex, "Error con la pantalla", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_Atender_menuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -278,6 +350,9 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Atender_menu;
+    private javax.swing.JMenuItem Consultar_menu;
+    private javax.swing.JMenuItem Crear_solicitud_menu;
     private javax.swing.JMenuItem MClientes;
     private javax.swing.JMenuItem MServicio;
     private javax.swing.JMenuItem Mmedicos;
@@ -288,6 +363,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;

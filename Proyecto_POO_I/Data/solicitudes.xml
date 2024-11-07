@@ -29,4 +29,34 @@
       <id_lista_servi>001</id_lista_servi>
     </otros_servicios>
   </solicitud>
- </solicitudes>
+  <solicitud id="870">
+    <fecha_hora>2024-06-27T16:39:33</fecha_hora>
+    <servicio id_s="102">
+      <nombre_servicio>Cirugia maxilofacial</nombre_servicio>
+      <precio>1000000.0</precio>
+    </servicio>
+    <Paciente id_p="300003333">
+      <nombre_p>Pedro Arnaez</nombre_p>
+      <telefono_p>7777-3000</telefono_p>
+      <email>pedro.a@gmail</email>
+    </Paciente>
+    <Medico id_m="201">
+      <nombre_medico>Maria Rojas</nombre_medico>
+      <puesto>Medico maxilofacial</puesto>
+      <telefono_m>8888-9999</telefono_m>
+      <servicios_m>
+        <id_sl>100</id_sl>
+        <id_sl>101</id_sl>
+        <id_sl>102</id_sl>
+      </servicios_m>
+    </Medico>
+    <estado id_e="001">
+      <nombre_e>En Revision</nombre_e>
+    </estado>
+    <observaciones>Necesita ayuda otra vez. </observaciones>
+    <otros_servicios>
+      <id_lista_servi>101</id_lista_servi>
+      <id_lista_servi>102</id_lista_servi>
+    </otros_servicios>
+  </solicitud>
+</solicitudes>

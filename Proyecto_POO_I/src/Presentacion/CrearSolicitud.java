@@ -42,6 +42,7 @@ public class CrearSolicitud extends javax.swing.JDialog {
         initComponents();
         llenarComboPacientes();
         llenarComboServicio();
+        this.setLocation(400, 200);
     }
     
     //Metodo que permite llenar el combo de pacientes

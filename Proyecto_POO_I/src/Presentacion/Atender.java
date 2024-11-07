@@ -27,6 +27,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author INTEL
  */
+
 public class Atender extends javax.swing.JDialog {
 
     /**
@@ -39,6 +40,7 @@ public class Atender extends javax.swing.JDialog {
         llenarcomboEstado();
         llenarTablaOtrosServicios();
         Combo_Solicitudes();
+        this.setLocation(400, 200);
         
     }
     

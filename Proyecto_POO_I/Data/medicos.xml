@@ -27,4 +27,45 @@
       <id>101</id>
     </servicios>
   </medico>
+  <medico id_m="203">
+    <nombre_medico>Khabib Nurmagomedov</nombre_medico>
+    <telefono>7777-8989</telefono>
+    <puesto>Odontologo General</puesto>
+    <servicios>
+      <id>106</id>
+      <id>107</id>
+    </servicios>
+  </medico>
+  <medico id_m="204">
+    <nombre_medico>Conor Fernandez</nombre_medico>
+    <telefono>1234-9876</telefono>
+    <puesto>Odontopediatra</puesto>
+    <servicios>
+      <id>103</id>
+      <id>104</id>
+      <id>105</id>
+    </servicios>
+  </medico>
+  <medico id_m="205">
+    <nombre_medico>Tomas Aspinalio</nombre_medico>
+    <telefono>3456-9567</telefono>
+    <puesto>Asistente Dental </puesto>
+    <servicios>
+      <id>100</id>
+      <id>102</id>
+      <id>103</id>
+      <id>106</id>
+    </servicios>
+  </medico>
+  <medico id_m="206">
+    <nombre_medico>Guillermo Sanabria</nombre_medico>
+    <telefono>6783-2134</telefono>
+    <puesto>Radiologo Dental</puesto>
+    <servicios>
+      <id>100</id>
+      <id>104</id>
+      <id>106</id>
+      <id>107</id>
+    </servicios>
+  </medico>
 </medicos>

@@ -20,4 +20,29 @@
     <telefono>7777-3000</telefono>
     <email>pedro.a@gmail</email>
   </paciente>
+  <paciente id="300004444">
+    <nombre>Jervis Esquivel</nombre>
+    <telefono>6789-6549</telefono>
+    <email>jer@gmail.com</email>
+  </paciente>
+  <paciente id="400002222">
+    <nombre>Christopher Vargas</nombre>
+    <telefono>4567-3289</telefono>
+    <email>ckpv12@gmail.com</email>
+  </paciente>
+  <paciente id="500003241">
+    <nombre>Lionel Messi</nombre>
+    <telefono>9999-1000</telefono>
+    <email>messi@gmail.com</email>
+  </paciente>
+  <paciente id="700002345">
+    <nombre>Samuel de Luque</nombre>
+    <telefono>7777-7777</telefono>
+    <email>vege@gmail.com</email>
+  </paciente>
+  <paciente id="600007132">
+    <nombre>Fernando Alonso</nombre>
+    <telefono>8888-9999</telefono>
+    <email>ferna@gmail.com</email>
+  </paciente>
 </pacientes>

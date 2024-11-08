@@ -40,13 +40,13 @@ public class Principal extends javax.swing.JFrame {
              // Cargar la imagen original
             ImageIcon iconoOriginal = new ImageIcon(ImageIO.read(new File("Imagenes/logo.jpg")));
     
-            // Redimensionar la imagen para que coincida con el tamaño del JLabel
+            // Redimensionar la imagen para que coincida con el tamano del label
             Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(jLabel4.getWidth(), jLabel4.getHeight(), Image.SCALE_SMOOTH);
     
-            // Crear un nuevo ImageIcon con la imagen redimensionada
+            // Crear un nuevo imageicon con la imagen redimensionada
             ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
     
-            // Asignar la imagen redimensionada al JLabel
+            // Asignar la imagen redimensionada al label
             jLabel4.setIcon(iconoEscalado);
             
         } catch (IOException e) {

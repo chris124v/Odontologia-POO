@@ -6,10 +6,30 @@
   </servicio>
   <servicio id="101">
     <nombre_servicio>Limpieza de encias</nombre_servicio>
-    <precio>20000</precio>
+    <precio>20000.0</precio>
   </servicio>
   <servicio id="102">
     <nombre_servicio>Cirugia maxilofacial</nombre_servicio>
-    <precio>1000000</precio>
+    <precio>1000000.0</precio>
+  </servicio>
+  <servicio id="103">
+    <nombre_servicio>Empastes</nombre_servicio>
+    <precio>25000.0</precio>
+  </servicio>
+  <servicio id="104">
+    <nombre_servicio>Extraccion Dental</nombre_servicio>
+    <precio>40000.0</precio>
+  </servicio>
+  <servicio id="105">
+    <nombre_servicio>Injertos de Encia</nombre_servicio>
+    <precio>100000.0</precio>
+  </servicio>
+  <servicio id="106">
+    <nombre_servicio>Carillas</nombre_servicio>
+    <precio>15000.0</precio>
+  </servicio>
+  <servicio id="107">
+    <nombre_servicio>Extraccion de mulelas del jucio</nombre_servicio>
+    <precio>30000.0</precio>
   </servicio>
 </servicios>

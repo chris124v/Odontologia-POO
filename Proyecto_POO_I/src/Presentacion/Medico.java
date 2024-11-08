@@ -41,7 +41,7 @@ public class Medico extends javax.swing.JDialog {
     private void llenarTabla(){
         
         try {
-            // Cargar los medicos desde el archivo XML
+            // Cargar los medicos desde el archivo xml
             ArrayList<Medicos> medicos;
             File xmlFile = new File("Data/medicos.xml");
             medicos = Util.XMLHandler.CargarMedico(xmlFile.getAbsolutePath());
@@ -223,6 +223,7 @@ public class Medico extends javax.swing.JDialog {
 
         jScrollPane1.setForeground(new java.awt.Color(102, 255, 204));
 
+        Tabla_Medicos.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         Tabla_Medicos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -461,7 +462,7 @@ public class Medico extends javax.swing.JDialog {
     
     //Boton para eliminar el medico segun el ID
     try {
-        // Obtener solo el ID del médico 
+        // Obtener solo el ID del medico 
         String id_m = E_IDM.getText();
         String nombre_medico = E_NombreMedico.getText();
         String telefono = E_Telefono.getText();
@@ -476,7 +477,7 @@ public class Medico extends javax.swing.JDialog {
         // Llamamos al writer
         XMLWriter generador = new XMLWriter();
         
-        // Cargar el XML existente
+        // Cargar el xml existente
         generador.cargarXML("Data/medicos.xml");
         
         // Crear un nuevo objeto Medicos solo con el ID
@@ -485,7 +486,7 @@ public class Medico extends javax.swing.JDialog {
         // Llamar al metodo para eliminar el médico
         generador.eliminarMedico(medico1);
         
-        // Guardar los cambios en el archivo XML
+        // Guardar los cambios en el archivo xml
         generador.guardarXML("Data/medicos.xml");
         
         // Invocamos el metodo llenar tabla para que lo actualice
@@ -509,7 +510,7 @@ public class Medico extends javax.swing.JDialog {
        
         //Metodo de modificar el medico
         try {
-            // Llamada al writer para modificar el XML
+            // Llamada al writer para modificar el xml
             XMLWriter generador = new XMLWriter();
         
             //Cargamos los servicios para verificar su existencia

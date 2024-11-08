@@ -116,8 +116,5 @@ public class Medicos extends Servicio {
     }
     
     
-    
-    //Prueba
-    
 }
 

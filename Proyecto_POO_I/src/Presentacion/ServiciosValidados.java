@@ -158,6 +158,7 @@ public class ServiciosValidados extends javax.swing.JDialog {
             }
         });
 
+        Tabla_ServiciosV.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         Tabla_ServiciosV.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},

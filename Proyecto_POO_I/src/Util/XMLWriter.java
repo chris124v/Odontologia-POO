@@ -6,7 +6,8 @@
 package Util;
 
 /* Esta java class de XMLWriter corresponde a la clase que modifica, agrega y elemina los pacientes,
-servicios y medicos esto mediante el uso del parser DOM de modificacion de archivos por arboles binarios.
+servicios y medicos esto mediante el uso del parser DOM de modificacion de archivos por arboles binarios. Ademas de realizar el agregado
+de las solicitudes medicas que necesiten los pacientes
 */
 
 //Import que maneja el documento de XML
@@ -92,7 +93,7 @@ public class XMLWriter {
         //Tomamos un elemento del XML y establecemos una variable del tipo raiz
         Element raiz = document.getDocumentElement();
         
-        //Creamos un objeto de tipo paciente con valores vacios y un getID para el atributo
+        //Creamos un objeto de tipo paciente con valores vacios y un getid para el atributo
         //En este caso seria la creacion de una instancia
         Paciente nuevoPaci = new Paciente(paciente.getId(), "", "","");
         
@@ -429,9 +430,9 @@ public class XMLWriter {
         if (servicioExistente) {
             medicos.appendChild(servicios);
     
-        //No se agrega nada
+        //No se agrega nada usamos un system out para probar
         } else {
-            System.out.println("No se agregara el médico porque no hay servicios válidos.");
+            System.out.println("No se agregara el medico porque no hay servicios validos.");
             return; // Salimos del método si no se encontraron servicios válidos
         }
     
@@ -461,13 +462,13 @@ public class XMLWriter {
                 
                 // Eliminamos el médico de la lista enlazada 
                 raiz.removeChild(medicosxml);
-                medicoEncontrado = true; // Marcamos que se encontró y elimino el medico
+                medicoEncontrado = true; // Marcamos que se encontro y elimino el medico
                 
                 break; // Salimos del ciclo ya que hemos encontrado y eliminado al medico
             }
         }
 
-        // Verificamos si se encontró el médico después del ciclo
+        // Verificamos si se encontró el medico después del ciclo
         if (!medicoEncontrado) {
             
         System.out.println("Peligro Inminente: El medico con ID " + medico.getId_m() + " no existe en los medicos disponibles para borrar.");

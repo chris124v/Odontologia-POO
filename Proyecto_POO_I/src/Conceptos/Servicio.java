@@ -67,9 +67,7 @@ public class Servicio {
         return "Servicio :" + this.getNombre_servicio()+ ", ID :" + this.getId() + ", Precio:" + this.getPrecio();
     }
 
-    public String getNombreServicio() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 }
 
     

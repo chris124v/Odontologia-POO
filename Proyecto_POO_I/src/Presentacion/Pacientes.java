@@ -41,7 +41,7 @@ public class Pacientes extends javax.swing.JDialog {
             columnNames.addElement("ID");
             columnNames.addElement("Nombre");
             columnNames.addElement("Telefono");
-            columnNames.addElement("Email"); // Asegúrate de que coincida con el valor que quieres mostrar
+            columnNames.addElement("Email");
 
             // Crear la estructura de datos para las filas
             Vector<Vector<String>> rowData = new Vector<>();
@@ -87,7 +87,6 @@ public class Pacientes extends javax.swing.JDialog {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -232,6 +231,7 @@ public class Pacientes extends javax.swing.JDialog {
             }
         });
 
+        Tabla_Pacientes.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         Tabla_Pacientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -412,7 +412,7 @@ public class Pacientes extends javax.swing.JDialog {
             //Llamamos al writer
             XMLWriter generador = new XMLWriter();
 
-            // Cargar el XML existente
+            // Cargar el xml existente
             generador.cargarXML("Data/pacientes.xml");
 
             // Crear un nuevo objeto Paciente
@@ -427,7 +427,7 @@ public class Pacientes extends javax.swing.JDialog {
             //Invocamos el metodo llenar tabla para que lo actualice
             llenarTabla();
 
-            // Limpiar campos después de agregar para la siguiente persona agregada
+            // Limpiar campos despues de agregar para la siguiente persona agregada
             E_ID.setText("");
             E_Nombre.setText("");
             E_Telefono.setText("");
@@ -458,13 +458,13 @@ public class Pacientes extends javax.swing.JDialog {
             //Llamamos al writer
             XMLWriter generador = new XMLWriter();
 
-            // Cargar el XML existente
+            // Cargar el xml existente
             generador.cargarXML("Data/pacientes.xml");
 
             // Crear un nuevo objeto Paciente
             Paciente paciente1 = new Paciente(id, nombre, telefono, email);
 
-            // Agregar pacientes usando el objeto, implementamos el metodo modificar paciente para cambiar los datos en el objeto
+            // Agregar pacientes usando el objeto implementamos el metodo modificar paciente para cambiar los datos en el objeto
             generador.modificarPaciente(paciente1);
 
             // Guardar los cambios

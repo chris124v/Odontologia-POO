@@ -29,34 +29,146 @@
       <id_lista_servi>001</id_lista_servi>
     </otros_servicios>
   </solicitud>
-  <solicitud id="870">
-    <fecha_hora>2024-06-27T16:39:33</fecha_hora>
+  <solicitud id="000002">
+    <fecha_hora>2024-11-20T22:02:45</fecha_hora>
+    <servicio id_s="107">
+      <nombre_servicio>Extraccion de mulelas del jucio</nombre_servicio>
+      <precio>30000.0</precio>
+    </servicio>
+    <Paciente id_p="600007132">
+      <nombre_p>Fernando Alonso</nombre_p>
+      <telefono_p>8888-9999</telefono_p>
+      <email>ferna@gmail.com</email>
+    </Paciente>
+    <Medico id_m="200">
+      <nombre_medico>Rodrigo Perez</nombre_medico>
+      <puesto>Odontologo</puesto>
+      <telefono_m>7777-8888</telefono_m>
+      <servicios_m>
+        <id_sl>100</id_sl>
+        <id_sl>101</id_sl>
+      </servicios_m>
+    </Medico>
+    <estado id_e="001">
+      <nombre_e>En Revision</nombre_e>
+    </estado>
+    <observaciones>Se esta considerando el procedimiento a utilizar para la extraccion.</observaciones>
+    <otros_servicios>
+      <id_lista_servi>103</id_lista_servi>
+      <id_lista_servi>105</id_lista_servi>
+      <id_lista_servi>106</id_lista_servi>
+    </otros_servicios>
+  </solicitud>
+  <solicitud id="000003">
+    <fecha_hora>2024-11-24T22:04:10</fecha_hora>
+    <servicio id_s="101">
+      <nombre_servicio>Limpieza de encias</nombre_servicio>
+      <precio>20000.0</precio>
+    </servicio>
+    <Paciente id_p="700002345">
+      <nombre_p>Samuel de Luque</nombre_p>
+      <telefono_p>7777-7777</telefono_p>
+      <email>vege@gmail.com</email>
+    </Paciente>
+    <Medico id_m=" ">
+      <nombre_medico>No hay</nombre_medico>
+      <puesto>No hay</puesto>
+      <telefono_m>No hay</telefono_m>
+      <servicios_m>
+        <id_sl>No hay</id_sl>
+      </servicios_m>
+    </Medico>
+    <estado id_e="000">
+      <nombre_e>Nuevo</nombre_e>
+    </estado>
+    <observaciones>Necesita una limpieza general.</observaciones>
+    <otros_servicios>
+      <id_lista_servi>No hay</id_lista_servi>
+    </otros_servicios>
+  </solicitud>
+  <solicitud id="000004">
+    <fecha_hora>2024-07-25T22:04:42</fecha_hora>
+    <servicio id_s="104">
+      <nombre_servicio>Extraccion Dental</nombre_servicio>
+      <precio>40000.0</precio>
+    </servicio>
+    <Paciente id_p="300002222">
+      <nombre_p>Ana Rojas</nombre_p>
+      <telefono_p>7777-2000</telefono_p>
+      <email>ana.r@gmail</email>
+    </Paciente>
+    <Medico id_m="205">
+      <nombre_medico>Tomas Aspinalio</nombre_medico>
+      <puesto>Asistente Dental </puesto>
+      <telefono_m>3456-9567</telefono_m>
+      <servicios_m>
+        <id_sl>100</id_sl>
+        <id_sl>102</id_sl>
+        <id_sl>103</id_sl>
+        <id_sl>106</id_sl>
+      </servicios_m>
+    </Medico>
+    <estado id_e="005">
+      <nombre_e>Completado</nombre_e>
+    </estado>
+    <observaciones>Se realizo la extraccion ahora se podria aplicar un blanqueamiento dental. </observaciones>
+    <otros_servicios>
+      <id_lista_servi>100</id_lista_servi>
+    </otros_servicios>
+  </solicitud>
+  <solicitud id="000005">
+    <fecha_hora>2024-05-13T22:06:59</fecha_hora>
     <servicio id_s="102">
       <nombre_servicio>Cirugia maxilofacial</nombre_servicio>
       <precio>1000000.0</precio>
+    </servicio>
+    <Paciente id_p="400002222">
+      <nombre_p>Christopher Vargas</nombre_p>
+      <telefono_p>4567-3289</telefono_p>
+      <email>ckpv12@gmail.com</email>
+    </Paciente>
+    <Medico id_m="204">
+      <nombre_medico>Conor Fernandez</nombre_medico>
+      <puesto>Odontopediatra</puesto>
+      <telefono_m>1234-9876</telefono_m>
+      <servicios_m>
+        <id_sl>103</id_sl>
+        <id_sl>104</id_sl>
+        <id_sl>105</id_sl>
+      </servicios_m>
+    </Medico>
+    <estado id_e="003">
+      <nombre_e>Pendiente de Resultados</nombre_e>
+    </estado>
+    <observaciones>Estamos evaluando con que proceso hacer la cirugia.</observaciones>
+    <otros_servicios>
+      <id_lista_servi>101</id_lista_servi>
+    </otros_servicios>
+  </solicitud>
+  <solicitud id="000006">
+    <fecha_hora>2024-08-10T22:08:47</fecha_hora>
+    <servicio id_s="103">
+      <nombre_servicio>Empastes</nombre_servicio>
+      <precio>25000.0</precio>
     </servicio>
     <Paciente id_p="300003333">
       <nombre_p>Pedro Arnaez</nombre_p>
       <telefono_p>7777-3000</telefono_p>
       <email>pedro.a@gmail</email>
     </Paciente>
-    <Medico id_m="201">
-      <nombre_medico>Maria Rojas</nombre_medico>
-      <puesto>Medico maxilofacial</puesto>
-      <telefono_m>8888-9999</telefono_m>
+    <Medico id_m="203">
+      <nombre_medico>Khabib Nurmagomedov</nombre_medico>
+      <puesto>Odontologo General</puesto>
+      <telefono_m>7777-8989</telefono_m>
       <servicios_m>
-        <id_sl>100</id_sl>
-        <id_sl>101</id_sl>
-        <id_sl>102</id_sl>
+        <id_sl>106</id_sl>
+        <id_sl>107</id_sl>
       </servicios_m>
     </Medico>
-    <estado id_e="001">
-      <nombre_e>En Revision</nombre_e>
+    <estado id_e="004">
+      <nombre_e>Cancelado</nombre_e>
     </estado>
-    <observaciones>Necesita ayuda otra vez. </observaciones>
-    <otros_servicios>
-      <id_lista_servi>101</id_lista_servi>
-      <id_lista_servi>102</id_lista_servi>
-    </otros_servicios>
+    <observaciones>El paciente no se presento el dia indicado.</observaciones>
+    <otros_servicios/>
   </solicitud>
 </solicitudes>

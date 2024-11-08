@@ -180,7 +180,7 @@ public class Atender extends javax.swing.JDialog {
                 String id_servicio_ta = String.valueOf(model.getValueAt(i, 1));
                 String nombre_servicio_otroo = String.valueOf(model.getValueAt(i, 2));
             
-                // Buscamos coincidencia ya sea por ID o por nombre del servicio
+                // Buscamos coincidencia ya sea por id o por nombre del servicio
                 for (Servicio servicio : servicios_otrosss) {
                     
                     //Aqui hacemos un gran and que busca las coinicidencias de nombre y servicio
@@ -238,6 +238,9 @@ public class Atender extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(235, 250, 255));
+
+        Combo_solicitud.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         Combo_solicitud.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         Combo_solicitud.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -245,14 +248,21 @@ public class Atender extends javax.swing.JDialog {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         jLabel1.setText("Solicitud");
 
+        Campo_id_paciente.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         jLabel4.setText("ID Paciente");
 
+        jLabel5.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         jLabel5.setText("Fecha/Hora");
 
+        jLabel2.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         jLabel2.setText("Especialidad");
 
+        Combo_estado.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         Combo_estado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         Combo_estado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -260,8 +270,10 @@ public class Atender extends javax.swing.JDialog {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         jLabel6.setText("Estado");
 
+        Combo_medico.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         Combo_medico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         Combo_medico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -269,10 +281,15 @@ public class Atender extends javax.swing.JDialog {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         jLabel3.setText("Medico");
 
+        Campo_observaciones.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
+
+        Observaciones.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         Observaciones.setText("Observaciones");
 
+        Tabla_servicios_adicionales.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         Tabla_servicios_adicionales.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -297,21 +314,32 @@ public class Atender extends javax.swing.JDialog {
             Tabla_servicios_adicionales.getColumnModel().getColumn(2).setResizable(false);
         }
 
+        jLabel7.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         jLabel7.setText("Otros servicios (Adicionales)");
 
+        Boton_salvar.setBackground(new java.awt.Color(153, 215, 235));
+        Boton_salvar.setFont(new java.awt.Font("Lucida Sans Unicode", 1, 12)); // NOI18N
         Boton_salvar.setText("Salvar");
+        Boton_salvar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(0, 0, 0), null, null));
         Boton_salvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Boton_salvarActionPerformed(evt);
             }
         });
 
+        Boton_Cancelar.setBackground(new java.awt.Color(153, 215, 235));
+        Boton_Cancelar.setFont(new java.awt.Font("Lucida Sans Unicode", 1, 12)); // NOI18N
         Boton_Cancelar.setText("Cancelar");
+        Boton_Cancelar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(0, 0, 0), null, null));
         Boton_Cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 salir(evt);
             }
         });
+
+        fecha_hora_campo.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
+
+        servicio_solici.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -347,21 +375,25 @@ public class Atender extends javax.swing.JDialog {
                                     .addComponent(Campo_id_paciente)
                                     .addComponent(fecha_hora_campo)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(171, 171, 171)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Observaciones)
-                            .addComponent(Campo_observaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(171, 171, 171)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Observaciones)
+                                    .addComponent(Campo_observaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(114, 114, 114)
+                                .addComponent(jLabel7))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(147, 147, 147)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(265, 265, 265)
-                        .addComponent(Boton_salvar)
-                        .addGap(85, 85, 85)
-                        .addComponent(Boton_Cancelar))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(114, 114, 114)
-                        .addComponent(jLabel7))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(147, 147, 147)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(217, 217, 217)
+                        .addComponent(Boton_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Boton_Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(80, 80, 80)))
                 .addContainerGap(166, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -404,7 +436,7 @@ public class Atender extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Boton_salvar)
                     .addComponent(Boton_Cancelar))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -550,8 +582,6 @@ public class Atender extends javax.swing.JDialog {
             // Mostrar mensaje de exito
             JOptionPane.showMessageDialog(this, "Solicitud atendida exitosamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
 
-            // Opcionalmente, cerrar la ventana
-            dispose();
 
     } catch (Exception e) {
         System.err.println("Error al actualizar la solicitud: "); e.printStackTrace(); JOptionPane.showMessageDialog(this, "Error al actualizar la solicitud: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

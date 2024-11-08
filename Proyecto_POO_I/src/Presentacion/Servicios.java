@@ -103,6 +103,7 @@ public class Servicios extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(235, 250, 255));
 
+        Tabla_Servicios.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 12)); // NOI18N
         Tabla_Servicios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -299,7 +300,7 @@ public class Servicios extends javax.swing.JDialog {
             //Llamamos al writer
             XMLWriter generador = new XMLWriter();
             
-            // Cargar el XML existente
+            // Cargar el xml existente
             generador.cargarXML("Data/servicios.xml");
             
             // Crear un nuevo objeto servicio
@@ -378,7 +379,7 @@ public class Servicios extends javax.swing.JDialog {
              // Llamamos al writer
             XMLWriter generador = new XMLWriter();
 
-            // Cargar el XML existente
+            // Cargar el xml existente
             generador.cargarXML("Data/servicios.xml");
             
             // Crear un nuevo objeto servicio
@@ -435,7 +436,7 @@ public class Servicios extends javax.swing.JDialog {
             //Llamamos al writer
             XMLWriter generador = new XMLWriter();
             
-            // Cargar el XML existente
+            // Cargar el xml existente
             generador.cargarXML("Data/servicios.xml");
             
             // Crear un nuevo objeto servicio

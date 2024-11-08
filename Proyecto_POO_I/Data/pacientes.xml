@@ -45,4 +45,9 @@
     <telefono>8888-9999</telefono>
     <email>ferna@gmail.com</email>
   </paciente>
+  <paciente id="80009345">
+    <nombre>Dario Barquero</nombre>
+    <telefono>6732-1111</telefono>
+    <email>barq@gmail.com</email>
+  </paciente>
 </pacientes>

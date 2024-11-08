@@ -178,7 +178,7 @@ public class Consultar extends javax.swing.JDialog {
     }
     
     // Método para actualizar la tabla con los resultados del buscado
-    private void actualizarTablaConResultados(ArrayList<Solicitud> solicitudes) {
+    private void actualizar_tabla(ArrayList<Solicitud> solicitudes) {
         
         // Obtener el modelo actual de la tabla de las solicitudes
         DefaultTableModel model = (DefaultTableModel) Tabla_solicitudes.getModel();
@@ -644,7 +644,7 @@ public class Consultar extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "No se encontraron solicitudes con los textos puestos", "Sin Resultados. Porfavor busque la solicitud especificamente", JOptionPane.INFORMATION_MESSAGE);
             
             // Mostrar todas las solicitudes y limpiar campos nuevamente llenamos la tabla para que aparezca todo
-            actualizarTablaConResultados(existentes_solicitudes);
+            actualizar_tabla(existentes_solicitudes);
             Campo_Id_solicitud.setText("");
             Campo_id_paciente.setText("");
             Campo_nombre_p.setText("");
@@ -656,7 +656,7 @@ public class Consultar extends javax.swing.JDialog {
         //Si si se encontro la solicitud
         } else {
             // Mostrar solicitud que se tenia que buscar
-            actualizarTablaConResultados(solicitudes_bien);
+            actualizar_tabla(solicitudes_bien);
         }
     
     //Ultima excepcion 

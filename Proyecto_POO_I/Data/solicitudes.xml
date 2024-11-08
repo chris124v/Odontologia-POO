@@ -171,4 +171,32 @@
     <observaciones>El paciente no se presento el dia indicado.</observaciones>
     <otros_servicios/>
   </solicitud>
+  <solicitud id="000007">
+    <fecha_hora>2024-10-18T22:12:45</fecha_hora>
+    <servicio id_s="105">
+      <nombre_servicio>Injertos de Encia</nombre_servicio>
+      <precio>100000.0</precio>
+    </servicio>
+    <Paciente id_p="300004444">
+      <nombre_p>Jervis Esquivel</nombre_p>
+      <telefono_p>6789-6549</telefono_p>
+      <email>jer@gmail.com</email>
+    </Paciente>
+    <Medico id_m="203">
+      <nombre_medico>Khabib Nurmagomedov</nombre_medico>
+      <puesto>Odontologo General</puesto>
+      <telefono_m>7777-8989</telefono_m>
+      <servicios_m>
+        <id_sl>106</id_sl>
+        <id_sl>107</id_sl>
+      </servicios_m>
+    </Medico>
+    <estado id_e="003">
+      <nombre_e>Pendiente de Resultados</nombre_e>
+    </estado>
+    <observaciones>Pendiente de resultados despues de los injertos. Tambien necesita carrillas.</observaciones>
+    <otros_servicios>
+      <id_lista_servi>106</id_lista_servi>
+    </otros_servicios>
+  </solicitud>
 </solicitudes>

@@ -112,7 +112,7 @@ Los diagramas en `Diagramas/` (casos de uso UML y diagramas de clases de los pro
 
 ---
 
-## Qué Aprendí
+## Acquired Knowledge
 * A modelar un problema real con clases y relaciones (composición entre `Solicitud`, `Paciente`, `Servicio`, `Medicos` y `Estado`) y a documentarlo con diagramas UML.
 * A separar el código en capas (dominio, interfaz y persistencia) para que los cambios en una no rompan las otras.
 * A leer y escribir XML con el parser DOM y a mantener los datos consistentes al agregar, modificar y eliminar.

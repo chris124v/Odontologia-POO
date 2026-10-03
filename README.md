@@ -1,5 +1,3 @@
-# Clinica-Odonto-POO
-
 <p align="center">
   <img src="Proyecto_POO_I/Imagenes/logo.jpg" alt="Logo de la Clínica Odontológica Molares" width="180">
 </p>

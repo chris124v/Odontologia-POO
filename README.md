@@ -66,13 +66,13 @@ flowchart LR
 * Java 21 con NetBeans (proyecto Ant).
 * Java Swing para la interfaz gráfica.
 * Parser DOM de XML (`javax.xml.parsers`) para guardar y leer los datos.
-* [JCalendar 1.4](https://toedter.com/jcalendar/) (`JDateChooser`) para seleccionar fechas.
+* [JCalendar 1.4](https://toedter.com/jcalendar/) (`JDateChooser`) para seleccionar fechas, incluida en `Proyecto_POO_I/lib/`.
 
 ---
 
 ## Estructura del Proyecto
 ```text
-Proyecto-POO-I/
+Odontologia-POO/
 └── Proyecto_POO_I/
     ├── src/
     │   ├── Aplicacion/Main.java     # Punto de entrada
@@ -87,6 +87,7 @@ Proyecto-POO-I/
     │   └── solicitudes.xml
     ├── Diagramas/                   # Casos de uso y diagramas de clases (draw.io)
     ├── Imagenes/logo.jpg            # Logo de la clínica
+    ├── lib/jcalendar-1.4.jar        # Biblioteca del calendario (JDateChooser)
     └── build.xml, nbproject/        # Configuración de NetBeans
 ```
 
@@ -99,12 +100,10 @@ Los diagramas en `Diagramas/` (casos de uso UML y diagramas de clases de los pro
 ### Requisitos previos
 * JDK 21
 * NetBeans (con soporte para proyectos Java con Ant)
-* El archivo `jcalendar-1.4.jar`, que no está en el repositorio
 
 ### Inicio rápido
-1. Clonar el repositorio y abrir la carpeta `Proyecto_POO_I` como proyecto en NetBeans.
-2. Descargar `jcalendar-1.4.jar` y agregarlo en *clic derecho en el proyecto → Properties → Libraries → Add JAR/Folder*. El proyecto trae configurada una ruta de la computadora de uno de los autores, así que hay que reemplazarla.
-3. Ejecutar el proyecto con **F6** (clase principal `Aplicacion.Main`).
+1. Clonar el repositorio y abrir la carpeta `Proyecto_POO_I` como proyecto en NetBeans. La biblioteca JCalendar ya viene incluida en `lib/`, no hay que instalar nada más.
+2. Ejecutar el proyecto con **F6** (clase principal `Aplicacion.Main`).
 
 ### Notas
 * Los archivos `Data/*.xml` y `Imagenes/logo.jpg` se leen con rutas relativas, así que el programa debe ejecutarse con la carpeta `Proyecto_POO_I` como directorio de trabajo, que es lo que hace NetBeans por defecto.
